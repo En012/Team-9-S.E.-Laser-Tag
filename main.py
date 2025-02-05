@@ -1,5 +1,4 @@
 class Main:
-    #hi
     #default constructor
     #add member variables as needed
     def __init__(self):
