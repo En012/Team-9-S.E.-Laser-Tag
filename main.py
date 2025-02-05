@@ -1,4 +1,5 @@
 class Main:
+    
     #default constructor
     #add member variables as needed
     def __init__(self):
@@ -8,7 +9,7 @@ class Main:
     def update(self):
         pass
     
-#test
+
 #declare main object
 m = Main()
 
@@ -24,4 +25,3 @@ while running:
 
     m.update()
 
-    #adfdfs
