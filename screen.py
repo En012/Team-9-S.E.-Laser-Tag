@@ -109,4 +109,4 @@ img = ImageTk.PhotoImage(img)
 label = tk.Label(root, image=img, bg="black")    
 label.pack()
 root.after(3000, switch)
-root.mainloop() #hello
+root.mainloop()
