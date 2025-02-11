@@ -23,5 +23,6 @@ while running:
     if userValue == "q":
         running = False
 
+    #update all functions
     m.update()
 
