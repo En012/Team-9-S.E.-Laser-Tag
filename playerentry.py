@@ -1,6 +1,5 @@
 import tkinter as tk
 import os
-from PIL import Image, ImageTk
 from tkinter import font as tkFont
 
 root = tk.Tk()
@@ -31,9 +30,9 @@ def get_id_texts():
 def change_button():
     box_font = tkFont.Font(family="Calibri", size=16, weight="bold")
     box = tk.Label(root, font=box_font, width=20, height=20, text="Please Select Slot to Change")
-    #boxwidth = box.winfo_reqwidth()
-    #boxheight = box.winfo_reqheight()
-    #box.place(x=int(width/2 - boxwidth/2), y=int(height/2 - boxheight/2))
+    boxwidth = box.winfo_reqwidth()
+    boxheight = box.winfo_reqheight()
+    box.place(x=int(width/2 - boxwidth/2), y=int(height/2 - boxheight/2))
     
     # Fetch and print ID texts
     red_ids, green_ids, red_names, green_names = get_id_texts()
@@ -92,7 +91,7 @@ for i in range(15):
         id.place(x = int(num_width * 12), y = int(int(title_height) + int((num_height + 10) * (i + 1))), anchor="nw")
         id_table_red.append(id)
         codename = tk.Label(root, font=codename_font, borderwidth=1, width = 40, height=1)
-        codename.place(x = int((id_width + 15) + num_width * 6), y = int(int(title_height) + int((num_height + 10) * (i + 1))), anchor="nw")
+        codename.place(x = int((id_width + 15) + num_width * 12), y = int(int(title_height) + int((num_height + 10) * (i + 1))), anchor="nw")
         codename_table_red.append(codename)
     else:
         number.place(y = int(int(title_height) + int((num_height + 10) * (i + 1))), anchor="nw")
@@ -100,7 +99,7 @@ for i in range(15):
         id.place(x = int(num_width * 12), y = int(int(title_height) + int((num_height + 10) * (i + 1))), anchor="nw")
         id_table_red.append(id)
         codename = tk.Label(root, font=codename_font, borderwidth=1, width = 40, height=1)
-        codename.place(x = int((id_width + 15) + num_width * 6), y = int(int(title_height) + int((num_height + 10) * (i + 1))), anchor="nw")
+        codename.place(x = int((id_width + 15) + num_width * 12), y = int(int(title_height) + int((num_height + 10) * (i + 1))), anchor="nw")
         codename_table_red.append(codename)
 
 #Green side numbers, id field, and codename field
@@ -112,18 +111,18 @@ for j in range(15):
         number.place(x = int(half_width + num_width/3), y = int(int(title_height) + int((num_height + 10) * (j + 1))), anchor="nw")
         #number.place(x = int(half_width +num_width/4), y = int(int(title_height) + int((num_height + 10) * (i + 1))), anchor="nw")
         id = tk.Label(root, font=id_font, borderwidth=1, width=15, height = 1)
-        id.place(x = int(half_width + num_width * 6), y = int(int(title_height) + int((num_height + 10) * (j + 1))), anchor="nw")
+        id.place(x = int(half_width + num_width * 12), y = int(int(title_height) + int((num_height + 10) * (j + 1))), anchor="nw")
         id_table_green.append(id)
         codename = tk.Label(root, font=codename_font, borderwidth=1, width = 40, height=1)
-        codename.place(x = int(half_width + (id_width + 15) + num_width * 6), y = int(int(title_height) + int((num_height + 10) * (j + 1))), anchor="nw")
+        codename.place(x = int(half_width + (id_width + 15) + num_width * 12), y = int(int(title_height) + int((num_height + 10) * (j + 1))), anchor="nw")
         codename_table_green.append(codename)
     else:
         number.place(x = half_width, y = int(int(title_height) + int((num_height + 10) * (j + 1))), anchor="nw")
         id = tk.Label(root, font=id_font, borderwidth=1, width=15, height = 1)
-        id.place(x = int(half_width + num_width * 6), y = int(int(title_height) + int((num_height + 10) * (j + 1))), anchor="nw")
+        id.place(x = int(half_width + num_width * 12), y = int(int(title_height) + int((num_height + 10) * (j + 1))), anchor="nw")
         id_table_green.append(id)
         codename = tk.Label(root, font=codename_font, borderwidth=1, width = 40, height=1)
-        codename.place(x = int(half_width + (id_width + 15) + num_width * 6), y = int(int(title_height) + int((num_height + 10) * (j + 1))), anchor="nw")
+        codename.place(x = int(half_width + (id_width + 15) + num_width * 12), y = int(int(title_height) + int((num_height + 10) * (j + 1))), anchor="nw")
         codename_table_green.append(codename)
 
 for i2 in range(15):
