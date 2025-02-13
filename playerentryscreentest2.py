@@ -170,7 +170,7 @@ def player_entry_screen(root):
     
     #button placement
     sub_btn_width = sub_btn.winfo_reqwidth()
-    sub_btn.grid(row=16,column=5)
+    #sub_btn.grid(row=16,column=5)
     port_btn.place(x = width/8, y = ((3*height)/4), anchor="nw")
     sub_btn.place(x = width/2 - sub_btn_width/2, y = ((3*height)/4), anchor = "nw")
     #infinite loop for program to work
