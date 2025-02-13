@@ -12,6 +12,7 @@ class Main:
 
     #update any member variables here
     def update(self):
+        #update the GUI
         self.root.mainloop()
     
 
@@ -21,12 +22,6 @@ m = Main()
 #create main loop
 running = True
 while running:
-
-    #temporary code until we get the GUI setup
-   # userValue = input("Enter q to leave \n")
-
-    #if userValue == "q":
-     #   running = False
 
     #run update methods
     m.update()
