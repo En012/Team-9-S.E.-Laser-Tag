@@ -159,20 +159,16 @@ def player_entry_screen(root):
         id_height = id_label.winfo_reqheight()
         num_height = num_label.winfo_reqheight()
         name_height = name_entry.winfo_reqheight()
+
         #sets positions of entries and labels
         #add team label
-        #id_label.grid(row=0,column=1)
         id_label.place(x = num_width + id_width/2, y = title_height)
-        #name_label.grid(row=0,column=2)
         name_label.place(x = (num_width + id_width + name_width/2), y = title_height)
-        #num_label.grid(row=i+1, column=0)
         if i < 9:
             num_label.place(x = num_width/4, y = (title_height + id_height + (num_height * i)))
         else:
             num_label.place(y = (title_height + id_height + (num_height * i)))
-        #name_entry.grid(row=i+1, column=2)
         name_entry.place(x = (num_width + id_width + 20), y = (title_height + id_height + (num_height * i)))
-        #id_entry.grid(row=i+1, column=1)
         id_entry.place(x = (num_width + 10), y = (title_height + id_height + (num_height * i)))
 
     #green team
@@ -184,18 +180,13 @@ def player_entry_screen(root):
         
         #sets positions of entries and labels
         #add team label
-        #id_label2.grid(row=0,column=6)
         id_label2.place(x = (width/2 + num_width + id_width/2), y = title_height)
-        #name_label2.grid(row=0,column=7)
         name_label2.place(x = (width/2 + num_width + id_width + name_width/2), y = title_height)
-        #num_label.grid(row=i+1, column=5)
         if i < 9:
             num_label.place(x = width/2 + num_width/4, y = (title_height + id_height + (num_height * i)))
         else:
             num_label.place(x = width/2, y = (title_height + id_height + (num_height * i)))
-        #name_entry.grid(row=i+1, column=7)
         name_entry.place(x = (width/2 + num_width + id_width + 20), y = (title_height + id_height + (num_height * i)))
-        #id_entry.grid(row=i+1, column=6)
         id_entry.place(x = (width/2 + num_width + 10), y = (title_height + id_height + (num_height * i)))
 
     #make key press also activate submit as a test of sorts (LATER)
@@ -207,7 +198,6 @@ def player_entry_screen(root):
     
     #button placement
     sub_btn_width = sub_btn.winfo_reqwidth()
-    sub_btn.grid(row=16,column=5)
     port_btn.place(x = width/8, y = ((3*height)/4), anchor="nw")
     sub_btn.place(x = width/2 - sub_btn_width/2, y = ((3*height)/4), anchor = "nw")
     #infinite loop for program to work
