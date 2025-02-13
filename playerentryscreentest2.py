@@ -31,6 +31,9 @@ def player_entry_screen(root):
     title_frame.place(x = 0, y = 0, relwidth = 1.0, height=int(title_height), anchor="nw")
     root.geometry(f"{width}x{height}")
 
+
+    #port number
+    port = "127.0.0.1"
     #red team user list
     name_List = []
     id_List = []
@@ -96,10 +99,44 @@ def player_entry_screen(root):
         print(id_List2)
         print("Green Team Names: ")
         print(name_List2)
-        
-    def change_port():
+    def change_port_inter():
+        box_bool = True
+        change_port(box_bool)
+
+    global box, port_entry, port_sub_btn
+    box, port_entry, port_sub_btn = None, None, None
+
+    def change_port(box_bool):
+        global box, port_entry, port_sub_btn
+        if box:
+            box.destroy()
+            box = None
+        if port_entry:
+            port_entry.destroy()
+            port_entry = None
+        if port_sub_btn:
+            port_sub_btn.destroy()
+            port_sub_btn = None
+        if(box_bool):
+            box_font = tkFont.Font(family="Calibri", size=16, weight="bold")
+            box = tk.Label(root, font=box_font, width=30, height=10, text="Please Type New Port Number", anchor = "n")
+            boxwidth = box.winfo_reqwidth()
+            boxheight = box.winfo_reqheight()
+            box.place(x=int(width/2 - boxwidth/2), y=int(height/2 - boxheight/2))
+            port_entry = tk.Entry(root, font=box_font, width=10)
+            textwidth = port_entry.winfo_reqwidth()
+            port_entry.place(x=int(width/2 - textwidth/2), y=int(height/2))
+            port_sub_btn=tk.Button(root,text = 'Submit', command = submit_port, width = 15, height = 1)
+            port_sub_btn_width = port_sub_btn.winfo_reqwidth()
+            port_sub_btn.place(x = int(width/2 - port_sub_btn_width/2), y = int(height/2 + 45))
+            
         pass
-        
+    def submit_port():
+        global port_entry
+        port_value = port_entry.get()
+        change_port(False)
+        print(f"New port entered: {port_value}")
+        return port_value
     #top labels for name and id columns
     name_label = tk.Label(root, text = 'Name', font=('calibre',12, 'bold'), background="red")
     id_label = tk.Label(root, text = 'ID', font=('calibre',12, 'bold'), background="red")
@@ -166,12 +203,13 @@ def player_entry_screen(root):
     sub_btn=tk.Button(root,text = 'Submit', command = submit, width = 15, height = 3)
 
     #button to activate the change ports function
-    port_btn= tk.Button(root, text="Change Port", command=change_port, width = 15, height = 3)
+    port_btn= tk.Button(root, text="Change Port", command=change_port_inter, width = 15, height = 3)
     
     #button placement
     sub_btn_width = sub_btn.winfo_reqwidth()
-    #sub_btn.grid(row=16,column=5)
+    sub_btn.grid(row=16,column=5)
     port_btn.place(x = width/8, y = ((3*height)/4), anchor="nw")
     sub_btn.place(x = width/2 - sub_btn_width/2, y = ((3*height)/4), anchor = "nw")
     #infinite loop for program to work
     #root.mainloop()
+    
