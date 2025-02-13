@@ -97,7 +97,8 @@ def player_entry_screen(root):
         print("Green Team Names: ")
         print(name_List2)
         
-        
+    def change_port():
+        pass
         
     #top labels for name and id columns
     name_label = tk.Label(root, text = 'Name', font=('calibre',12, 'bold'), background="red")
@@ -123,18 +124,18 @@ def player_entry_screen(root):
         name_height = name_entry.winfo_reqheight()
         #sets positions of entries and labels
         #add team label
-        id_label.grid(row=0,column=1)
+        #id_label.grid(row=0,column=1)
         id_label.place(x = num_width + id_width/2, y = title_height)
-        name_label.grid(row=0,column=2)
+        #name_label.grid(row=0,column=2)
         name_label.place(x = (num_width + id_width + name_width/2), y = title_height)
-        num_label.grid(row=i+1, column=0)
+        #num_label.grid(row=i+1, column=0)
         if i < 9:
             num_label.place(x = num_width/4, y = (title_height + id_height + (num_height * i)))
         else:
             num_label.place(y = (title_height + id_height + (num_height * i)))
-        name_entry.grid(row=i+1, column=2)
+        #name_entry.grid(row=i+1, column=2)
         name_entry.place(x = (num_width + id_width + 20), y = (title_height + id_height + (num_height * i)))
-        id_entry.grid(row=i+1, column=1)
+        #id_entry.grid(row=i+1, column=1)
         id_entry.place(x = (num_width + 10), y = (title_height + id_height + (num_height * i)))
 
     #green team
@@ -146,33 +147,31 @@ def player_entry_screen(root):
         
         #sets positions of entries and labels
         #add team label
-        """
-        id_label2.grid(row=0,column=6)
-        name_label2.grid(row=0,column=7)
-        num_label.grid(row=i+1, column=5)
-        name_entry.grid(row=i+1, column=7)
-        id_entry.grid(row=i+1, column=6)
-        """
-        id_label2.grid(row=0,column=6)
+        #id_label2.grid(row=0,column=6)
         id_label2.place(x = (width/2 + num_width + id_width/2), y = title_height)
-        name_label2.grid(row=0,column=7)
+        #name_label2.grid(row=0,column=7)
         name_label2.place(x = (width/2 + num_width + id_width + name_width/2), y = title_height)
-        num_label.grid(row=i+1, column=5)
+        #num_label.grid(row=i+1, column=5)
         if i < 9:
             num_label.place(x = width/2 + num_width/4, y = (title_height + id_height + (num_height * i)))
         else:
             num_label.place(x = width/2, y = (title_height + id_height + (num_height * i)))
-        name_entry.grid(row=i+1, column=7)
+        #name_entry.grid(row=i+1, column=7)
         name_entry.place(x = (width/2 + num_width + id_width + 20), y = (title_height + id_height + (num_height * i)))
-        id_entry.grid(row=i+1, column=6)
+        #id_entry.grid(row=i+1, column=6)
         id_entry.place(x = (width/2 + num_width + 10), y = (title_height + id_height + (num_height * i)))
 
     #make key press also activate submit as a test of sorts (LATER)
     #button to activate the submit function
     sub_btn=tk.Button(root,text = 'Submit', command = submit, width = 15, height = 3)
+
+    #button to activate the change ports function
+    port_btn= tk.Button(root, text="Change Port", command=change_port, width = 15, height = 3)
+    
     #button placement
     sub_btn_width = sub_btn.winfo_reqwidth()
     sub_btn.grid(row=16,column=5)
-    sub_btn.place(x = width/2 - sub_btn_width/2, y = ((3*height)/4))
+    port_btn.place(x = width/8, y = ((3*height)/4), anchor="nw")
+    sub_btn.place(x = width/2 - sub_btn_width/2, y = ((3*height)/4), anchor = "nw")
     #infinite loop for program to work
     #root.mainloop()
