@@ -36,8 +36,6 @@ def player_entry_screen(root):
     green_frame.place(relx=0.5, rely=title_relheight, relwidth=0.5, relheight=1 - title_relheight)
 
 
-    #port number
-    port = "127.0.0.1"
     #red team user list
     name_List = []
     id_List = []
@@ -110,14 +108,14 @@ def player_entry_screen(root):
             UDPClientSocket.close()
     
 
-    global box, port_entry, port_sub_btn
+    global box,outline, port_entry, port_sub_btn
     box, port_entry, port_sub_btn = None, None, None
 
     def change_udp_server_inter():
         change_udp_server(True)
 
     def change_udp_server(show):
-            global box, port_entry, port_sub_btn
+            global box, outline, port_entry, port_sub_btn
             #removing previous dialog if its there
             if box:
                 box.destroy()
@@ -133,15 +131,15 @@ def player_entry_screen(root):
                 msg = ("Enter new UDP Server IP and Port (format: IP, Port)\n" #instruction message for user
                        "Example: 192.168.1.100, 20001")
                 box = tk.Label(root, font=box_font, width=50, height=5, text=msg, anchor="n")
-                boxwidth = box.winfo_reqwidth()
-                boxheight = box.winfo_reqheight()
+                #outline = tk.Frame(bd=0, highlightthickness=0, background="black")
                 port_entry = tk.Entry(root, font=box_font, width=30)
-                textwidth = port_entry.winfo_reqwidth()
+                #textwidth = port_entry.winfo_reqwidth()
                 port_sub_btn = tk.Button(root, text='Submit', command=submit_udp_server, width=15, height=1) #submits value to the server
-                port_sub_btn_width = port_sub_btn.winfo_reqwidth()
+                #port_sub_btn_width = port_sub_btn.winfo_reqwidth()
+                #outline.place(relx=0.5, rely=0.4, width=100,height=100, anchor="center")
                 box.place(relx=0.5, rely=0.4, anchor="center")
-                port_entry.place(relx=0.5, rely=0.5, anchor="center")
-                port_sub_btn.place(relx=0.5, rely=0.55, anchor="center")
+                port_entry.place(relx=0.5, rely=0.42, anchor="center")
+                port_sub_btn.place(relx=0.5, rely=0.48, anchor="center")
 
 
     def submit_udp_server():
@@ -199,11 +197,19 @@ def player_entry_screen(root):
         num_label2 = tk.Label(root, text=f"{i+1}.", font=('Arial', 12, 'bold'), background="green")
         num_label2.place(relx=0.55, rely=row_rel_y, anchor="center")
         
+        #id labels
+        id_label2 = tk.Label(root, text = 'ID', font=('calibre',12, 'bold'), background="green")
+        id_label2.place(relx=0.59, rely=row_rel_y, anchor="e")  # `anchor="e"` aligns it to the right
+
         id_entry2 = tk.Entry(root, textvariable=id_vars2[i], font=('calibre', 10, 'normal'))
         id_entry2.place(relx=0.65, rely=row_rel_y, relwidth=0.1, anchor="center")
         
+        #name labels
+        name_label2 = tk.Label(root, text = 'Name', font=('calibre',12, 'bold'), background="green")
+        name_label2.place(relx=0.75, rely=row_rel_y, anchor="e")  # `anchor="e"` aligns it to the right
+
         name_entry2 = tk.Entry(root, textvariable=name_vars2[i], font=('calibre', 10, 'normal'))
-        name_entry2.place(relx=0.80, rely=row_rel_y, relwidth=0.15, anchor="center")
+        name_entry2.place(relx=0.83, rely=row_rel_y, relwidth=0.15, anchor="center")
 
 
     #make key press also activate submit as a test of sorts (LATER)
