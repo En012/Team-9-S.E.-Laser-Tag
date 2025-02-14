@@ -18,8 +18,7 @@ try:
 
     #receiving response from server
     msgFromServer = UDPClientSocket.recvfrom(bufferSize)
-    msg = "Message from Server: {}".format(msgFromServer[0].decode())
-    print(msg)
+    print("Message from Server: {}".format(msgFromServer[0].decode()))
 
 except ConnectionResetError:
     print("Connection was reset by the remote host.")

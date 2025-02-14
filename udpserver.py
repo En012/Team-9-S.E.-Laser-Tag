@@ -17,7 +17,7 @@ UDPServerSocket.bind((localIP, localPort))
 # Set a timeout on the socket
 UDPServerSocket.settimeout(1)
 
-print("UDP server up and listening")
+print("UDP server up and listening on {localIP}:{localPort}")
 
 #signal handler for graceful shutdown
 def signal_handler(_sig, _frame):
@@ -35,15 +35,12 @@ while True:
         bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
         message = bytesAddressPair[0]
         address = bytesAddressPair[1]
-        clientMsg = "Message from Client: {}".format(message.decode())
-        clientIP  = "Client IP Address: {}".format(address)
-        
-        print(clientMsg)
-        print(clientIP)
-
+        print(f"Message from Client: {message.decode()}")
+        print(f"Client IP Address: {address}")
+        print(f"Received message: {message.decode()} from {address}")
         #sending a reply back to client
         UDPServerSocket.sendto(bytesToSend, address)
-        print("Reply sent to client: {}".format(msgFromServer))
+        print(f"Reply Sent to Client: {msgFromServer}")
 
     except socket.timeout:
         #timeout
