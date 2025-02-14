@@ -1,16 +1,16 @@
 import sqlite3
 
-# Connect to the database
+#connecting to the database
 conn = sqlite3.connect('players.db')
 cursor = conn.cursor()
 
-# Execute a query to get all data from the players table
+#execute a query to get all data from the players table
 cursor.execute("SELECT * FROM players")
 rows = cursor.fetchall()
 
-# Print out each row
+#print out each row
 for row in rows:
     print(row)
 
-# Close the connection
+#close the connection
 conn.close()

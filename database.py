@@ -18,6 +18,7 @@ def init_db():
     conn.commit()
     conn.close()
 
+#function for clearing data base (mainly using for testing at the moment)
 def cleardatabase():
     conn = sqlite3.connect('players.db')
     cursor = conn.cursor()
@@ -25,6 +26,7 @@ def cleardatabase():
     conn.commit()
     conn.close()
 
+#main function to save players, intention is to ignore duplicate additions.
 def save_players(team, names, equipment_codes):
     conn = sqlite3.connect('players.db')
     cursor = conn.cursor()
