@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
 import os
-import playerentryscreentest2 as pe
+import playerentrytest3 as pe
 from PIL import Image, ImageTk
 
 class Screen:
