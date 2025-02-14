@@ -12,7 +12,7 @@ udp_server_socket = None
 udp_server_thread = None
 
 def udp_server_loop():
-    """Listens for incoming UDP messages and echoes them back."""
+    #listens for messages from client
     global server_running, udp_server_socket
     while server_running:
         try:
@@ -27,7 +27,7 @@ def udp_server_loop():
             break
 
 def start_udp_server():
-    """Starts the UDP server in a separate thread."""
+    #Starts the UDP server
     global server_running, udp_server_socket, udp_server_thread, udp_server_ip, udp_server_port
     try:
         udp_server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -40,7 +40,7 @@ def start_udp_server():
         print("Failed to start UDP server:", e)
 
 def stop_udp_server():
-    """Stops the UDP server."""
+    #Stops the servers
     global server_running, udp_server_socket
     server_running = False
     if udp_server_socket:
