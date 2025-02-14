@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 import udpclient
 import udpserver
+import database
 
 #---------------------- udp port functions ------------------------------------------
     
@@ -36,7 +37,7 @@ def change_udp_server(show):
             port_sub_btn.place(relx=0.5, rely=0.48, anchor="center")
 
 def submit_udp_server():
-        """Handles new UDP configuration input from the user."""
+        #Handles new UDP configuration input from the user.
         val = port_entry.get()
         parts = val.split(',')
         if len(parts) == 2:
@@ -100,6 +101,9 @@ def player_entry_screen(root):
     #function activates when submit button is clicked
     #adds input names to a list
     def submit():
+        #clearing database before new submit
+        database.cleardatabase()
+        
         #cleans lists for new updates
         #only works when the .set lines are not being used!!!
         name_List.clear()
@@ -145,6 +149,11 @@ def player_entry_screen(root):
         for code in id_List2:
             if code.strip():
                 udpclient.send_udp_message(code)
+
+        #saving players to data base
+        database.save_players("Red", name_List, id_List)
+        database.save_players("Green", name_List2, id_List2)
+        print("Player information saved to database")
 
 
     #top labels for name and id columns
@@ -212,7 +221,10 @@ def player_entry_screen(root):
     
 #need this to run it on my computer for some reason -Dylan (you can remove it if its harmful)
 if __name__ == "__main__":
-    root = tk.Tk()               # Create the main window
-    player_entry_screen(root)    # Call your function to set up the UI
+    #initializing database
+    database.init_db()
+
+    root = tk.Tk()               #create the main window
+    player_entry_screen(root)    #call function to set up the UI
     udpserver.start_udp_server()
-    root.mainloop()              # Start the event loop
+    root.mainloop()              #start the event loop
