@@ -1,53 +1,66 @@
 import socket
-import signal
-import sys
+import threading
 
-localIP     = "127.0.0.1"
-localPort   = 20001
-bufferSize  = 1024
-msgFromServer       = "Hello UDP Client"
-bytesToSend         = str.encode(msgFromServer)
+#Default server config
+udp_server_ip = "127.0.0.1"  # default IP address
+udp_server_port = 20001      # default port
+buffersize = 1024           # buffer size
 
-#creating a datagram socket
-UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+#global variables for server
+server_running = False
+udp_server_socket = None
+udp_server_thread = None
 
-#binding to address and IP
-UDPServerSocket.bind((localIP, localPort))
+def udp_server_loop():
+    """Listens for incoming UDP messages and echoes them back."""
+    global server_running, udp_server_socket
+    while server_running:
+        try:
+            data, addr = udp_server_socket.recvfrom(buffersize)
+            message = data.decode()
+            print(f"UDP server received from {addr}: {message}")
+            # Echo the received message back to the sender
+            udp_server_socket.sendto(message.encode(), addr)
+        except Exception as e:
+            if server_running:
+                print("UDP server error:", e)
+            break
 
-# Set a timeout on the socket
-UDPServerSocket.settimeout(1)
-
-print("UDP server up and listening on {localIP}:{localPort}")
-
-#signal handler for graceful shutdown
-def signal_handler(_sig, _frame):
-    print("\nShutdown signal received. Shutting down server...")
-    UDPServerSocket.close()
-    sys.exit(0)
-
-#registering signal from user (i.e ctrl + c)
-signal.signal(signal.SIGINT, signal_handler)
-
-#listening for incoming datagrams from client
-while True:
+def start_udp_server():
+    """Starts the UDP server in a separate thread."""
+    global server_running, udp_server_socket, udp_server_thread, udp_server_ip, udp_server_port
     try:
-        #wait for data with a timeout
-        bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
-        message = bytesAddressPair[0]
-        address = bytesAddressPair[1]
-        print(f"Message from Client: {message.decode()}")
-        print(f"Client IP Address: {address}")
-        print(f"Received message: {message.decode()} from {address}")
-        #sending a reply back to client
-        UDPServerSocket.sendto(bytesToSend, address)
-        print(f"Reply Sent to Client: {msgFromServer}")
+        udp_server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        udp_server_socket.bind((udp_server_ip, udp_server_port))
+        server_running = True
+        udp_server_thread = threading.Thread(target=udp_server_loop, daemon=True)
+        udp_server_thread.start()
+        print(f"UDP server started on {udp_server_ip}:{udp_server_port}")
+    except Exception as e:
+        print("Failed to start UDP server:", e)
 
-    except socket.timeout:
-        #timeout
-        continue
+def stop_udp_server():
+    """Stops the UDP server."""
+    global server_running, udp_server_socket
+    server_running = False
+    if udp_server_socket:
+        udp_server_socket.close()
+        udp_server_socket = None
+        print("UDP server stopped.")
 
+def update_and_restart_server(new_ip, new_port):
+    stop_udp_server()  #Stopping the current server
+    global udp_server_ip, udp_server_port
+    udp_server_ip = new_ip
+    udp_server_port = new_port
+    start_udp_server()  #Restarting with new configuration (new port/new ip)
+
+
+
+if __name__ == "__main__":
+    start_udp_server()
+    try:
+        while True:
+            pass  #keeping the server running
     except KeyboardInterrupt:
-        #handling Ctrl+C explicitly
-        print("\nKeyboard interrupt received. Shutting down server...")
-        UDPServerSocket.close()
-        sys.exit(0)
+        stop_udp_server()

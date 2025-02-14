@@ -1,31 +1,32 @@
 import socket
 
-msgFromClient       = "Hello UDP Server"
-bytesToSend         = str.encode(msgFromClient)
-serverAddressPort   = ("127.0.0.1", 20001) # port changed from gitexample
-bufferSize          = 1024
+#default configuration
+udp_server_ip = "127.0.0.1"
+udp_server_port = 20001
+buffersize = 1024
 
-#creating a UDP socket at client side
-UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+def send_udp_message(message, server_ip=None, server_port=None):
+    #sends a UDP message to the server and prints the reply.
+   
+    ip = server_ip if server_ip is not None else udp_server_ip
+    port = server_port if server_port is not None else udp_server_port
+    bytesToSend = str.encode(message)
+    UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    UDPClientSocket.settimeout(5)
+    try:
+        UDPClientSocket.sendto(bytesToSend, (ip, port))
+        print(f"Message sent to server: '{message}'")
+        msgFromServer = UDPClientSocket.recvfrom(buffersize)
+        reply = msgFromServer[0].decode()
+        print(f"Reply from server: {reply}")
+    except Exception as e:
+        print(f"Error sending UDP message: {e}")
+    finally:
+        UDPClientSocket.close()
 
-#seting a timeout for the socket
-UDPClientSocket.settimeout(5)
-
-try:
-    #send to server using created UDP socket
-    UDPClientSocket.sendto(bytesToSend, serverAddressPort)
-    print("Message sent to server.")
-
-    #receiving response from server
-    msgFromServer = UDPClientSocket.recvfrom(bufferSize)
-    print("Message from Server: {}".format(msgFromServer[0].decode()))
-
-except ConnectionResetError:
-    print("Connection was reset by the remote host.")
-except socket.timeout:
-    print("No response from server within the timeout period.")
-except Exception as e:
-    print("An error occurred: {}".format(e))
-finally:
-    #closing socket
-    UDPClientSocket.close()
+def set_udp_config(ip, port):
+    #Updates the default UDP server configuration for the client.
+    global udp_server_ip, udp_server_port
+    udp_server_ip = ip      #ip: New server IP address.
+    udp_server_port = port  #port: New server port number.
+    print(f"UDP client configuration updated to {udp_server_ip}:{udp_server_port}")
