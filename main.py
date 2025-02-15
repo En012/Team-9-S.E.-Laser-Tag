@@ -57,11 +57,12 @@ def submit_udp_server():
         change_udp_server(False)
 
 def udp_error_popup(message):
-    messagebox.showerror(message)
+    messagebox.showerror(title="An error has occured", message="Invalid port number! Please re-enter a valid integer.")
 
 
 #----------------------------------------------- end port functions --------------------------------------------------------------
 
+#setup for the player entry screen
 def player_entry_screen(root):
     #setting name of window
     root.title("[test] Player Entry")
@@ -227,7 +228,11 @@ def player_entry_screen(root):
     #infinite loop for program to work
     #root.mainloop()
     
-#need this to run it on my computer for some reason -Dylan (you can remove it if its harmful)
+#switches from the splash screen (logo.jpg) to the playerentry screen   
+def switch():
+    player_entry_screen(root) #call function to set up the UI
+
+#main function, code starts here
 if __name__ == "__main__":
     #initializing database
     database.init_db()
@@ -240,9 +245,6 @@ if __name__ == "__main__":
     height = root.winfo_screenheight()
 
     img_path = os.path.expanduser("images/logo.jpg")
-    def switch():
-        player_entry_screen(root) #call function to set up the UI
-
 
     img = Image.open("images/logo.jpg")
     img = img.resize((width, height), Image.LANCZOS)
@@ -250,6 +252,8 @@ if __name__ == "__main__":
     label = tk.Label(root, image=img, bg="black")    
     label.pack()
     root.geometry(f"{width}x{height}")
-    root.after(3000, switch)               #create the main window   
+    root.after(3000, switch) #create the main window   
     udpserver.start_udp_server()
-    root.mainloop()              #start the event loop
+    
+    #start the event loop
+    root.mainloop()              
