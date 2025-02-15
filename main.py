@@ -84,7 +84,123 @@ def startGame(id_List, id_List2):
     else:
         messagebox.showinfo(title="Notification", message="Start will be implemented in a future sprint!")
 
+def idPopUp(root):
 
+    player_id = "None"
+
+    # Create a popup window
+    popup = tk.Toplevel(root)
+    popup.title("Add Player")
+    popup.geometry("300x150")  # Set window size
+
+    # Center the popup window
+    popup.update_idletasks()  # Ensure the window size is calculated before positioning
+    screen_width = popup.winfo_screenwidth()
+    screen_height = popup.winfo_screenheight()
+    window_width = 300
+    window_height = 150
+
+    x_position = (screen_width // 2) - (window_width // 2)
+    y_position = (screen_height // 2) - (window_height // 2)
+    popup.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+
+    # Label for the player ID input
+    tk.Label(popup, text="Enter Player ID:", font=("Arial", 12)).pack(pady=10)
+
+    # Entry field for player ID
+    player_id_var = tk.StringVar()
+    player_id_entry = tk.Entry(popup, textvariable=player_id_var, font=("Arial", 12))
+    player_id_entry.pack(pady=5)
+
+    # Function to handle submission
+    def submit_id():
+        nonlocal player_id 
+        player_id = player_id_var.get()
+
+        #check to make sure that the user only entered numbers into the ID field
+        if not player_id.isdigit():
+            messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
+            player_id = "None"
+        popup.destroy()  # Close the popup
+
+    # Submit button
+    submit_button = tk.Button(popup, text="Submit", command=submit_id, font=("Arial", 12))
+    submit_button.pack(pady=10)
+
+    # Keep the popup focused until closed
+    popup.transient(root)  # Make it modal (disable interaction with main window)
+    popup.grab_set()
+    root.wait_window(popup)
+
+    return player_id
+
+def codeNamePopUp(root, id):
+
+    codeName = "None"
+
+    # Create a popup window
+    popup = tk.Toplevel(root)
+    popup.title("Add Player")
+    popup.geometry("300x500")  # Set window size
+
+    # Center the popup window
+    popup.update_idletasks()  # Ensure the window size is calculated before positioning
+    screen_width = popup.winfo_screenwidth()
+    screen_height = popup.winfo_screenheight()
+    window_width = 300
+    window_height = 150
+
+    x_position = (screen_width // 2) - (window_width // 2)
+    y_position = (screen_height // 2) - (window_height // 2)
+    popup.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+
+    # Label for the player ID input
+    tk.Label(popup, text=f"ID is new. Please enter a codename:", font=("Arial", 12)).pack(pady=10)
+
+    # Entry field for player ID
+    codeName_var = tk.StringVar()
+    codeName_entry = tk.Entry(popup, textvariable=codeName_var, font=("Arial", 12))
+    codeName_entry.pack(pady=5)
+
+    # Function to handle submission
+    def submitCodename():
+        nonlocal codeName
+        codeName = codeName_var.get()
+        popup.destroy()  # Close the popup
+
+    # Submit button
+    submit_button = tk.Button(popup, text="Submit", command=submitCodename, font=("Arial", 12))
+    submit_button.pack(pady=10)
+
+    # Keep the popup focused until closed
+    popup.transient(root)  # Make it modal (disable interaction with main window)
+    popup.grab_set()
+    root.wait_window(popup)
+
+    return codeName
+
+
+#called when the addPlayer button is pressed:
+def addPlayer(root):
+
+    #get Id from the idPopUp Window
+    playerId = idPopUp(root)
+
+    #if enteredId = None, then getting the id failed so return
+    if playerId == "None":
+        return
+    
+    #STEP 2: check against the database to see if the id is there
+
+    #STEP 3: If not, ask for a codename:
+    playerCodeName = codeNamePopUp(root, playerId)
+
+    #if enteredCodeName = None, then getting the codename failed so return
+    if playerCodeName == "None":
+        return
+
+    playerEquipmentId = "None"
+    
 
 
 #setup for the player entry screen
@@ -260,7 +376,8 @@ def player_entry_screen(root):
     port_btn= tk.Button(root, text="Change Port", command=change_udp_server_inter, width = 15, height = 3)
 
     #button for adding a player to the game
-    add_btn = tk.Button(root, text = 'Add Player', command = submit, width = 15, height = 3)
+    #lambda prevents the startGame function from being called as soon as the program starts up
+    add_btn = tk.Button(root, text = 'Add Player', command = lambda: addPlayer(root), width = 15, height = 3)
     
     #button placement
     sub_btn.place(relx=0.5, rely=0.95, anchor="center", relwidth=0.2, relheight=0.05)
