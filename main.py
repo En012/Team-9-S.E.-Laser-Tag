@@ -51,13 +51,13 @@ def submit_udp_server():
                 udpclient.set_udp_config(new_ip, new_port)
                 udpserver.update_and_restart_server(new_ip, new_port)
             except ValueError:
-                udp_error_popup("An error has occured, \n Invalid port number! Please re-enter a valid integer.")
+                udp_error_popup()
         else:
-            udp_error_popup("An error has occured, \n Invalid port number! Please re-enter a valid integer.")
+            udp_error_popup()
         change_udp_server(False)
 
 def udp_error_popup(message):
-    messagebox.showerror(title="An error has occured", message="Invalid port number! Please re-enter a valid integer.")
+    messagebox.showerror(title="Error", message="Invalid port number! Please re-enter a valid integer.")
 
 
 #----------------------------------------------- end port functions --------------------------------------------------------------
