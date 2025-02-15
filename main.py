@@ -100,6 +100,7 @@ def idPopUp(root):
     window_width = 300
     window_height = 150
 
+    #center the popup window
     x_position = (screen_width // 2) - (window_width // 2)
     y_position = (screen_height // 2) - (window_height // 2)
     popup.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
@@ -134,7 +135,7 @@ def idPopUp(root):
 
     return player_id
 
-def codeNamePopUp(root, id):
+def codeNamePopUp(root):
 
     codeName = "None"
 
@@ -150,14 +151,15 @@ def codeNamePopUp(root, id):
     window_width = 300
     window_height = 150
 
+    #center the popup window
     x_position = (screen_width // 2) - (window_width // 2)
     y_position = (screen_height // 2) - (window_height // 2)
     popup.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
-    # Label for the player ID input
+    # Label for the codename input
     tk.Label(popup, text=f"ID is new. Please enter a codename:", font=("Arial", 12)).pack(pady=10)
 
-    # Entry field for player ID
+    # Entry field for codename
     codeName_var = tk.StringVar()
     codeName_entry = tk.Entry(popup, textvariable=codeName_var, font=("Arial", 12))
     codeName_entry.pack(pady=5)
@@ -179,6 +181,56 @@ def codeNamePopUp(root, id):
 
     return codeName
 
+def equipmentPopUp(root):
+    
+    equipmentId = "None"
+
+    # Create a popup window
+    popup = tk.Toplevel(root)
+    popup.title("Add Player")
+    popup.geometry("300x150")  # Set window size
+
+    # Center the popup window
+    popup.update_idletasks()  # Ensure the window size is calculated before positioning
+    screen_width = popup.winfo_screenwidth()
+    screen_height = popup.winfo_screenheight()
+    window_width = 300
+    window_height = 150
+
+    x_position = (screen_width // 2) - (window_width // 2)
+    y_position = (screen_height // 2) - (window_height // 2)
+    popup.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+
+    # Label for the equipment ID input
+    tk.Label(popup, text="Enter Equipment ID:", font=("Arial", 12)).pack(pady=10)
+
+    # Entry field for equipment ID
+    equipment_var = tk.StringVar()
+    equipment_entry = tk.Entry(popup, textvariable=equipment_var, font=("Arial", 12))
+    equipment_entry.pack(pady=5)
+
+    # Function to handle submission
+    def submit_id():
+        nonlocal equipmentId
+        equipmentId = equipment_var.get()
+
+        #check to make sure that the user only entered numbers into the ID field
+        if not equipmentId.isdigit():
+            messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
+            equipmentId = "None"
+        popup.destroy()  # Close the popup
+
+    # Submit button
+    submit_button = tk.Button(popup, text="Submit", command=submit_id, font=("Arial", 12))
+    submit_button.pack(pady=10)
+
+    # Keep the popup focused until closed
+    popup.transient(root)  # Make it modal (disable interaction with main window)
+    popup.grab_set()
+    root.wait_window(popup)
+
+    return equipmentId
+
 
 #called when the addPlayer button is pressed:
 def addPlayer(root):
@@ -186,20 +238,26 @@ def addPlayer(root):
     #get Id from the idPopUp Window
     playerId = idPopUp(root)
 
-    #if enteredId = None, then getting the id failed so return
+    #if enteredId = None, then getting the id failed so return with no changes
     if playerId == "None":
         return
-    
+
     #STEP 2: check against the database to see if the id is there
 
     #STEP 3: If not, ask for a codename:
-    playerCodeName = codeNamePopUp(root, playerId)
+    playerCodeName = codeNamePopUp(root)
 
-    #if enteredCodeName = None, then getting the codename failed so return
+    #if enteredCodeName = None, then getting the codename failed so return with no changes
     if playerCodeName == "None":
         return
 
-    playerEquipmentId = "None"
+    #STEP 4: Get equipment ID from the player:
+    playerEquipmentId = equipmentPopUp(root)
+    
+    #if playerEquipmentId = None, then getting the equipment ID failed so return with no changes
+    if playerEquipmentId == "None":
+        return
+    
     
 
 
