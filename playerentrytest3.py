@@ -1,4 +1,6 @@
 import tkinter as tk
+import os
+from PIL import Image, ImageTk
 import tkinter.font as tkFont
 import udpclient
 import udpserver
@@ -224,7 +226,24 @@ if __name__ == "__main__":
     #initializing database
     database.init_db()
 
-    root = tk.Tk()               #create the main window
-    player_entry_screen(root)    #call function to set up the UI
+    root = tk.Tk()
+    root.title("Image Display")
+    root.configure(bg="black")
+
+    width = root.winfo_screenwidth()
+    height = root.winfo_screenheight()
+
+    img_path = os.path.expanduser("~/Downloads/logo.jpg")
+    def switch():
+        player_entry_screen(root) #call function to set up the UI
+
+
+    img = Image.open("C:\\Users\\trevr\\Downloads\\logo.jpg")
+    img = img.resize((width, height), Image.LANCZOS)
+    img = ImageTk.PhotoImage(img)
+    label = tk.Label(root, image=img, bg="black")    
+    label.pack()
+    root.geometry(f"{width}x{height}")
+    root.after(3000, switch)               #create the main window   
     udpserver.start_udp_server()
     root.mainloop()              #start the event loop
