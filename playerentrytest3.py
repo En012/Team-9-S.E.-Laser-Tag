@@ -233,12 +233,12 @@ if __name__ == "__main__":
     width = root.winfo_screenwidth()
     height = root.winfo_screenheight()
 
-    img_path = os.path.expanduser("~/Downloads/logo.jpg")
+    img_path = os.path.expanduser("images/logo.jpg")
     def switch():
         player_entry_screen(root) #call function to set up the UI
 
 
-    img = Image.open("C:\\Users\\trevr\\Downloads\\logo.jpg")
+    img = Image.open("images/logo.jpg")
     img = img.resize((width, height), Image.LANCZOS)
     img = ImageTk.PhotoImage(img)
     label = tk.Label(root, image=img, bg="black")    
