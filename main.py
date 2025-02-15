@@ -62,6 +62,10 @@ def udp_error_popup(message):
 
 #----------------------------------------------- end port functions --------------------------------------------------------------
 
+
+
+
+
 #setup for the player entry screen
 def player_entry_screen(root):
     #setting name of window
