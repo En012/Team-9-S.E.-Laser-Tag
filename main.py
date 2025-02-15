@@ -1,6 +1,7 @@
 import tkinter as tk
 import os
 from PIL import Image, ImageTk
+from tkinter import messagebox
 import tkinter.font as tkFont
 import udpclient
 import udpserver
@@ -39,6 +40,7 @@ def change_udp_server(show):
             port_sub_btn.place(relx=0.5, rely=0.48, anchor="center")
 
 def submit_udp_server():
+        global box, port_entry, port_sub_btn
         #Handles new UDP configuration input from the user.
         val = port_entry.get()
         parts = val.split(',')
@@ -49,11 +51,15 @@ def submit_udp_server():
                 udpclient.set_udp_config(new_ip, new_port)
                 udpserver.update_and_restart_server(new_ip, new_port)
             except ValueError:
-                print("Invalid port number! Please re-enter a valid integer.")
+                udp_error_popup("An error has occured, \n Invalid port number! Please re-enter a valid integer.")
         else:
-            print("Invalid input, format must be: IP, Port")
+            udp_error_popup("An error has occured, \n Invalid port number! Please re-enter a valid integer.")
         change_udp_server(False)
-    
+
+def udp_error_popup(message):
+    messagebox.showerror(message)
+
+
 #----------------------------------------------- end port functions --------------------------------------------------------------
 
 def player_entry_screen(root):
