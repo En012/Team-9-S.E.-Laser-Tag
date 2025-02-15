@@ -32,7 +32,7 @@ def change_udp_server(show):
             box_font = tkFont.Font(family="Calibri", size=16, weight="bold")
             msg = ("Enter new UDP Server IP and Port (format: IP, Port)\n"
                    "Example: 192.168.1.100, 20001")
-            box = tk.Label(root, font=box_font, width=50, height=5, text=msg, anchor="n")
+            box = tk.Label(root, font=box_font, width=50, height=8, text=msg, anchor="n")
             port_entry = tk.Entry(root, font=box_font, width=30)
             port_sub_btn = tk.Button(root, text='Submit', command=submit_udp_server, width=15, height=1)
             box.place(relx=0.5, rely=0.4, anchor="center")
@@ -56,12 +56,33 @@ def submit_udp_server():
             udp_error_popup()
         change_udp_server(False)
 
-def udp_error_popup(message):
+def udp_error_popup():
     messagebox.showerror(title="Error", message="Invalid port number! Please re-enter a valid integer.")
 
 
 #----------------------------------------------- end port functions --------------------------------------------------------------
 
+#function for starting the game, to be fully implemented later
+def startGame(id_List, id_List2):
+
+    numRedPlayers = 0
+    numGreenPlayers = 0
+
+    #check to make sure that a player is on each team
+    for i in range(15):
+        if id_List[i] != "None":
+            numRedPlayers += 1
+        
+        if id_List2[i] != "None":
+            numGreenPlayers += 1
+
+    #if both teams dont have at least one player, throw an error
+    if numRedPlayers == 0 or numGreenPlayers == 0:
+        messagebox.showerror(title="Error", message="You must have at least one player on each team to start a game!")
+        return
+    #otherwise, start the game
+    else:
+        messagebox.showinfo(title="Notification", message="Start will be implemented in a future sprint!")
 
 
 
@@ -82,34 +103,45 @@ def player_entry_screen(root):
     red_frame = tk.Frame(bd=0, highlightthickness=0, background="red")
     green_frame = tk.Frame(bd=0, highlightthickness=0, background="green")
 
-
     #Title Placement
     titlefont = tkFont.Font(family='Calibri', size=36, weight='bold')
     title = tk.Label(root, font=titlefont, text="Edit Current Game", background="black", fg = "white")
-    #title.place(x = int(width/2 - title_width/2), anchor = "nw") #this title does not scale with window size
     title.place(relx=0.5, rely=0, relwidth=1.0, relheight=title_relheight, anchor="n")
-    
 
     #Place background frames
     red_frame.place(relx=0, rely=title_relheight, relwidth=0.5, relheight=1 - title_relheight)
     green_frame.place(relx=0.5, rely=title_relheight, relwidth=0.5, relheight=1 - title_relheight)
 
-
     #red team user list
     name_List = []
     id_List = []
+
     #green team user list
     name_List2 = []
     id_List2 = []
 
+    #fill red and green team with default values
+    for i in range(15):
+        name_List.append("None")
+        id_List.append("None")
+        name_List2.append("None")
+        id_List2.append("None")
+
     #the tk.StringVar() for _ in range(15) is neccesary for .get() to work
 
     #red team user inputs
-    name_vars = [tk.StringVar() for _ in range(15)]
-    id_vars = [tk.StringVar() for _ in range(15)]
+    #name_vars = [tk.StringVar() for _ in range(15)]
+    #id_vars = [tk.StringVar() for _ in range(15)]
     #green team user inputs
-    name_vars2 = [tk.StringVar() for _ in range(15)]
-    id_vars2 = [tk.StringVar() for _ in range(15)]
+    #name_vars2 = [tk.StringVar() for _ in range(15)]
+    #id_vars2 = [tk.StringVar() for _ in range(15)]
+
+    # Create StringVars for dynamic updates
+    id_vars = [tk.StringVar(value=id_List[i]) for i in range(15)]
+    name_vars = [tk.StringVar(value=name_List[i]) for i in range(15)]
+
+    id_vars2 = [tk.StringVar(value=id_List2[i]) for i in range(15)]
+    name_vars2 = [tk.StringVar(value=name_List2[i]) for i in range(15)]
 
     #function activates when submit button is clicked
     #adds input names to a list
@@ -176,58 +208,64 @@ def player_entry_screen(root):
     id_label2 = tk.Label(root, text = 'ID', font=('calibre',12, 'bold'), background="green")
 
 
+    #create labels for red
     for i in range(row_count):
         row_rel_y = title_relheight + (i + 0.5) * row_relheight  # Now within bounds
         num_label = tk.Label(root, text=f"{i+1}.", font=('Arial', 12, 'bold'), background="red")
         num_label.place(relx=0.05, rely=row_rel_y, anchor="center")
         
         #id labels
-        id_label = tk.Label(root, text = 'ID', font=('calibre',12, 'bold'), background="red")
+        id_label = tk.Label(root, text = 'ID:', font=('calibre',12, 'bold'), background="red")
         id_label.place(relx=0.09, rely=row_rel_y, anchor="e")  # `anchor="e"` aligns it to the right
 
         #id entry
-        id_entry = tk.Entry(root, textvariable=id_vars[i], font=('calibre', 10, 'normal'))
+        id_entry = tk.Label(root, textvariable=id_vars[i], font=('calibre', 10, 'normal'), background="white")
         id_entry.place(relx=0.15, rely=row_rel_y, relwidth=0.1, anchor="center")
         
         #name labels
-        name_label = tk.Label(root, text = 'Name', font=('calibre',12, 'bold'), background="red")
+        name_label = tk.Label(root, text = 'Name:', font=('calibre',12, 'bold'), background="red")
         name_label.place(relx=0.25, rely=row_rel_y, anchor="e")  # `anchor="e"` aligns it to the right
 
         #name entry
-        name_entry = tk.Entry(root, textvariable=name_vars[i], font=('calibre', 10, 'normal'))
+        name_entry = tk.Label(root, textvariable=name_vars[i], font=('calibre', 10, 'normal'), background="white")
         name_entry.place(relx=0.33, rely=row_rel_y, relwidth=0.15, anchor="center")
 
-
+    #create labels for green
     for i in range(row_count):
         row_rel_y = title_relheight + (i + 0.5) * row_relheight  # Adjusted placement
         num_label2 = tk.Label(root, text=f"{i+1}.", font=('Arial', 12, 'bold'), background="green")
         num_label2.place(relx=0.55, rely=row_rel_y, anchor="center")
         
         #id labels
-        id_label2 = tk.Label(root, text = 'ID', font=('calibre',12, 'bold'), background="green")
+        id_label2 = tk.Label(root, text = 'ID:', font=('calibre',12, 'bold'), background="green")
         id_label2.place(relx=0.59, rely=row_rel_y, anchor="e")  # `anchor="e"` aligns it to the right
 
-        id_entry2 = tk.Entry(root, textvariable=id_vars2[i], font=('calibre', 10, 'normal'))
+        id_entry2 = tk.Label(root, textvariable=id_vars2[i], font=('calibre', 10, 'normal'), background="white")
         id_entry2.place(relx=0.65, rely=row_rel_y, relwidth=0.1, anchor="center")
         
         #name labels
-        name_label2 = tk.Label(root, text = 'Name', font=('calibre',12, 'bold'), background="green")
+        name_label2 = tk.Label(root, text = 'Name:', font=('calibre',12, 'bold'), background="green")
         name_label2.place(relx=0.75, rely=row_rel_y, anchor="e")  # `anchor="e"` aligns it to the right
 
-        name_entry2 = tk.Entry(root, textvariable=name_vars2[i], font=('calibre', 10, 'normal'))
+        name_entry2 = tk.Label(root, textvariable=name_vars2[i], font=('calibre', 10, 'normal'), background="white")
         name_entry2.place(relx=0.83, rely=row_rel_y, relwidth=0.15, anchor="center")
 
 
-    #make key press also activate submit as a test of sorts (LATER)
-    #button to activate the submit function
-    sub_btn=tk.Button(root,text = 'Submit', command = submit, width = 15, height = 3)
+    
+    #button to activate the start game function
+    #lambda prevents the startGame function from being called as soon as the program starts up
+    sub_btn=tk.Button(root,text = 'Start Game', command = lambda: startGame(id_List, id_List2), width = 15, height = 3)
 
     #button to activate the change ports function
     port_btn= tk.Button(root, text="Change Port", command=change_udp_server_inter, width = 15, height = 3)
+
+    #button for adding a player to the game
+    add_btn = tk.Button(root, text = 'Add Player', command = submit, width = 15, height = 3)
     
     #button placement
     sub_btn.place(relx=0.5, rely=0.95, anchor="center", relwidth=0.2, relheight=0.05)
-    port_btn.place(relx=0.2, rely=0.95, anchor="center", relwidth=0.25, relheight=0.05)
+    port_btn.place(relx=0.2, rely=0.95, anchor="center", relwidth=0.2, relheight=0.05)
+    add_btn.place(relx = 0.8, rely=0.95, anchor="center", relwidth = 0.2, relheight=0.05)
 
     #infinite loop for program to work
     #root.mainloop()
@@ -260,4 +298,4 @@ if __name__ == "__main__":
     udpserver.start_udp_server()
     
     #start the event loop
-    root.mainloop()              
+    root.mainloop()
