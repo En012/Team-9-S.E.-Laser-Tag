@@ -282,7 +282,7 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
     #if enteredCodeName = None, then getting the codename failed so return with no changes
     if playerCodeName == "None":
         return
-    #otherwise, change the codename corresponding to the player ID
+    #otherwise, change the codename in the database corresponding to the player ID
     else:
         database.set_player_name(playerId, playerCodeName)
 
