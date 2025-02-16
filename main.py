@@ -135,7 +135,7 @@ def idPopUp(root):
         nonlocal player_id
         player_id = player_id_var.get()
         if not player_id.isdigit():
-            messagebox.showerror(title="Error", message="ID's should only consist of digits and cannot have spaces. Please reenter the ID")
+            messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
             player_id = "None"
         else:
             popup.destroy()  # Close the popup
@@ -185,14 +185,7 @@ def codeNamePopUp(root):
     def submitCodename():
         nonlocal codeName
         codeName = codeName_var.get()
-
-        #make sure codename is not an empty string
-        if codeName == "":
-            messagebox.showerror(title="Error", message="Codename cannot be empty")
-        elif codeName == "None":
-            messagebox.showerror(title="Error", message="Codename cannot be 'None', please enter a different codename")
-        else:
-            popup.destroy()  # Close the popup
+        popup.destroy()  # Close the popup
 
     # Submit button
     submit_button = tk.Button(popup, text="Submit", command=submitCodename, font=("Arial", 12))
@@ -241,7 +234,7 @@ def equipmentPopUp(root):
 
         #check to make sure that the user only entered numbers into the ID field
         if not equipmentId.isdigit():
-            messagebox.showerror(title="Error", message="ID's should only consist of digits and cannot have spaces. Please reenter the ID")
+            messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
             equipmentId = "None"
         else:
             popup.destroy()  # Close the popup
@@ -284,7 +277,7 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
     #if enteredCodeName = None, then getting the codename failed so return with no changes
     if playerCodeName == "None":
         return
-    #otherwise, change the codename in the database corresponding to the player ID
+    #otherwise, change the codename corresponding to the player ID
     else:
         database.set_player_name(playerId, playerCodeName)
 
@@ -294,9 +287,6 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
     #if playerEquipmentId = None, then getting the equipment ID failed so return with no changes
     if playerEquipmentId == "None":
         return
-    
-    #transmitting player ID and codenames to server. If equipment code is needed, just add it to the message.
-    udpclient.send_udp_message(f"Player {playerCodeName} has been added with ID: {playerId}")
     
     #STEP 5: Add the player info to the playerentry screen
     #If playerEquipmentId is odd, add the player to red team
@@ -368,27 +358,26 @@ def player_entry_screen(root):
     name_vars2 = [tk.StringVar(value=name_List2[i]) for i in range(15)]
 
     # Create labels for red team
+    id_label = tk.Label(root, text='ID', font=('calibre', 12, 'bold'), background="red")
+    id_label.place(relx=0.15, rely=0.119, anchor="center")
+
+    name_label = tk.Label(root, text='Name', font=('calibre', 12, 'bold'), background="red")
+    name_label.place(relx=0.348, rely=0.119, anchor="e")
     for i in range(row_count):
-        row_rel_y = title_relheight + (i + 0.5) * row_relheight  
+        row_rel_y = title_relheight + (i + 1.0) * row_relheight  
 
         num_label = tk.Label(root, text=f"{i+1}.", font=('Arial', 12, 'bold'), background="red")
         num_label.place(relx=0.05, rely=row_rel_y, anchor="center")
 
-        id_label = tk.Label(root, text='ID:', font=('calibre', 12, 'bold'), background="red")
-        id_label.place(relx=0.09, rely=row_rel_y, anchor="e")
-
-        id_entry = tk.Label(root, textvariable=id_vars[i], font=('calibre', 10, 'bold'), background="white")
+        id_entry = tk.Label(root, textvariable=id_vars[i], font=('calibre', 10, 'normal'), background="white")
         id_entry.place(relx=0.15, rely=row_rel_y, relwidth=0.1, anchor="center")
 
-        name_label = tk.Label(root, text='Name:', font=('calibre', 12, 'bold'), background="red")
-        name_label.place(relx=0.25, rely=row_rel_y, anchor="e")
-
-        name_entry = tk.Label(root, textvariable=name_vars[i], font=('calibre', 10, 'bold'), background="white")
+        name_entry = tk.Label(root, textvariable=name_vars[i], font=('calibre', 10, 'normal'), background="white")
         name_entry.place(relx=0.33, rely=row_rel_y, relwidth=0.15, anchor="center")
 
     # Create labels for green team
     for i in range(row_count):
-        row_rel_y = title_relheight + (i + 0.5) * row_relheight  
+        row_rel_y = title_relheight + (i + 1.0) * row_relheight  
 
         num_label2 = tk.Label(root, text=f"{i+1}.", font=('Arial', 12, 'bold'), background="green")
         num_label2.place(relx=0.55, rely=row_rel_y, anchor="center")
@@ -396,13 +385,13 @@ def player_entry_screen(root):
         id_label2 = tk.Label(root, text='ID:', font=('calibre', 12, 'bold'), background="green")
         id_label2.place(relx=0.59, rely=row_rel_y, anchor="e")
 
-        id_entry2 = tk.Label(root, textvariable=id_vars2[i], font=('calibre', 10, 'bold'), background="white")
+        id_entry2 = tk.Label(root, textvariable=id_vars2[i], font=('calibre', 10, 'normal'), background="white")
         id_entry2.place(relx=0.65, rely=row_rel_y, relwidth=0.1, anchor="center")
 
         name_label2 = tk.Label(root, text='Name:', font=('calibre', 12, 'bold'), background="green")
         name_label2.place(relx=0.75, rely=row_rel_y, anchor="e")
 
-        name_entry2 = tk.Label(root, textvariable=name_vars2[i], font=('calibre', 10, 'bold'), background="white")
+        name_entry2 = tk.Label(root, textvariable=name_vars2[i], font=('calibre', 10, 'normal'), background="white")
         name_entry2.place(relx=0.83, rely=row_rel_y, relwidth=0.15, anchor="center")
 
     #Buttons
@@ -429,8 +418,7 @@ def switch():
 
 # Main function
 if __name__ == "__main__":
-    #automatically starting server upon application start
-    udpserver.start_udp_server()
+
     #setup tkinter GUI elements
     root = tk.Tk()
     root.title("Loading...")
