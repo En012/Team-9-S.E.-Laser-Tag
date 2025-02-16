@@ -1,26 +1,26 @@
 # Installation
 
-##Dependencies:
+Dependencies:
 
 Make sure you have the following installed:
 
 Python3
     If python3 has not already been installed, you can install it with this command:
-        a) sudo apt install python3
+        sudo apt install python3
 
 Pip
     You can verify that pip is installed using: pip3 --version
     If you get an error, then you can install pip with the following commands:
-        a) sudo apt update 
-        b) sudo apt install python3-pip -y
+        sudo apt update 
+        sudo apt install python3-pip -y
 
 Tkinter
     This can be installed with the following command:
-        a) sudo apt install python3-tk
+        sudo apt install python3-tk
 
 Pillow
     This can be installed with the following command:
-        a) pip install pillow
+        pip install pillow
 
 # Running the program
 
