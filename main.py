@@ -135,7 +135,7 @@ def idPopUp(root):
         nonlocal player_id
         player_id = player_id_var.get()
         if not player_id.isdigit():
-            messagebox.showerror(title="Error", message="ID's should only consist of digits and cannot be empty. Please reenter the ID")
+            messagebox.showerror(title="Error", message="ID's should only consist of digits and cannot have spaces. Please reenter the ID")
             player_id = "None"
         else:
             popup.destroy()  # Close the popup
@@ -239,7 +239,7 @@ def equipmentPopUp(root):
 
         #check to make sure that the user only entered numbers into the ID field
         if not equipmentId.isdigit():
-            messagebox.showerror(title="Error", message="ID's should only consist of digits and cannot be empty. Please reenter the ID")
+            messagebox.showerror(title="Error", message="ID's should only consist of digits and cannot have spaces. Please reenter the ID")
             equipmentId = "None"
         else:
             popup.destroy()  # Close the popup
@@ -375,13 +375,13 @@ def player_entry_screen(root):
         id_label = tk.Label(root, text='ID:', font=('calibre', 12, 'bold'), background="red")
         id_label.place(relx=0.09, rely=row_rel_y, anchor="e")
 
-        id_entry = tk.Label(root, textvariable=id_vars[i], font=('calibre', 10, 'normal'), background="white")
+        id_entry = tk.Label(root, textvariable=id_vars[i], font=('calibre', 10, 'bold'), background="white")
         id_entry.place(relx=0.15, rely=row_rel_y, relwidth=0.1, anchor="center")
 
         name_label = tk.Label(root, text='Name:', font=('calibre', 12, 'bold'), background="red")
         name_label.place(relx=0.25, rely=row_rel_y, anchor="e")
 
-        name_entry = tk.Label(root, textvariable=name_vars[i], font=('calibre', 10, 'normal'), background="white")
+        name_entry = tk.Label(root, textvariable=name_vars[i], font=('calibre', 10, 'bold'), background="white")
         name_entry.place(relx=0.33, rely=row_rel_y, relwidth=0.15, anchor="center")
 
     # Create labels for green team
@@ -394,13 +394,13 @@ def player_entry_screen(root):
         id_label2 = tk.Label(root, text='ID:', font=('calibre', 12, 'bold'), background="green")
         id_label2.place(relx=0.59, rely=row_rel_y, anchor="e")
 
-        id_entry2 = tk.Label(root, textvariable=id_vars2[i], font=('calibre', 10, 'normal'), background="white")
+        id_entry2 = tk.Label(root, textvariable=id_vars2[i], font=('calibre', 10, 'bold'), background="white")
         id_entry2.place(relx=0.65, rely=row_rel_y, relwidth=0.1, anchor="center")
 
         name_label2 = tk.Label(root, text='Name:', font=('calibre', 12, 'bold'), background="green")
         name_label2.place(relx=0.75, rely=row_rel_y, anchor="e")
 
-        name_entry2 = tk.Label(root, textvariable=name_vars2[i], font=('calibre', 10, 'normal'), background="white")
+        name_entry2 = tk.Label(root, textvariable=name_vars2[i], font=('calibre', 10, 'bold'), background="white")
         name_entry2.place(relx=0.83, rely=row_rel_y, relwidth=0.15, anchor="center")
 
     #Buttons
