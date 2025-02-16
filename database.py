@@ -6,15 +6,15 @@ def init_db():
     
     conn = sqlite3.connect('players.db')
     cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS players (
+    cursor.execute(
+        '''CREATE TABLE IF NOT EXISTS players (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             team TEXT NOT NULL,
             player_number INTEGER,
             player_name TEXT,
             equipment_code TEXT
-        )
-    ''')
+        )'''
+    )
     conn.commit()
     conn.close()
 

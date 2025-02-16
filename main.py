@@ -101,6 +101,7 @@ def startGame(id_List, id_List2):
     else:
         messagebox.showinfo(title="Notification", message="Start will be implemented in a future sprint!")
 
+#code for the idPopUp menu
 def idPopUp(root):
     player_id = "None"
 
@@ -150,6 +151,7 @@ def idPopUp(root):
 
     return player_id
 
+#code for the namePopUp menu
 def codeNamePopUp(root):
 
     codeName = "None"
@@ -196,6 +198,7 @@ def codeNamePopUp(root):
 
     return codeName
 
+#code for the equipmentPopUp menu
 def equipmentPopUp(root):
     
     equipmentId = "None"
