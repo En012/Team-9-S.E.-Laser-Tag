@@ -293,6 +293,7 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
     if playerEquipmentId == "None":
         return
     
+    #transmitting player ID and codenames to server. If equipment code is needed, just add it to the message.
     udpclient.send_udp_message(f"Player {playerCodeName} has been added with ID: {playerId}")
     
     #STEP 5: Add the player info to the playerentry screen
@@ -426,6 +427,7 @@ def switch():
 
 # Main function
 if __name__ == "__main__":
+    #automatically starting server upon application start
     udpserver.start_udp_server()
     #setup tkinter GUI elements
     root = tk.Tk()
