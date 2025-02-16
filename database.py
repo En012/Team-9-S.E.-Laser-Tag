@@ -1,24 +1,22 @@
 import sqlite3
 
+#Initialize the database and create the players table if it doesn't exist.
 def init_db():
-    
-    #Initialize the database and create the players table if it doesn't exist.
-    
     conn = sqlite3.connect('players.db')
     cursor = conn.cursor()
     cursor.execute(
-        '''CREATE TABLE IF NOT EXISTS players (
+        """CREATE TABLE IF NOT EXISTS players (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             team TEXT NOT NULL,
             player_number INTEGER,
             player_name TEXT,
             equipment_code TEXT
-        )'''
+        )"""
     )
     conn.commit()
     conn.close()
 
-#function for clearing data base (mainly using for testing at the moment)
+#clears all records from the database
 def cleardatabase():
     conn = sqlite3.connect('players.db')
     cursor = conn.cursor()
@@ -26,7 +24,7 @@ def cleardatabase():
     conn.commit()
     conn.close()
 
-#main function to save players, intention is to ignore duplicate additions.
+#Saves players to the database, avoiding duplicates
 def save_players(team, names, equipment_codes):
     conn = sqlite3.connect('players.db')
     cursor = conn.cursor()
@@ -46,14 +44,73 @@ def save_players(team, names, equipment_codes):
     conn.commit()
     conn.close()
 
-#checks if a playerID exists in the database
-def check_player_id(player_id):
+#Returns the name of the player with the given ID
+def get_player_name(player_id):
     conn = sqlite3.connect('players.db')
     cursor = conn.cursor()
 
+    cursor.execute("SELECT player_name FROM players WHERE equipment_code = ?", (player_id,))
+    result = cursor.fetchone()
+
+    conn.close()
+    return result[0] if result else None  # Return name if found, otherwise None
+
+#Updates the player's name for the given player ID
+def set_player_name(player_id, new_name):
+    conn = sqlite3.connect('players.db')
+    cursor = conn.cursor()
+
+    cursor.execute("UPDATE players SET player_name = ? WHERE equipment_code = ?", (new_name, player_id))
+    conn.commit()
+    conn.close()
+
+    print(f"Updated player {player_id} name to {new_name}")
+
+#returns the equipment code of the player with the given player ID
+def get_equipment_code(player_id):
+    """Returns the equipment code of the player with the given ID."""
+    conn = sqlite3.connect('players.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT equipment_code FROM players WHERE equipment_code = ?", (player_id,))
+    result = cursor.fetchone()
+
+    conn.close()
+    return result[0] if result else None  # Return equipment_code if found, otherwise None
+
+#sets the equipment code of the player with the given player ID
+def set_equipment_code(player_id, new_equipment_code):
+    """Updates the player's equipment code for the given ID."""
+    conn = sqlite3.connect('players.db')
+    cursor = conn.cursor()
+
+    cursor.execute("UPDATE players SET equipment_code = ? WHERE equipment_code = ?", (new_equipment_code, player_id))
+    conn.commit()
+    conn.close()
+
+    print(f"Updated player {player_id} equipment code to {new_equipment_code}")
+
+#Checks if a given player ID exists; if not, adds it with 'None' as the name.
+def check_or_add_player(player_id):
+    conn = sqlite3.connect('players.db')
+    cursor = conn.cursor()
+
+    # Check if the player ID exists
     cursor.execute("SELECT * FROM players WHERE equipment_code = ?", (player_id,))
     result = cursor.fetchone()  # Fetch one matching row
 
-    conn.close()
+    if result:
+        print(f"Player Found: ID={result[0]}, Team={result[1]}, Number={result[2]}, Name={result[3]}, Equipment={result[4]}")
+    else:
+        print(f"No player found with Equipment ID: {player_id}. Adding to database...")
 
-    return result  # Returns the player record or None
+        # Assign to "Unknown" team and default name "None"
+        cursor.execute(
+            "INSERT INTO players (team, player_number, player_name, equipment_code) VALUES (?, ?, ?, ?)",
+            ("Unknown", None, None, player_id)
+        )
+        conn.commit()
+        print(f"Added new player with Equipment ID: {player_id}")
+
+    conn.close()
+    return result if result else None
