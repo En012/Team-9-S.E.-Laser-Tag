@@ -24,9 +24,8 @@
 
 After downloading and extracting the zip file, navigate to the folder within your command line
 
-To run the program, type the following command:
-
-python3 main.py
+### To run the program, type the following command:
+    python3 main.py
 
 
 
