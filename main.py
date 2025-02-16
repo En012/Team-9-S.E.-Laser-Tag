@@ -248,7 +248,7 @@ def equipmentPopUp(root):
 
 
 #called when the addPlayer button is pressed:
-def addPlayer(root):
+def addPlayer(root, id_List, name_List, id_List2, name_List2):
 
     #get Id from the idPopUp Window
     playerId = idPopUp(root)
@@ -273,6 +273,8 @@ def addPlayer(root):
     if playerEquipmentId == "None":
         return
     
+    id_List[0] = "1001"
+    name_List[0] = "Ultron"
     
 
 
@@ -450,7 +452,7 @@ def player_entry_screen(root):
 
     #button for adding a player to the game
     #lambda prevents the startGame function from being called as soon as the program starts up
-    add_btn = tk.Button(root, text = 'Add Player', command = lambda: addPlayer(root), width = 15, height = 3)
+    add_btn = tk.Button(root, text = 'Add Player', command = lambda: addPlayer(root, id_List, name_List, id_List2, name_List2), width = 15, height = 3)
     
     #button placement
     sub_btn.place(relx=0.5, rely=0.95, anchor="center", relwidth=0.2, relheight=0.05)
