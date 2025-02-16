@@ -259,6 +259,12 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
     #if enteredId = None, then getting the id failed so return with no changes
     if playerId == "None":
         return
+    
+    #check if player with id is already in the game
+    if playerId in id_List or playerId in id_List2:
+        messagebox.showerror(title="Error", message=f"Player with ID: {playerId} is already in the game")
+        return
+
 
     #STEP 2: check against the database to see if the id is there
     database.check_or_add_player(playerId) #if ID is not in the database, add playerID in along with default values
@@ -282,6 +288,7 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
     if playerEquipmentId == "None":
         return
     
+    #STEP 5: Add the player info to the playerentry screen
     #If playerEquipmentId is odd, add the player to red team
     if int(playerEquipmentId) % 2 == 1:
 
