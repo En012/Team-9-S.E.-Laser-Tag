@@ -8,7 +8,7 @@ If python3 has not already been installed, you can install it with this command:
     sudo apt install python3
 
 ## Pip
-You can verify that pip is installed using: pip3 --version
+You can verify that pip is installed using: pip3 --version.
 If you get an error, then you can install pip with the following commands:
 ###     
     sudo apt update 
@@ -26,7 +26,7 @@ This can be installed with the following command:
 
 # Running the program
 
-After downloading and extracting the zip file, navigate to the folder within your command line
+After downloading and extracting the zip file, navigate to the project folder within your command line.
 To run the program, type the following command:
 ###    
     python3 main.py
