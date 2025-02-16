@@ -135,7 +135,7 @@ def idPopUp(root):
         nonlocal player_id
         player_id = player_id_var.get()
         if not player_id.isdigit():
-            messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
+            messagebox.showerror(title="Error", message="ID's should only consist of digits and cannot be empty. Please reenter the ID")
             player_id = "None"
         else:
             popup.destroy()  # Close the popup
@@ -185,7 +185,12 @@ def codeNamePopUp(root):
     def submitCodename():
         nonlocal codeName
         codeName = codeName_var.get()
-        popup.destroy()  # Close the popup
+
+        #make sure codename is not an empty string
+        if codeName == "":
+            messagebox.showerror(title="Error", message="Codename cannot be empty")
+        else:
+            popup.destroy()  # Close the popup
 
     # Submit button
     submit_button = tk.Button(popup, text="Submit", command=submitCodename, font=("Arial", 12))
@@ -234,7 +239,7 @@ def equipmentPopUp(root):
 
         #check to make sure that the user only entered numbers into the ID field
         if not equipmentId.isdigit():
-            messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
+            messagebox.showerror(title="Error", message="ID's should only consist of digits and cannot be empty. Please reenter the ID")
             equipmentId = "None"
         else:
             popup.destroy()  # Close the popup
