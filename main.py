@@ -306,7 +306,7 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
 
 def player_entry_screen(root):
     #setting name of window
-    root.title("[test] Player Entry")
+    root.title("Photon")
     root.minsize(800,600)
 
     #setting the sizes
@@ -403,7 +403,7 @@ def switch():
 # Main function
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Image Display")
+    root.title("Loading...")
     root.configure(bg="black")
 
     width = root.winfo_screenwidth()
