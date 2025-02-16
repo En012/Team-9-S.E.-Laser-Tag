@@ -8,42 +8,48 @@ import udpserver
 import database
 
 #---------------------- udp port functions ------------------------------------------
-    
+
 global box, port_entry, port_sub_btn
 box, port_entry, port_sub_btn = None, None, None
 
 def change_udp_server_inter():
-    change_udp_server(True)
+    change_udp_server()
 
-def change_udp_server(show):
-        global box, port_entry, port_sub_btn
-        # Destroy any existing dialog widgets
-        if box:
-            box.destroy()
-            box = None
-        if port_entry:
-            port_entry.destroy()
-            port_entry = None
-        if port_sub_btn:
-            port_sub_btn.destroy()
-            port_sub_btn = None
+def change_udp_server():
+    udp_server_popup(root)
 
-        if show:
-            box_font = tkFont.Font(family="Calibri", size=16, weight="bold")
-            msg = ("Enter new UDP Server IP and Port (format: IP, Port)\n"
-                   "Example: 192.168.1.100, 20001")
-            box = tk.Label(root, font=box_font, width=50, height=8, text=msg, anchor="n")
-            port_entry = tk.Entry(root, font=box_font, width=30)
-            port_sub_btn = tk.Button(root, text='Submit', command=submit_udp_server, width=15, height=1)
-            box.place(relx=0.5, rely=0.4, anchor="center")
-            port_entry.place(relx=0.5, rely=0.42, anchor="center")
-            port_sub_btn.place(relx=0.5, rely=0.48, anchor="center")
+def udp_server_popup(root):
+    udp_ip_port = "None"
 
-def submit_udp_server():
-        global box, port_entry, port_sub_btn
-        #Handles new UDP configuration input from the user.
-        val = port_entry.get()
-        parts = val.split(',')
+    # Create a popup window
+    popup = tk.Toplevel(root)
+    popup.title("Change UDP Server")
+    popup.geometry("400x200")  # Set window size
+
+    # Center the popup window
+    popup.update_idletasks()  # Ensure the window size is calculated before positioning
+    screen_width = popup.winfo_screenwidth()
+    screen_height = popup.winfo_screenheight()
+    window_width = 400
+    window_height = 200
+
+    x_position = (screen_width // 2) - (window_width // 2)
+    y_position = (screen_height // 2) - (window_height // 2)
+    popup.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+
+    # Label for the UDP server IP and port input
+    tk.Label(popup, text="Enter new UDP Server IP and Port (format: IP, Port)\nExample: 192.168.1.100, 20001", font=("Arial", 12)).pack(pady=10)
+
+    # Entry field for UDP server IP and port
+    udp_ip_port_var = tk.StringVar()
+    udp_ip_port_entry = tk.Entry(popup, textvariable=udp_ip_port_var, font=("Arial", 12))
+    udp_ip_port_entry.pack(pady=5)
+
+    # Function to handle submission
+    def submit_udp_server():
+        nonlocal udp_ip_port
+        udp_ip_port = udp_ip_port_var.get()
+        parts = udp_ip_port.split(',')
         if len(parts) == 2:
             new_ip = parts[0].strip()
             try:
@@ -51,20 +57,31 @@ def submit_udp_server():
                 udpclient.set_udp_config(new_ip, new_port)
                 udpserver.update_and_restart_server(new_ip, new_port)
             except ValueError:
-                udp_error_popup()
+                messagebox.showerror(title="Error", message="Invalid port number! Please re-enter a valid integer.")
+                udp_ip_port = "None"
         else:
-            udp_error_popup()
-        change_udp_server(False)
+            messagebox.showerror(title="Error", message="Invalid input, format must be: IP, Port")
+            udp_ip_port = "None"
+        popup.destroy()  # Close the popup
 
-def udp_error_popup():
-    messagebox.showerror(title="Error", message="Invalid port number! Please re-enter a valid integer.")
+    # Submit button
+    submit_button = tk.Button(popup, text="Submit", command=submit_udp_server, font=("Arial", 12))
+    submit_button.pack(pady=10)
 
+    # Keep the popup focused until closed
+    popup.transient(root)  # Make it modal (disable interaction with main window)
+    popup.grab_set()
+    root.wait_window(popup)
+
+    return udp_ip_port
+
+def udp_error_popup(message):
+    messagebox.showerror(title="Error", message=message)
 
 #----------------------------------------------- end port functions --------------------------------------------------------------
 
 #function for starting the game, to be fully implemented later
 def startGame(id_List, id_List2):
-
     numRedPlayers = 0
     numGreenPlayers = 0
 
@@ -85,7 +102,6 @@ def startGame(id_List, id_List2):
         messagebox.showinfo(title="Notification", message="Start will be implemented in a future sprint!")
 
 def idPopUp(root):
-
     player_id = "None"
 
     # Create a popup window
@@ -100,7 +116,6 @@ def idPopUp(root):
     window_width = 300
     window_height = 150
 
-    #center the popup window
     x_position = (screen_width // 2) - (window_width // 2)
     y_position = (screen_height // 2) - (window_height // 2)
     popup.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
@@ -115,14 +130,14 @@ def idPopUp(root):
 
     # Function to handle submission
     def submit_id():
-        nonlocal player_id 
+        nonlocal player_id
         player_id = player_id_var.get()
-
-        #check to make sure that the user only entered numbers into the ID field
         if not player_id.isdigit():
             messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
             player_id = "None"
-        popup.destroy()  # Close the popup
+        else:
+            print(f"Player ID entered: {player_id}")  # Store or process the ID
+            popup.destroy()  # Close the popup
 
     # Submit button
     submit_button = tk.Button(popup, text="Submit", command=submit_id, font=("Arial", 12))
