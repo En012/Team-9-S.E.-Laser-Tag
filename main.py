@@ -281,9 +281,6 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
     #if playerEquipmentId = None, then getting the equipment ID failed so return with no changes
     if playerEquipmentId == "None":
         return
-    #otherwise, change the equipment code corresponding to the player ID
-    else:
-        database.set_equipment_code(playerId, playerEquipmentId)
     
     #If playerEquipmentId is odd, add the player to red team
     if int(playerEquipmentId) % 2 == 1:

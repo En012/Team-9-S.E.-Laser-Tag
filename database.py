@@ -64,31 +64,6 @@ def set_player_name(player_id, new_name):
     conn.commit()
     conn.close()
 
-    print(f"Updated player {player_id} name to {new_name}")
-
-#returns the equipment code of the player with the given player ID
-def get_equipment_code(player_id):
-    """Returns the equipment code of the player with the given ID."""
-    conn = sqlite3.connect('players.db')
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT equipment_code FROM players WHERE equipment_code = ?", (player_id,))
-    result = cursor.fetchone()
-
-    conn.close()
-    return result[0] if result else None  # Return equipment_code if found, otherwise None
-
-#sets the equipment code of the player with the given player ID
-def set_equipment_code(player_id, new_equipment_code):
-    """Updates the player's equipment code for the given ID."""
-    conn = sqlite3.connect('players.db')
-    cursor = conn.cursor()
-
-    cursor.execute("UPDATE players SET equipment_code = ? WHERE equipment_code = ?", (new_equipment_code, player_id))
-    conn.commit()
-    conn.close()
-
-    print(f"Updated player {player_id} equipment code to {new_equipment_code}")
 
 #Checks if a given player ID exists; if not, adds it with 'None' as the name.
 def check_or_add_player(player_id):
@@ -98,11 +73,6 @@ def check_or_add_player(player_id):
     # Check if the player ID exists
     cursor.execute("SELECT * FROM players WHERE equipment_code = ?", (player_id,))
     result = cursor.fetchone()  # Fetch one matching row
-
-    if result:
-        print(f"Player Found: ID={result[0]}, Team={result[1]}, Number={result[2]}, Name={result[3]}, Equipment={result[4]}")
-    else:
-        print(f"No player found with Equipment ID: {player_id}. Adding to database...")
 
         # Assign to "Unknown" team and default name "None"
         cursor.execute(
