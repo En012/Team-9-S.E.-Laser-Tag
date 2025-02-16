@@ -7,10 +7,11 @@ import udpclient
 import udpserver
 import database
 
-#---------------------- udp port functions ------------------------------------------
 
-global box, port_entry, port_sub_btn
-box, port_entry, port_sub_btn = None, None, None
+#initalize the database
+database.init_db()
+
+#---------------------- udp port functions ------------------------------------------
 
 def change_udp_server_inter():
     change_udp_server()
@@ -260,6 +261,10 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
         return
 
     #STEP 2: check against the database to see if the id is there
+    result = database.check_player_id(playerId)
+
+    if result:
+        print(f"Player Found: ID={result[0]}, Team={result[1]}, Number={result[2]}, Name={result[3]}, Equipment={result[4]}")
 
     #STEP 3: If not, ask for a codename:
     playerCodeName = codeNamePopUp(root)
@@ -405,21 +410,28 @@ def switch():
 
 # Main function
 if __name__ == "__main__":
+
+    #setup tkinter GUI elements
     root = tk.Tk()
     root.title("Loading...")
     root.configure(bg="black")
 
+    #get screen width and height
     width = root.winfo_screenwidth()
     height = root.winfo_screenheight()
 
+    #splash screen
     img = Image.open("images/logo.jpg")
     img = img.resize((width, height), Image.LANCZOS)
     img = ImageTk.PhotoImage(img)
     label = tk.Label(root, image=img, bg="black")    
     label.pack()
     root.geometry(f"{width}x{height}")
+
+    #switch screens after 3 seconds
     root.after(3000, switch) 
 
+    #Go
     root.mainloop()
 
 

@@ -45,3 +45,15 @@ def save_players(team, names, equipment_codes):
 
     conn.commit()
     conn.close()
+
+#checks if a playerID exists in the database
+def check_player_id(player_id):
+    conn = sqlite3.connect('players.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM players WHERE equipment_code = ?", (player_id,))
+    result = cursor.fetchone()  # Fetch one matching row
+
+    conn.close()
+
+    return result  # Returns the player record or None
