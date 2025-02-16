@@ -2,23 +2,23 @@
 
 ## Dependencies:
 
-### Python3
-    If python3 has not already been installed, you can install it with this command:    
-        sudo apt install python3
+## Python3
+### If python3 has not already been installed, you can install it with this command:    
+    sudo apt install python3
 
-### Pip
-    You can verify that pip is installed using: pip3 --version
-    If you get an error, then you can install pip with the following commands:
-        sudo apt update 
-        sudo apt install python3-pip -y
+## Pip
+### You can verify that pip is installed using: pip3 --version
+### If you get an error, then you can install pip with the following commands:
+    sudo apt update 
+    sudo apt install python3-pip -y
 
-### Tkinter
-    This can be installed with the following command:
-        sudo apt install python3-tk
+## Tkinter
+### This can be installed with the following command:
+    sudo apt install python3-tk
 
-### Pillow
-    This can be installed with the following command:
-        pip install pillow
+## Pillow
+### This can be installed with the following command:
+    pip install pillow
 
 # Running the program
 
