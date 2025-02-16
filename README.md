@@ -3,7 +3,7 @@
 ## Dependencies:
 
 ### Python3
-    If python3 has not already been installed, you can install it with this command:
+If python3 has not already been installed, you can install it with this command:
         sudo apt install python3
 
 ### Pip
