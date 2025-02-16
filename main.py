@@ -138,7 +138,6 @@ def idPopUp(root):
             messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
             player_id = "None"
         else:
-            print(f"Player ID entered: {player_id}")  # Store or process the ID
             popup.destroy()  # Close the popup
 
     # Submit button
@@ -237,7 +236,8 @@ def equipmentPopUp(root):
         if not equipmentId.isdigit():
             messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
             equipmentId = "None"
-        popup.destroy()  # Close the popup
+        else:
+            popup.destroy()  # Close the popup
 
     # Submit button
     submit_button = tk.Button(popup, text="Submit", command=submit_id, font=("Arial", 12))
