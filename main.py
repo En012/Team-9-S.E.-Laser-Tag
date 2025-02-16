@@ -261,17 +261,19 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
         return
 
     #STEP 2: check against the database to see if the id is there
-    result = database.check_player_id(playerId)
+    database.check_or_add_player(playerId) #if ID is not in the database, add playerID in along with default values
+    playerCodeName = database.get_player_name(playerId) #codeName will either be None (if ID is new), or a different string
 
-    if result:
-        print(f"Player Found: ID={result[0]}, Team={result[1]}, Number={result[2]}, Name={result[3]}, Equipment={result[4]}")
-
-    #STEP 3: If not, ask for a codename:
-    playerCodeName = codeNamePopUp(root)
+    #STEP 3: If id is new, ask for the codename
+    if playerCodeName is None:
+        playerCodeName = codeNamePopUp(root)
 
     #if enteredCodeName = None, then getting the codename failed so return with no changes
     if playerCodeName == "None":
         return
+    #otherwise, change the codename corresponding to the player ID
+    else:
+        database.set_player_name(playerId, playerCodeName)
 
     #STEP 4: Get equipment ID from the player:
     playerEquipmentId = equipmentPopUp(root)
@@ -279,6 +281,9 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
     #if playerEquipmentId = None, then getting the equipment ID failed so return with no changes
     if playerEquipmentId == "None":
         return
+    #otherwise, change the equipment code corresponding to the player ID
+    else:
+        database.set_equipment_code(playerId, playerEquipmentId)
     
     #If playerEquipmentId is odd, add the player to red team
     if int(playerEquipmentId) % 2 == 1:
