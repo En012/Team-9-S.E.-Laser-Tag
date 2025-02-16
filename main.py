@@ -190,7 +190,7 @@ def codeNamePopUp(root):
         if codeName == "":
             messagebox.showerror(title="Error", message="Codename cannot be empty")
         elif codeName == "None":
-            messagebox.showerror(title="Error", message="Codename cannot be 'None', please enter a different codename)
+            messagebox.showerror(title="Error", message="Codename cannot be 'None', please enter a different codename")
         else:
             popup.destroy()  # Close the popup
 
