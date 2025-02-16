@@ -293,6 +293,8 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
     if playerEquipmentId == "None":
         return
     
+    udpclient.send_udp_message(f"Player {playerCodeName} has been added with ID: {playerId}")
+    
     #STEP 5: Add the player info to the playerentry screen
     #If playerEquipmentId is odd, add the player to red team
     if int(playerEquipmentId) % 2 == 1:
@@ -424,7 +426,7 @@ def switch():
 
 # Main function
 if __name__ == "__main__":
-
+    udpserver.start_udp_server()
     #setup tkinter GUI elements
     root = tk.Tk()
     root.title("Loading...")
