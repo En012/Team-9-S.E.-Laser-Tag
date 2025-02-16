@@ -74,13 +74,12 @@ def check_or_add_player(player_id):
     cursor.execute("SELECT * FROM players WHERE equipment_code = ?", (player_id,))
     result = cursor.fetchone()  # Fetch one matching row
 
-        # Assign to "Unknown" team and default name "None"
-        cursor.execute(
-            "INSERT INTO players (team, player_number, player_name, equipment_code) VALUES (?, ?, ?, ?)",
-            ("Unknown", None, None, player_id)
-        )
-        conn.commit()
-        print(f"Added new player with Equipment ID: {player_id}")
+    # Assign to "Unknown" team and default name "None"
+    cursor.execute(
+        "INSERT INTO players (team, player_number, player_name, equipment_code) VALUES (?, ?, ?, ?)",
+        ("Unknown", None, None, player_id)
+    )
+    conn.commit()
 
     conn.close()
     return result if result else None
