@@ -288,6 +288,7 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
     if playerEquipmentId == "None":
         return
     
+    # this logs the message being sent to the server, essential for debugging
     udpclient.send_udp_message(f"Player {playerCodeName} has been added with ID: {playerId}")
     
     #STEP 5: Add the player info to the playerentry screen
@@ -419,6 +420,7 @@ def switch():
 
 # Main function
 if __name__ == "__main__":
+    #this line starts up the udp server upon application start (if not here, server is not running until address swap)
     udpserver.start_udp_server()
 
     #setup tkinter GUI elements
