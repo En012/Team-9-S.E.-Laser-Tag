@@ -416,14 +416,23 @@ def player_entry_screen(root):
     add_btn.place(relx=0.8, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
 
 def switch():
-    player_entry_screen(root)
+    #Goes to countdown timer test
+    root.after(3000, timer)
 
+seconds = 30
 def timer():
-    seconds = 30
-    while(seconds != 0):
-        print("i\n")
-        time.sleep(1)
+    global seconds, img, label, width, height
+    if(seconds >= 0):
+        print(f"{seconds}\n")
+        img_path = os.path.expanduser(f"images/{seconds}.tif")
         seconds = seconds - 1
+        root.after(1000, timer)
+    else:
+        player_entry_screen(root)
+    img = Image.open(img_path)
+    img = img.resize((width, height), Image.LANCZOS)
+    img = ImageTk.PhotoImage(img)
+    label.configure(image=img)
 
 # Main function
 if __name__ == "__main__":
