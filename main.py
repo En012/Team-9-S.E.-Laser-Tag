@@ -6,7 +6,7 @@ import tkinter.font as tkFont
 import udpclient
 import udpserver
 import database
-
+import time
 
 #initalize the database
 database.init_db()
@@ -417,6 +417,13 @@ def player_entry_screen(root):
 
 def switch():
     player_entry_screen(root)
+
+def timer():
+    seconds = 30
+    while(seconds != 0):
+        print("i\n")
+        time.sleep(1)
+        seconds = seconds - 1
 
 # Main function
 if __name__ == "__main__":
