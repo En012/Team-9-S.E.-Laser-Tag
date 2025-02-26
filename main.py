@@ -415,10 +415,12 @@ def player_entry_screen(root):
     port_btn.place(relx=0.2, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
     add_btn.place(relx=0.8, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
 
+#switch to playerEntryScreen
 def switch():
-    #Goes to countdown timer test
-    root.after(3000, timer)
+    player_entry_screen(root)
 
+
+#countdown timer test function
 seconds = 30
 def timer():
     global seconds, img, label, width, height
