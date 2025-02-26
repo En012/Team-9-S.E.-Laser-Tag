@@ -13,14 +13,14 @@ database.init_db()
 
 #---------------------- udp port functions ------------------------------------------
 
-def change_udp_server_inter():
-    change_udp_server()
+def change_udp_client_inter():
+    change_udp_client()
 
-def change_udp_server():
+def change_udp_client():
     udp_server_popup(root)
 
 def udp_server_popup(root):
-    udp_ip_port = "None"
+    udp_ip_address = "None"
 
     # Create a popup window
     popup = tk.Toplevel(root)
@@ -38,31 +38,29 @@ def udp_server_popup(root):
     y_position = (screen_height // 2) - (window_height // 2)
     popup.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
-    # Label for the UDP server IP and port input
-    tk.Label(popup, text="Enter new UDP Server IP and Port (format: IP, Port)\nExample: 192.168.1.100, 20001", font=("Arial", 12)).pack(pady=10)
+    # Label for the UDP server IP input
+    tk.Label(popup, text="Enter new UDP Server IP \nExample: 192.168.1.100", font=("Arial", 12)).pack(pady=10)
 
-    # Entry field for UDP server IP and port
-    udp_ip_port_var = tk.StringVar()
-    udp_ip_port_entry = tk.Entry(popup, textvariable=udp_ip_port_var, font=("Arial", 12))
-    udp_ip_port_entry.pack(pady=5)
+    # Entry field for UDP server IP 
+    udp_ip_address_var = tk.StringVar()
+    udp_ip_address_entry = tk.Entry(popup, textvariable=udp_ip_address_var, font=("Arial", 12))
+    udp_ip_address_entry.pack(pady=5)
 
     # Function to handle submission
     def submit_udp_server():
-        nonlocal udp_ip_port
-        udp_ip_port = udp_ip_port_var.get()
-        parts = udp_ip_port.split(',')
-        if len(parts) == 2:
-            new_ip = parts[0].strip()
-            try:
-                new_port = int(parts[1].strip())
-                udpclient.set_udp_config(new_ip, new_port)
-                udpserver.update_and_restart_server(new_ip, new_port)
-            except ValueError:
-                messagebox.showerror(title="Error", message="Invalid port number! Please re-enter a valid integer.")
-                udp_ip_port = "None"
-        else:
-            messagebox.showerror(title="Error", message="Invalid input, format must be: IP, Port")
-            udp_ip_port = "None"
+        nonlocal udp_ip_address
+        udp_ip_address = udp_ip_address_var.get()
+        # if len(parts) == 2:
+        try:
+            udpclient.set_udp_config(udp_ip_address)
+            #keeping this here for now since he said we might use it in the future
+            #udpserver.update_and_restart_server(new_ip)
+        except ValueError:
+            messagebox.showerror(title="Error", message="Invalid address number! Please re-enter a valid integer.")
+            udp_ip_address = "None"
+        # else:
+        #     messagebox.showerror(title="Error", message="Invalid input")
+        #     udp_ip_address = "None"
         popup.destroy()  # Close the popup
 
     # Submit button
@@ -74,12 +72,12 @@ def udp_server_popup(root):
     popup.grab_set()
     root.wait_window(popup)
 
-    return udp_ip_port
+    return udp_ip_address
 
 def udp_error_popup(message):
     messagebox.showerror(title="Error", message=message)
 
-#----------------------------------------------- end port functions --------------------------------------------------------------
+#----------------------------------------------- end address functions --------------------------------------------------------------
 
 #function for starting the game, to be fully implemented later
 def startGame(id_List, id_List2):
@@ -289,7 +287,7 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
         return
     
     # this logs the message being sent to the server, essential for debugging
-    udpclient.send_udp_message(f"Player {playerCodeName} has been added with ID: {playerId}")
+    udpclient.send_udp_message(f"{playerEquipmentId}")
     
     #STEP 5: Add the player info to the playerentry screen
     #If playerEquipmentId is odd, add the player to red team
@@ -402,8 +400,8 @@ def player_entry_screen(root):
     #lambda prevents the startGame function from being called as soon as the program starts up
     sub_btn=tk.Button(root,text = 'Start Game', command = lambda: startGame(id_List, id_List2), width = 15, height = 3)
 
-    #button to activate the change ports function
-    port_btn= tk.Button(root, text="Change Port", command=change_udp_server_inter, width = 15, height = 3)
+    #button to activate the change address function
+    address_btn= tk.Button(root, text="Change Address", command=change_udp_client_inter, width = 15, height = 3)
 
     #button for adding a player to the game
     add_btn = tk.Button(root, text='Add Player', 
@@ -412,7 +410,7 @@ def player_entry_screen(root):
 
     # Button placement
     sub_btn.place(relx=0.5, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
-    port_btn.place(relx=0.2, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
+    address_btn.place(relx=0.2, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
     add_btn.place(relx=0.8, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
 
 #switch to playerEntryScreen
@@ -439,7 +437,7 @@ def timer():
 # Main function
 if __name__ == "__main__":
     #this line starts up the udp server upon application start (if not here, server is not running until address swap)
-    udpserver.start_udp_server()
+    #udpserver.start_udp_server()
 
     #setup tkinter GUI elements
     root = tk.Tk()

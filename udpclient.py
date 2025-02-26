@@ -24,9 +24,8 @@ def send_udp_message(message, server_ip=None, server_port=None):
     finally:
         UDPClientSocket.close()
 
-def set_udp_config(ip, port):
+def set_udp_config(ip):
     #Updates the default UDP server configuration for the client.
-    global udp_server_ip, udp_server_port
+    global udp_server_ip
     udp_server_ip = ip      #ip: New server IP address.
-    udp_server_port = port  #port: New server port number.
-    print(f"UDP client configuration updated to {udp_server_ip}:{udp_server_port}")
+    print(f"UDP client configuration updated to {udp_server_ip}")
