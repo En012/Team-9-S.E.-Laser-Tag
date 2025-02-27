@@ -31,12 +31,12 @@ To run the program, type the following command:
 ###    
     python3 main.py
 
-# Switching Address/Port
+# Switching Server Address
 
-After running the program, there will be a button to switch the address and port of the server. Follow the example given on the prompt when changing addresses:
+After running the program, there will be a button to switch the server address. Follow the example given on the prompt when changing address:
 
 ###
-    Example: 192.168.1.100, 20001
+    Example: 192.168.1.100
 
 The IP address you can enter is tied to those on your local machine. To check what addresses you can input, type this command in the command line:
 
