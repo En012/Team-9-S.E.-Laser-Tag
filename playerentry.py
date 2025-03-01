@@ -4,19 +4,32 @@ from tkinter import messagebox, font as tkFont
 from udpbutton import UDPButton
 from addplayerbutton import AddPlayerButton
 
+#This class contains all code for the PlayerEntryScreen
 class PlayerEntryScreen:
 
+    #Default constructor
     def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, switch_to_player_action):
+
+        #Get root, ID, and Name lists from display.py
         self.root = root
         self.redIDList = redIDList
         self.greenIDList = greenIDList
         self.redNameList = redNameList
         self.greenNameList = greenNameList
 
+        #------------------------------------------------------------------------------------------------------------
+        #self.switch_to_player_action is used to switch back to display.py when the "start game" button is pressed
+        #In display.py, the switchToPlayerAction function will be called, which will start up the player action screen
+
+        #so when you press the start game button the program counter will go as follows: 
+        #startGame in playerentry.py ---> switchToPlayerAction in display.py ---> run in playeraction.py
+
         self.switch_to_player_action = switch_to_player_action
 
-        #create objects for two of the buttons
-        #THESE OBJECTS DO NOT HANDLE DISPLAYING THE BUTTONS, they handle the code that is run when the button is pressed
+        #-------------------------------------------------------------------------------------------------------------
+
+        #create objects for the UDP and AddPlayer button
+        #THESE OBJECTS DO NOT HANDLE DISPLAYING THE BUTTONS, they handle the code that is run when the buttons are pressed
         self.UDPButton = UDPButton(self.root)
         self.AddPlayerButton = AddPlayerButton(self.root, self.redIDList, self.greenIDList, self.redNameList, self.greenNameList)
 

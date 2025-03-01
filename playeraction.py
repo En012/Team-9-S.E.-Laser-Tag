@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox, font as tkFont
+from PIL import Image, ImageTk
+import os
 
+#This class contains all the code for the player action screen
 class PlayerActionScreen:
 
     #default constructor
@@ -10,6 +13,23 @@ class PlayerActionScreen:
         self.greenIDList = greenIDList
         self.redNameList = redNameList
         self.greenNameList = greenNameList
+
+
+    #This may be broken now, I'm not sure...
+    # countdown timer function
+    def timer(self, seconds=30):
+        if seconds >= 0:
+            print(f"{seconds}\n")
+            img_path = os.path.expanduser(f"images/{seconds}.tif")
+            self.img = Image.open(img_path)
+            self.img = self.img.resize((self.width, self.height), Image.LANCZOS)
+            self.img = ImageTk.PhotoImage(self.img)
+            label = tk.Label(self.root, image=self.img, bg="black")
+            label.pack()
+            self.root.after(1000, self.timer, seconds - 1)
+        else:
+            self.player_entry_screen()
+    
     
     #CODE FOR PLAYERACTION SCREEN GOES HERE!!!
     def run(self):
@@ -27,5 +47,4 @@ class PlayerActionScreen:
 
         #whatever goes here, idk, thats for Trevor and Eduardo to decide
         #but whatever it is... it better be cool
-        
         

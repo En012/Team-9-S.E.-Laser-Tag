@@ -12,5 +12,5 @@ if __name__ == "__main__":
     #create screen object
     screen = Display()
 
-    #Go
+    #Loop the program
     screen.root.mainloop()

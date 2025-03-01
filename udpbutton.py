@@ -1,7 +1,8 @@
-import udpclient
-import udpserver
 import tkinter as tk
 from tkinter import messagebox
+
+import udpclient
+import udpserver
 
 #Handles all the code that is run when the change UDP address button is pressed
 #DOES NOT handle displaying the button to the screen

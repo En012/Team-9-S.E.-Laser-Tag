@@ -1,8 +1,7 @@
 import tkinter as tk
-import os
+from tkinter import messagebox, font as tkFont
 from PIL import Image, ImageTk
-from tkinter import messagebox
-import tkinter.font as tkFont
+import os
 
 from playerentry import PlayerEntryScreen
 from playeraction import PlayerActionScreen
@@ -28,9 +27,11 @@ class Display:
         self.height = self.root.winfo_screenheight()
 
         #Initialize the playerentryscreen
+        #All code for PlayerEntryScreen can be found in playerentry.py
         self.PlayerEntryScreen = PlayerEntryScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList, self.switchToPlayerAction) 
 
         #Initialize the playeractionscreen
+        #All code for PlayerActionScreen can be found in playeraction.py
         self.PlayerActionScreen = PlayerActionScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList)
         
         #run the splash screen
@@ -60,17 +61,3 @@ class Display:
         for widget in self.root.winfo_children():
             widget.destroy()  # Clear current widgets
         self.PlayerActionScreen.run() # Show the playeraction screen
-
-    # countdown timer function
-    def timer(self, seconds=30):
-        if seconds >= 0:
-            print(f"{seconds}\n")
-            img_path = os.path.expanduser(f"images/{seconds}.tif")
-            self.img = Image.open(img_path)
-            self.img = self.img.resize((self.width, self.height), Image.LANCZOS)
-            self.img = ImageTk.PhotoImage(self.img)
-            label = tk.Label(self.root, image=self.img, bg="black")
-            label.pack()
-            self.root.after(1000, self.timer, seconds - 1)
-        else:
-            self.player_entry_screen()
