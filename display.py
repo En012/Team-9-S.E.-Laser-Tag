@@ -34,7 +34,7 @@ class Display:
         #All code for PlayerActionScreen can be found in playeraction.py
         self.PlayerActionScreen = PlayerActionScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList)
         
-        #run the splash screen
+        #display the splash screen
         self.splash_screen()
 
         #switch to player entry screen after 3000 milliseconds

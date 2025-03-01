@@ -17,7 +17,7 @@ class PlayerEntryScreen:
         self.redNameList = redNameList
         self.greenNameList = greenNameList
 
-        #------------------------------------------------------------------------------------------------------------
+        #-------------------------------------------------------------------------------------------------------------
         #self.switch_to_player_action is used to switch back to display.py when the "start game" button is pressed
         #In display.py, the switchToPlayerAction function will be called, which will start up the player action screen
 
