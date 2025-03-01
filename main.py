@@ -277,6 +277,9 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
         #otherwise, add the playerID and codename as an entry in the database
         else:
             database.addPlayer(playerId, playerCodeName)
+    else:
+        #If playerID is there, get the codename
+        playerCodeName = database.getCodeName(playerId)
 
 
     #database.check_or_add_player(playerId) #if ID is not in the database, add playerID in along with default values

@@ -53,3 +53,13 @@ def removePlayer(playerID):
     conn.commit()
     conn.close()
     print("Player removed successfully.")
+
+def getCodeName(playerID):
+    conn = sqlite3.connect("players.db")
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT Codename FROM Players WHERE playerID = ?", (playerID,))
+    result = cursor.fetchone()
+    
+    conn.close()
+    return result[0] if result else None
