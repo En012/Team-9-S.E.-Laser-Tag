@@ -282,7 +282,7 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
         playerCodeName = database.getCodeName(playerId)
 
         #if retrieving playerID from the database failed, return
-        if playerCodeName = None:
+        if playerCodeName == None:
             return
 
     #STEP 4: Get equipment ID from the player:
