@@ -73,6 +73,8 @@ def udp_error_popup(message):
     messagebox.showerror(title="Error", message=message)
 
 #----------------------------------------------- end address functions --------------------------------------------------------------
+
+
 # Main function
 if __name__ == "__main__":
     #this line starts up the udp server upon application start (if not here, server is not running until address swap)

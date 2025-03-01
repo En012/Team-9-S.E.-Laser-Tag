@@ -38,7 +38,7 @@ def addPlayer(playerID, codename):
     try:
         cursor.execute("INSERT INTO Players (playerID, Codename) VALUES (?, ?)", (playerID, codename))
         conn.commit()
-        print("Player added successfully.")
+        #print("Player added successfully.")
     except sqlite3.IntegrityError:
         print("Error: PlayerID already exists.")
     
