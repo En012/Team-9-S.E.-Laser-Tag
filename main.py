@@ -1,7 +1,7 @@
 import database
 from display import Display
 
-# #initalize the database
+#initalize the database
 database.initialize_database()
 
 # Main function
