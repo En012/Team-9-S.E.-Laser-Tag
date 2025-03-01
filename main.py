@@ -7,7 +7,7 @@ import udpclient
 import udpserver
 import database
 import display
-import time
+
 
 # #initalize the database
 # database.initialize_database()

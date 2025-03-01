@@ -2,6 +2,7 @@ import tkinter as tk
 import os
 import tkinter.font as tkFont
 from PIL import Image, ImageTk
+import time
 import __main__
 
 class Display:
