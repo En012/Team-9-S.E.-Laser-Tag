@@ -9,7 +9,7 @@ import database
 import time
 
 #initalize the database
-database.init_db()
+database.initialize_database()
 
 #---------------------- udp port functions ------------------------------------------
 
@@ -265,19 +265,33 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
 
 
     #STEP 2: check against the database to see if the id is there
-    database.check_or_add_player(playerId) #if ID is not in the database, add playerID in along with default values
-    playerCodeName = database.get_player_name(playerId) #codeName will either be None (if ID is new), or a different string
+    inDatabase = database.checkInDatabase(playerId)
 
-    #STEP 3: If id is new, ask for the codename
-    if playerCodeName is None:
+    #If playerID is not there, ask for a codename
+    if inDatabase == False:
         playerCodeName = codeNamePopUp(root)
 
+        #if Codename = None, then getting the codename failed, so return
+        if playerCodeName == "None":
+            return
+        #otherwise, add the playerID and codename as an entry in the database
+        else:
+            database.addPlayer(playerId, playerCodeName)
+
+
+    #database.check_or_add_player(playerId) #if ID is not in the database, add playerID in along with default values
+    #playerCodeName = database.get_player_name(playerId) #codeName will either be None (if ID is new), or a different string
+
+    #STEP 3: If id is new, ask for the codename
+    #if playerCodeName is None:
+    #    playerCodeName = codeNamePopUp(root)
+
     #if enteredCodeName = None, then getting the codename failed so return with no changes
-    if playerCodeName == "None":
-        return
+    #if playerCodeName == "None":
+    #    return
     #otherwise, change the codename corresponding to the player ID
-    else:
-        database.set_player_name(playerId, playerCodeName)
+    #else:
+    #    database.set_player_name(playerId, playerCodeName)
 
     #STEP 4: Get equipment ID from the player:
     playerEquipmentId = equipmentPopUp(root)
