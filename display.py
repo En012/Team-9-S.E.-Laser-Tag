@@ -23,8 +23,8 @@ class Display:
         self.root.title("Loading...")
         self.root.configure(bg="black")
 
-        #create objects for the three buttons
-        #THESE CLASSES DO NOT HANDLE DISPLAYING THE BUTTONS, they handle the code that is run when the button is pressed
+        #create objects for two of the buttons
+        #THESE OBJECTS DO NOT HANDLE DISPLAYING THE BUTTONS, they handle the code that is run when the button is pressed
         self.UDPButton = UDPButton(self.root)
         self.AddPlayerButton = AddPlayerButton(self.root, self.redIDList, self.greenIDList, self.redNameList, self.greenNameList)
 
@@ -160,6 +160,8 @@ class Display:
         #otherwise, start the game
         else:
             messagebox.showinfo(title="Notification", message="Start will be implemented in a future sprint!")
+            #What happens next IDK, thats for Trevor and Eduardo to decide...
+            #but whatever it is, it better be cool
 
     # countdown timer function
     def timer(self, seconds=30):
