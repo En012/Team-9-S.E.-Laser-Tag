@@ -19,11 +19,6 @@ This can be installed with the following command:
 ###
     sudo apt install python3-tk
 
-## Psycopg2
-This can be installed with the following command:
-###
-    sudo apt install python3-psycopg2
-
 ## Pillow
 This can be installed with the following command:
 ###    

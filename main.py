@@ -327,7 +327,6 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
                 name_vars2[i].set(name_List2[i])
                 break
 
-
 def player_entry_screen(root):
     #setting name of window
     root.title("Photon")
