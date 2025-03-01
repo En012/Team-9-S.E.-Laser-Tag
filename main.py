@@ -293,7 +293,7 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
         return
     
     # this logs the message being sent to the server, essential for debugging
-    udpclient.send_udp_message(f"{playerEquipmentId}")
+    #udpclient.send_udp_message(f"{playerEquipmentId}")
     
     #STEP 5: Add the player info to the playerentry screen
     #If playerEquipmentId is odd, add the player to red team
