@@ -54,6 +54,7 @@ def removePlayer(playerID):
     conn.close()
     print("Player removed successfully.")
 
+#Retrieves the codename associated with the given playerID as a string
 def getCodeName(playerID):
     conn = sqlite3.connect("players.db")
     cursor = conn.cursor()
@@ -62,4 +63,5 @@ def getCodeName(playerID):
     result = cursor.fetchone()
     
     conn.close()
+    #returns None, if not codename is found
     return result[0] if result else None

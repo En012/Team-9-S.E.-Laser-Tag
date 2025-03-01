@@ -281,20 +281,9 @@ def addPlayer(root, id_List, name_List, id_List2, name_List2, id_vars, name_vars
         #If playerID is there, get the codename
         playerCodeName = database.getCodeName(playerId)
 
-
-    #database.check_or_add_player(playerId) #if ID is not in the database, add playerID in along with default values
-    #playerCodeName = database.get_player_name(playerId) #codeName will either be None (if ID is new), or a different string
-
-    #STEP 3: If id is new, ask for the codename
-    #if playerCodeName is None:
-    #    playerCodeName = codeNamePopUp(root)
-
-    #if enteredCodeName = None, then getting the codename failed so return with no changes
-    #if playerCodeName == "None":
-    #    return
-    #otherwise, change the codename corresponding to the player ID
-    #else:
-    #    database.set_player_name(playerId, playerCodeName)
+        #if retrieving playerID from the database failed, return
+        if playerCodeName = None:
+            return
 
     #STEP 4: Get equipment ID from the player:
     playerEquipmentId = equipmentPopUp(root)
