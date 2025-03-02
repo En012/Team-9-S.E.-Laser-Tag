@@ -8,6 +8,8 @@ class PlayerActionScreen:
 
     #default constructor
     def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList):
+
+        #Get root, ID, and Name lists from display.py
         self.root = root
         self.redIDList = redIDList
         self.greenIDList = greenIDList
