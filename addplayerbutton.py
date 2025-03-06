@@ -195,7 +195,7 @@ class AddPlayerButton:
         popup.update_idletasks() # Ensure the window size is calculated before positioning
         screen_width = popup.winfo_screenwidth()
         screen_height = popup.winfo_screenheight()
-        window_width = 300
+        window_width = 400
         window_height = 150
 
         x_position = (screen_width // 2) - (window_width // 2)
@@ -203,7 +203,7 @@ class AddPlayerButton:
         popup.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # Label for the equipment ID input
-        tk.Label(popup, text="Enter Equipment ID:", font=("Arial", 12)).pack(pady=10)
+        tk.Label(popup, text="Enter Equipment ID: (Red = odd) (Green = even)", font=("Arial", 12)).pack(pady=10)
 
         # Entry field for equipment ID
         equipment_var = tk.StringVar()
