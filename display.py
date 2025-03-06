@@ -61,3 +61,4 @@ class Display:
         for widget in self.root.winfo_children():
             widget.destroy()  # Clear current widgets
         self.PlayerActionScreen.run() # Show the playeraction screen
+        #adfa
