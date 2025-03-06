@@ -85,10 +85,10 @@ class PlayerEntryScreen:
 
         # Create labels for green team
         id_label2 = tk.Label(self.root, text='ID', font=('calibre', 12, 'bold'), background="green")
-        id_label2.place(relx=0.658, rely=0.12, anchor="e")
+        id_label2.place(relx=0.65, rely=0.12, anchor="center")
 
         name_label2 = tk.Label(self.root, text='Name', font=('calibre', 12, 'bold'), background="green")
-        name_label2.place(relx=0.848, rely=0.12, anchor="e")
+        name_label2.place(relx=0.83, rely=0.12, anchor="center")
         for i in range(row_count):
             row_rel_y = title_relheight + (i + 1.0) * row_relheight
 
