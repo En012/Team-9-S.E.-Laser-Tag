@@ -203,7 +203,8 @@ class AddPlayerButton:
         popup.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # Label for the equipment ID input
-        tk.Label(popup, text="Enter Equipment ID: (Red = odd) (Green = even)", font=("Arial", 12)).pack(pady=10)
+        tk.Label(popup, text="Enter Equipment ID:", font=("Arial", 12)).pack(pady=10)
+        tk.Label(popup, text="(Red Team = Odd ID; Green Team = Even ID)", font=("Arial", 12)).pack(pady=5)
 
         # Entry field for equipment ID
         equipment_var = tk.StringVar()
