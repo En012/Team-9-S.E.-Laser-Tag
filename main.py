@@ -4,7 +4,6 @@ from display import Display
 #initalize the database
 database.initialize_database()
 
-print("test")
 
 # Main function
 if __name__ == "__main__":

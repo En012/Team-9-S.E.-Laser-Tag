@@ -196,7 +196,7 @@ class AddPlayerButton:
         screen_width = popup.winfo_screenwidth()
         screen_height = popup.winfo_screenheight()
         window_width = 400
-        window_height = 150
+        window_height = 200
 
         x_position = (screen_width // 2) - (window_width // 2)
         y_position = (screen_height // 2) - (window_height // 2)
