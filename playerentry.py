@@ -6,7 +6,6 @@ from addplayerbutton import AddPlayerButton
 
 #This class contains all code for the PlayerEntryScreen
 class PlayerEntryScreen:
-
     #Default constructor
     def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, switch_to_player_action):
 

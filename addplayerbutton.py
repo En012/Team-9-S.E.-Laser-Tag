@@ -26,6 +26,7 @@ class AddPlayerButton:
         if playerId == "None":
             return
 
+        print(self.redIDList)
         #check to see if player with the same id is already in the game
         if playerId in self.redIDList or playerId in self.greenIDList:
             messagebox.showerror(title="Error", message=f"Player with ID: {playerId} is already in the game")

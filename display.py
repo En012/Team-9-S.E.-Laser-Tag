@@ -22,6 +22,9 @@ class Display:
         self.root.title("Loading...")
         self.root.configure(bg="black")
 
+        #binding F10 key to call clear button
+        self.root.bind("<F10>", self.clear_entry)
+
         #get screen self.width and self.height
         self.width = self.root.winfo_screenwidth()
         self.height = self.root.winfo_screenheight()
@@ -39,6 +42,22 @@ class Display:
 
         #switch to player entry screen after 3000 milliseconds
         self.root.after(3000, self.switchToPlayerEntry)
+
+    #code for clear button
+    def clear_entry(self, event=None):
+        print("F10 pressed")
+        self.redIDList = [""] * 15
+        self.redNameList = [""] * 15
+        self.greenIDList = [""] * 15
+        self.greenNameList = [""] * 15
+        print(self.redIDList)
+        for i in range(15):
+            self.PlayerEntryScreen.id_vars[i].set("")
+            self.PlayerEntryScreen.name_vars[i].set("")
+            self.PlayerEntryScreen.id_vars2[i].set("")
+            self.PlayerEntryScreen.name_vars2[i].set("")
+
+
         
 
     #code for the splash screen
