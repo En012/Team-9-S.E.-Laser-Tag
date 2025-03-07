@@ -12,10 +12,10 @@ class Display:
     def __init__(self):
 
         #setup default values for name and ID list for red and green team
-        self.redNameList = ["None"] * 15
-        self.redIDList = ["None"] * 15
-        self.greenNameList = ["None"] * 15
-        self.greenIDList = ["None"] * 15
+        self.redNameList = [" "] * 15
+        self.redIDList = [" "] * 15
+        self.greenNameList = [" "] * 15
+        self.greenIDList = [" "] * 15
 
         #setup tkinter GUI elements
         self.root = tk.Tk()

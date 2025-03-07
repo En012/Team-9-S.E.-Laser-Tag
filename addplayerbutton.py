@@ -64,11 +64,11 @@ class AddPlayerButton:
 
         #Finally, add the player to the playerentryscreen
         if int(playerEquipmentId) % 2 == 1:
-            if self.redIDList[14] != "None":
+            if self.redIDList[14] != " ":
                 messagebox.showerror(title="Error", message="Red Team is full!")
                 return
             for i in range(15):
-                if self.redIDList[i] == "None":
+                if self.redIDList[i] == " ":
                     self.redIDList[i] = playerId
                     self.redNameList[i] = playerCodeName
 
@@ -76,11 +76,11 @@ class AddPlayerButton:
                     name_vars[i].set(self.redNameList[i])
                     break
         else:
-            if self.greenIDList[14] != "None":
+            if self.greenIDList[14] != " ":
                 messagebox.showerror(title="Error", message="Green Team is full!")
                 return
             for i in range(15):
-                if self.greenIDList[i] == "None":
+                if self.greenIDList[i] == " ":
                     self.greenIDList[i] = playerId
                     self.greenNameList[i] = playerCodeName
 
@@ -169,7 +169,11 @@ class AddPlayerButton:
         def submitCodename():
             nonlocal codeName
             codeName = codeName_var.get()
-            popup.destroy()
+            if codeName.strip() == "":
+                messagebox.showerror(title="Error", message="Codename cannot be only spaces. Please enter another codename")
+                codeName = "None"
+            else:
+                popup.destroy()
 
         # Submit button
         submit_button = tk.Button(popup, text="Submit", command=submitCodename, font=("Arial", 12))
@@ -195,8 +199,8 @@ class AddPlayerButton:
         popup.update_idletasks() # Ensure the window size is calculated before positioning
         screen_width = popup.winfo_screenwidth()
         screen_height = popup.winfo_screenheight()
-        window_width = 400
-        window_height = 200
+        window_width = 350
+        window_height = 175
 
         x_position = (screen_width // 2) - (window_width // 2)
         y_position = (screen_height // 2) - (window_height // 2)

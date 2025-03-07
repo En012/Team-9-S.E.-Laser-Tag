@@ -130,10 +130,10 @@ class PlayerEntryScreen:
 
         # check to make sure that a player is on each team
         for i in range(15):
-            if self.redIDList[i] != "None":
+            if self.redIDList[i] != " ":
                 numRedPlayers += 1
 
-            if self.greenIDList[i] != "None":
+            if self.greenIDList[i] != " ":
                 numGreenPlayers += 1
 
         # if both teams don't have at least one player, throw an error
