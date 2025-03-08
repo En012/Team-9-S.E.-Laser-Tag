@@ -107,7 +107,7 @@ class PlayerEntryScreen:
 
         # button to activate the start game function
         # lambda prevents the startGame function from being called as soon as the program starts up
-        sub_btn = tk.Button(self.root, text='Start Game', command=lambda: self.startGame(), width=15, height=3)
+        sub_btn = tk.Button(self.root, text='Start Game [F5]', command=lambda: self.startGame(), width=15, height=3)
 
         # button to activate the change address function. Calls method from the UDPButton object
         address_btn = tk.Button(self.root, text="Change Address", command=self.UDPButton.change_udp_client_inter, width=15, height=3)

@@ -60,9 +60,6 @@ class Display:
             self.PlayerEntryScreen.id_vars2[i].set("")
             self.PlayerEntryScreen.name_vars2[i].set("")
 
-
-        
-
     #code for the splash screen
     def splash_screen(self):
         #initalize self.image and open the splash screen
