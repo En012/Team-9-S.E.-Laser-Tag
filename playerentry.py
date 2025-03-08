@@ -122,8 +122,8 @@ class PlayerEntryScreen:
         address_btn.place(relx=0.2, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
         add_btn.place(relx=0.8, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
 
-    # function for starting the game, to be fully implemented later
-    def startGame(self):
+    # function for starting the game, event=None is for the F5 keybind
+    def startGame(self, event=None):
         numRedPlayers = 0
         numGreenPlayers = 0
 

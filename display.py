@@ -22,9 +22,6 @@ class Display:
         self.root.title("Loading...")
         self.root.configure(bg="black")
 
-        #binding F10 key to call clear button
-        self.root.bind("<F10>", self.clear_entry)
-
         #get screen self.width and self.height
         self.width = self.root.winfo_screenwidth()
         self.height = self.root.winfo_screenheight()
@@ -37,6 +34,12 @@ class Display:
         #All code for PlayerActionScreen can be found in playeraction.py
         self.PlayerActionScreen = PlayerActionScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList)
         
+        #binding F10 key to call clear button
+        self.root.bind("<F10>", self.clear_entry)
+
+        #binding F5 key to call startgame under PlayerEntryScreen
+        self.root.bind("<F5>", self.PlayerEntryScreen.startGame)
+
         #display the splash screen
         self.splash_screen()
 
