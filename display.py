@@ -35,7 +35,7 @@ class Display:
         self.PlayerActionScreen = PlayerActionScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList)
         
         #binding F10 key to call clear button
-        self.root.bind("<F10>", self.clear_entry)
+        self.root.bind("<F12>", self.clear_entry)
 
         #binding F5 key to call startgame under PlayerEntryScreen
         self.root.bind("<F5>", self.PlayerEntryScreen.startGame)
@@ -48,17 +48,22 @@ class Display:
 
     #code for clear button
     def clear_entry(self, event=None):
-        print("F10 pressed")
-        self.redIDList = [""] * 15
-        self.redNameList = [""] * 15
-        self.greenIDList = [""] * 15
-        self.greenNameList = [""] * 15
-        print(self.redIDList)
+        print("F12 pressed")
         for i in range(15):
+            #invidually clearing the lists values.
+            self.redIDList[i] = " "
+            self.redNameList[i] = " "
+            self.greenIDList[i] = " "
+            self.greenNameList[i] = " "
+
+            #clearing the list graphically from the GUI
             self.PlayerEntryScreen.id_vars[i].set("")
             self.PlayerEntryScreen.name_vars[i].set("")
             self.PlayerEntryScreen.id_vars2[i].set("")
             self.PlayerEntryScreen.name_vars2[i].set("")
+
+        #checking if the list actually clears
+        print(self.redIDList)
 
     #code for the splash screen
     def splash_screen(self):
