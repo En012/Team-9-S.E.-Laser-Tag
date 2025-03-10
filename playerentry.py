@@ -46,8 +46,8 @@ class PlayerEntryScreen:
         row_relheight = (1 - title_relheight - button_relheight) / row_count
 
         # Set background colors
-        red_frame = tk.Frame(self.root, bd=0, highlightthickness=0, background="red")
-        green_frame = tk.Frame(self.root, bd=0, highlightthickness=0, background="green")
+        red_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black",background="red")
+        green_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="green")
 
         # Title Placement
         titlefont = tkFont.Font(family='Calibri', size=36, weight='bold')
@@ -64,11 +64,15 @@ class PlayerEntryScreen:
         self.id_vars2 = [tk.StringVar(value=self.greenIDList[i]) for i in range(15)]
         self.name_vars2 = [tk.StringVar(value=self.greenNameList[i]) for i in range(15)]
 
+        #Create labels for keyboard input instructions
+        clear_label = tk.Label(self.root, text='Clear Screen <F12>', font = ('calibre', 8, 'bold'), background="red")
+        clear_label.place(relx=0.201, rely=0.98, anchor="center")
+
         # Create labels for red team
-        id_label = tk.Label(self.root, text='ID', font=('calibre', 12, 'bold'), background="red")
+        id_label = tk.Label(self.root, text='ID', font=('calibre', 12, 'bold'), background="red", padx=-1,pady=-1)
         id_label.place(relx=0.151, rely=0.12, anchor="center")
 
-        name_label = tk.Label(self.root, text='Name', font=('calibre', 12, 'bold'), background="red")
+        name_label = tk.Label(self.root, text='Name', font=('calibre', 12, 'bold'), background="red", padx=-1,pady=-1)
         name_label.place(relx=0.348, rely=0.12, anchor="e")
         for i in range(row_count):
             row_rel_y = title_relheight + (i + 1.0) * row_relheight
@@ -76,17 +80,17 @@ class PlayerEntryScreen:
             num_label = tk.Label(self.root, text=f"{i+1}.", font=('Arial', 12, 'bold'), background="red")
             num_label.place(relx=0.075, rely=row_rel_y, anchor="center")
 
-            id_entry = tk.Label(self.root, textvariable=self.id_vars[i], font=('calibre', 10, 'normal'), background="white")
+            id_entry = tk.Label(self.root, textvariable=self.id_vars[i], font=('calibre', 10, 'normal'), background="white", highlightthickness=1, highlightbackground="black")
             id_entry.place(relx=0.15, rely=row_rel_y, relwidth=0.1, anchor="center")
 
-            name_entry = tk.Label(self.root, textvariable=self.name_vars[i], font=('calibre', 10, 'normal'), background="white")
+            name_entry = tk.Label(self.root, textvariable=self.name_vars[i], font=('calibre', 10, 'normal'), background="white", highlightthickness=1, highlightbackground="black")
             name_entry.place(relx=0.33, rely=row_rel_y, relwidth=0.15, anchor="center")
 
         # Create labels for green team
-        id_label2 = tk.Label(self.root, text='ID', font=('calibre', 12, 'bold'), background="green")
+        id_label2 = tk.Label(self.root, text='ID', font=('calibre', 12, 'bold'), background="green", padx=-1,pady=-1)
         id_label2.place(relx=0.65, rely=0.12, anchor="center")
 
-        name_label2 = tk.Label(self.root, text='Name', font=('calibre', 12, 'bold'), background="green")
+        name_label2 = tk.Label(self.root, text='Name', font=('calibre', 12, 'bold'), background="green", padx=-1,pady=-1)
         name_label2.place(relx=0.83, rely=0.12, anchor="center")
         for i in range(row_count):
             row_rel_y = title_relheight + (i + 1.0) * row_relheight
@@ -94,10 +98,10 @@ class PlayerEntryScreen:
             num_label2 = tk.Label(self.root, text=f"{i+1}.", font=('Arial', 12, 'bold'), background="green")
             num_label2.place(relx=0.575, rely=row_rel_y, anchor="center")
 
-            id_entry2 = tk.Label(self.root, textvariable=self.id_vars2[i], font=('calibre', 10, 'normal'), background="white")
+            id_entry2 = tk.Label(self.root, textvariable=self.id_vars2[i], font=('calibre', 10, 'normal'), background="white", highlightthickness=1, highlightbackground="black")
             id_entry2.place(relx=0.65, rely=row_rel_y, relwidth=0.1, anchor="center")
 
-            name_entry2 = tk.Label(self.root, textvariable=self.name_vars2[i], font=('calibre', 10, 'normal'), background="white")
+            name_entry2 = tk.Label(self.root, textvariable=self.name_vars2[i], font=('calibre', 10, 'normal'), background="white", highlightthickness=1, highlightbackground="black")
             name_entry2.place(relx=0.83, rely=row_rel_y, relwidth=0.15, anchor="center")
 
         self.player_entry_buttons()
@@ -107,20 +111,20 @@ class PlayerEntryScreen:
 
         # button to activate the start game function
         # lambda prevents the startGame function from being called as soon as the program starts up
-        sub_btn = tk.Button(self.root, text='Start Game [F5]', command=lambda: self.startGame(), width=15, height=3)
+        sub_btn = tk.Button(self.root, text='Start Game [F5]', command=lambda: self.startGame(), width=15, height=3, bd=1, relief="solid")
 
         # button to activate the change address function. Calls method from the UDPButton object
-        address_btn = tk.Button(self.root, text="Change Address", command=self.UDPButton.change_udp_client_inter, width=15, height=3)
+        address_btn = tk.Button(self.root, text="Change Address", command=self.UDPButton.change_udp_client_inter, width=15, height=3, bd=1, relief="solid")
 
         # button for adding a player to the game. Calls method from the AddPlayerButton object
         add_btn = tk.Button(self.root, text='Add Player',
                             command=lambda: self.AddPlayerButton.addPlayer(self.id_vars, self.name_vars, self.id_vars2, self.name_vars2),
-                            width=15, height=3)
+                            width=15, height=3, bd=1, relief="solid")
 
         # Button placement
-        sub_btn.place(relx=0.5, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
-        address_btn.place(relx=0.2, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
-        add_btn.place(relx=0.8, rely=0.96, anchor="center", relwidth=0.2, relheight=0.05)
+        sub_btn.place(relx=0.5, rely=0.95, anchor="center", relwidth=0.2, relheight=0.035)
+        address_btn.place(relx=0.2, rely=0.95, anchor="center", relwidth=0.2, relheight=0.035)
+        add_btn.place(relx=0.8, rely=0.95, anchor="center", relwidth=0.2, relheight=0.035)
 
     # function for starting the game, event=None is for the F5 keybind
     def startGame(self, event=None):
