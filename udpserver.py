@@ -3,7 +3,7 @@ import threading
 
 #Default server config
 udp_server_ip = "127.0.0.1"  # default IP address
-udp_server_port = 20001      # default port
+udp_server_port = 7500      # default port
 buffersize = 1024           # buffer size
 
 #global variables for server

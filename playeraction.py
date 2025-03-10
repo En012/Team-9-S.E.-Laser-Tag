@@ -3,7 +3,6 @@ from tkinter import messagebox, font as tkFont
 from tkinter import ttk
 from PIL import Image, ImageTk
 import os
-import time
 
 #This class contains all the code for the player action screen
 class PlayerActionScreen:
@@ -76,7 +75,7 @@ class PlayerActionScreen:
 
 
         #-------------------------------------------------Labels--------------------------------------------------------------------------------
-        #Team labels
+        ##Team labels##
         #red team
         red_team_label = tk.Label(back_frame, text='RED TEAM', font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="red", padx=-1, pady=-1)
         red_team_label.place(relx=.35, rely=.02, anchor="n")
@@ -93,7 +92,7 @@ class PlayerActionScreen:
         current_action_label = tk.Label(game_frame, text='Current Game Action', font=('Bell Gothic Std Black', 12, 'bold italic'), background="blue", foreground="cyan", padx=-1, pady=-1)
         current_action_label.place(relx=1, rely=0, anchor="ne")
 
-        #Time remaining (replace placehold with incremental time value)
+        #Time remaining
         self.time_label = tk.Label(back_frame, text=f"Time Remaining: {self.seconds_left}", font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
         self.time_label.place(relx=0.99, rely=.98, anchor="se")
 

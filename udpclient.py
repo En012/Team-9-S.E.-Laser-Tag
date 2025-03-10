@@ -2,7 +2,7 @@ import socket
 
 #default configuration
 udp_server_ip = "127.0.0.1"
-udp_server_port = 20001
+udp_server_port = 7500
 buffersize = 1024
 
 def send_udp_message(message, server_ip=None, server_port=None):
