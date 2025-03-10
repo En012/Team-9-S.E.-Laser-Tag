@@ -117,7 +117,7 @@ class AddPlayerButton:
         player_id_entry.pack(pady=5)
 
         # Function to handle submission
-        def submit_id():
+        def submit_id(event=None):
             nonlocal player_id
             player_id = player_id_var.get()
             if not player_id.isdigit():
@@ -125,6 +125,9 @@ class AddPlayerButton:
                 player_id = "None"
             else:
                 popup.destroy()
+
+        #binding enter key to submit id
+        player_id_entry.bind("<Return>", submit_id)
 
         # Submit button
         submit_button = tk.Button(popup, text="Submit", command=submit_id, font=("Arial", 12))
@@ -166,7 +169,7 @@ class AddPlayerButton:
         codeName_entry.pack(pady=5)
 
         # Function to handle submission
-        def submitCodename():
+        def submitCodename(event=None):
             nonlocal codeName
             codeName = codeName_var.get()
             if codeName.strip() == "":
@@ -174,6 +177,9 @@ class AddPlayerButton:
                 codeName = "None"
             else:
                 popup.destroy()
+
+        #binding enter key to submit code name
+        codeName_entry.bind("<Return>", submitCodename)
 
         # Submit button
         submit_button = tk.Button(popup, text="Submit", command=submitCodename, font=("Arial", 12))
@@ -216,7 +222,7 @@ class AddPlayerButton:
         equipment_entry.pack(pady=5)
 
         # Function to handle submission
-        def submit_id():
+        def submit_id(event=None):
             nonlocal equipmentId
             equipmentId = equipment_var.get()
 
@@ -225,6 +231,9 @@ class AddPlayerButton:
                 equipmentId = "None"
             else:
                 popup.destroy()
+        
+        #binding enter to submit id
+        equipment_entry.bind("<Return>", submit_id)
 
         # Submit button
         submit_button = tk.Button(popup, text="Submit", command=submit_id, font=("Arial", 12))
