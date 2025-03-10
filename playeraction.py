@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, font as tkFont
+from tkinter import ttk
 from PIL import Image, ImageTk
 import os
 
@@ -41,12 +42,44 @@ class PlayerActionScreen:
         # setting name of window
         self.root.title("Photon")
         self.root.minsize(800, 600)
+        self.root.configure(bg="black")
 
         # Set title font
         title_font = tkFont.Font(family='Calibri', size=24, weight='bold')
-        title = tk.Label(self.root, text="Player Action Screen", font=title_font, bg="white", fg="black")
-        title.place(relx=0.5, rely=0.1, anchor="center")
+        title = tk.Label(self.root, text="Player Action Screen", font=title_font, bg="black", fg="white")
+        title.place(relx=0.5, rely=0.05, anchor="center")
 
         #whatever goes here, idk, thats for Trevor and Eduardo to decide
         #but whatever it is... it better be cool
         
+        #--------------------------------------------------Frames-------------------------------------------------------------------------------
+        #black background for score keeping (referenced from his github)
+        back_frame= tk.Frame(self.root, bd=1, highlightthickness=5, highlightbackground="grey", background="black")
+        back_frame.place(relx=0.15, rely=.15, relwidth=0.7, relheight=0.75)
+
+        #blue frame where gameplay is tracked
+        game_frame= tk.Frame(self.root, bd=1, highlightthickness=5, highlightbackground="grey", background="blue")
+        game_frame.place(relx=0.15, rely=.4, relwidth=0.7, relheight=0.42)
+
+
+        #-------------------------------------------------Labels--------------------------------------------------------------------------------
+        #Team labels
+        #red team
+        red_team_label = tk.Label(back_frame, text='RED TEAM', font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="red", padx=-1, pady=-1)
+        red_team_label.place(relx=.35, rely=.02, anchor="n")
+
+        #green team
+        green_team_label = tk.Label(back_frame, text='GREEN TEAM', font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="green", padx=-1, pady=-1)
+        green_team_label.place(relx=.625, rely=.02, anchor="n")
+
+        #Current score label
+        current_score_label = tk.Label(back_frame, text='Current Scores', font=('Bell Gothic Std Black', 12, 'bold italic'), background="black", foreground="cyan", padx=-1, pady=-1)
+        current_score_label.place(relx=1, rely=0, anchor="ne")
+
+        #Current action label
+        current_action_label = tk.Label(game_frame, text='Current Game Action', font=('Bell Gothic Std Black', 12, 'bold italic'), background="blue", foreground="cyan", padx=-1, pady=-1)
+        current_action_label.place(relx=1, rely=0, anchor="ne")
+
+        #Time remaining (replace placehold with incremental time value)
+        time_label = tk.Label(back_frame, text='Time Remaining: placehold', font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
+        time_label.place(relx=0.99, rely=.98, anchor="se")
