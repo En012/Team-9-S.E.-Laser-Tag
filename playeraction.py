@@ -110,11 +110,11 @@ class PlayerActionScreen:
         #-------------------------------------------------Labels--------------------------------------------------------------------------------
         ##Team labels##
         #red team
-        red_team_label = tk.Label(red_frame, text='RED TEAM', font=('Bell Gothic Std Black', 30, 'bold'), background="red", foreground="black", padx=-1, pady=-1)
+        red_team_label = tk.Label(red_frame, text='RED TEAM', font=('Bell Gothic Std Black', 27, 'bold'), background="red", foreground="black", padx=-1, pady=-1)
         red_team_label.place(relx=.5, rely=.02, anchor="n")
 
         #green team
-        green_team_label = tk.Label(green_frame, text='GREEN TEAM', font=('Bell Gothic Std Black', 30, 'bold'), background="green", foreground="black", padx=-1, pady=-1)
+        green_team_label = tk.Label(green_frame, text='GREEN TEAM', font=('Bell Gothic Std Black', 27, 'bold'), background="green", foreground="black", padx=-1, pady=-1)
         green_team_label.place(relx=.5, rely=.02, anchor="n")
         """
         #Current score label
