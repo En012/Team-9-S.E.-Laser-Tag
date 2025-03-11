@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, font as tkFont
 from tkinter import ttk
-#from PIL import Image, ImageTk
+from PIL import Image, ImageTk
 import os
 
 #This class contains all the code for the player action screen
@@ -36,18 +36,18 @@ class PlayerActionScreen:
 
     #This may be broken now, I'm not sure...
     # countdown timer function
-    # def timer(self, seconds=30):
-    #     if seconds >= 0:
-    #         print(f"{seconds}\n")
-    #         img_path = os.path.expanduser(f"images/{seconds}.tif")
-    #         self.img = Image.open(img_path)
-    #         self.img = self.img.resize((self.width, self.height), Image.LANCZOS)
-    #         self.img = ImageTk.PhotoImage(self.img)
-    #         label = tk.Label(self.root, image=self.img, bg="black")
-    #         label.pack()
-    #         self.root.after(1000, self.timer, seconds - 1)
-    #     else:
-    #         self.player_entry_screen()
+    def timer(self, seconds=30):
+        if seconds >= 0:
+            print(f"{seconds}\n")
+            img_path = os.path.expanduser(f"images/{seconds}.tif")
+            self.img = Image.open(img_path)
+            self.img = self.img.resize((self.width, self.height), Image.LANCZOS)
+            self.img = ImageTk.PhotoImage(self.img)
+            label = tk.Label(self.root, image=self.img, bg="black")
+            label.pack()
+            self.root.after(1000, self.timer, seconds - 1)
+        else:
+            self.player_entry_screen()
     
     
     #CODE FOR PLAYERACTION SCREEN GOES HERE!!!
@@ -57,22 +57,24 @@ class PlayerActionScreen:
             red_length = len(self.redIDList)
             for i in range(red_length):
                 player = self.redNameList[i]
-                red_player_name_label = tk.Label(red_frame, text=player, font=('Arial', 12), bg="red", fg="black")
-                red_player_name_label.place(relx=0.35, rely=.12 + (i * 0.05), anchor="w")
-                self.redScoreList.append(initial_score)
-                score = self.redScoreList[i]
-                red_player_score_label = tk.Label(red_frame, text=score, font=('Arial', 12), bg="red", fg="black")
-                red_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
+                if(player != " "):
+                    red_player_name_label = tk.Label(red_frame, text=player, font=('Arial', 12), bg="red", fg="black")
+                    red_player_name_label.place(relx=0.35, rely=.12 + (i * 0.05), anchor="w")
+                    self.redScoreList.append(initial_score)
+                    score = self.redScoreList[i]
+                    red_player_score_label = tk.Label(red_frame, text=score, font=('Arial', 12), bg="red", fg="black")
+                    red_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
             #green team players
             green_length = len(self.greenIDList)
             for i in range(green_length):
                 player = self.greenNameList[i]
-                green_player_name_label = tk.Label(green_frame, text=player, font=('Arial', 12), bg="green", fg="black")
-                green_player_name_label.place(relx=0.35, rely=.12 + (i * 0.05), anchor="w")
-                self.greenScoreList.append(initial_score)
-                score = self.greenScoreList[i]
-                green_player_score_label = tk.Label(green_frame, text=score, font=('Arial', 12), bg="green", fg="black")
-                green_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
+                if(player != " "):
+                    green_player_name_label = tk.Label(green_frame, text=player, font=('Arial', 12), bg="green", fg="black")
+                    green_player_name_label.place(relx=0.35, rely=.12 + (i * 0.05), anchor="w")
+                    self.greenScoreList.append(initial_score)
+                    score = self.greenScoreList[i]
+                    green_player_score_label = tk.Label(green_frame, text=score, font=('Arial', 12), bg="green", fg="black")
+                    green_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
     
     def run(self):
 
