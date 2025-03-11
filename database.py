@@ -1,15 +1,16 @@
+import os
 import sqlite3
 import psycopg2
 
 insideVM = True
 def initialize_database():
-    try:
+    if os.name == "posix":
         # Try connecting to the PostgreSQL database
         conn = connectToVMDatabase()
         cursor = conn.cursor()
         print("Connected to PostgreSQL database.")
-    except Exception as e:
-        print(f"PostgreSQL connection failed: {e}\nFalling back to SQLite.")
+    else:
+        print(f"PostgreSQL connection failed. \nFalling back to SQLite.")
         global insideVM
         insideVM = False
         
