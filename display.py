@@ -71,15 +71,32 @@ class Display:
         label = tk.Label(self.root, image=self.img, bg="black")    
         label.pack()
         self.root.geometry(f"{self.width}x{self.height}")
+        
+    #code for the countdown timer screen
+    def countdown_timer(self, seconds=30):
+        if seconds >= 0:
+            print(f"{seconds}\n")
+            img_path = os.path.expanduser(f"images/{seconds}.jpg")
+            self.img = Image.open(img_path)
+            self.img = self.img.resize((self.width, self.height), Image.LANCZOS)
+            self.img = ImageTk.PhotoImage(self.img)
+            if not hasattr(self, "label"):
+                self.label = tk.Label(self.root, image=self.img, bg="black")
+                self.label.pack()
+            self.label.config(image=self.img)
+            self.root.geometry(f"{self.width}x{self.height}")
+            self.root.after(1000, self.countdown_timer, seconds - 1)
+        else:
+            self.PlayerActionScreen.run() # Show the player action screen
     
     #switch to playerEntryScreen
     def switchToPlayerEntry(self):
         self.PlayerEntryScreen.run() #show the playerentry screen
 
-    #switch to playerActionScreen
+    #switch to playerActionScreen (Ed: Possible name change due to how its modified now?)
     def switchToPlayerAction(self):
         # Reinitialize the display when switching back
         for widget in self.root.winfo_children():
             widget.destroy()  # Clear current widgets
-        self.PlayerActionScreen.run() # Show the playeraction screen
+        self.countdown_timer() # Show the playeraction screen
         
