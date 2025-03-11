@@ -1,15 +1,26 @@
 import sqlite3
+import psycopg2
 
-#Initialize the database and create the players table if it doesn't exist.
+insideVM = True
 def initialize_database():
-    # Connect to the SQLite database (creates file if it doesn't exist)
-    conn = sqlite3.connect("players.db")
-    cursor = conn.cursor()
+    try:
+        # Try connecting to the PostgreSQL database
+        conn = connectToVMDatabase()
+        cursor = conn.cursor()
+        print("Connected to PostgreSQL database.")
+    except Exception as e:
+        print(f"PostgreSQL connection failed: {e}\nFalling back to SQLite.")
+        global insideVM
+        insideVM = False
+        
+        # Fallback to SQLite
+        conn = sqlite3.connect("players.db")
+        cursor = conn.cursor()
     
-    # Create the Players table
+    # Create the Players table if it doesn't exist
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS Players (
-            playerID INTEGER PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS players (
+            playerID SERIAL PRIMARY KEY,
             codeName TEXT NOT NULL
         )
     ''')
@@ -17,51 +28,84 @@ def initialize_database():
     # Commit changes and close connection
     conn.commit()
     conn.close()
+    print("Database initialized successfully.")
 
 #Checks if an entry is already in the database
 #Returns true if it is. False if it is not
 def checkInDatabase(playerID):
-    conn = sqlite3.connect("players.db")
-    cursor = conn.cursor()
+    global insideVM
+
+    if insideVM:
+        conn = connectToVMDatabase()
+        cursor = conn.cursor()
+        query = "SELECT 1 FROM players WHERE playerID = %s"
+    else:
+        conn = sqlite3.connect("players.db")
+        cursor = conn.cursor()
+        query = "SELECT 1 FROM players WHERE playerID = ?"
     
-    cursor.execute("SELECT 1 FROM Players WHERE playerID = ?", (playerID,))
+    cursor.execute(query, (playerID,))
     result = cursor.fetchone()
     
     conn.close()
     return result is not None
 
-#Adds an entry with the given playerID and codename to the database
 def addPlayer(playerID, codename):
-    conn = sqlite3.connect("players.db")
-    cursor = conn.cursor()
+    global insideVM
+
+    if insideVM:
+        conn = connectToVMDatabase()
+        cursor = conn.cursor()
+        query = "INSERT INTO players (playerID, codeName) VALUES (%s, %s)"
+    else:
+        conn = sqlite3.connect("players.db")
+        cursor = conn.cursor()
+        query = "INSERT INTO players (playerID, codeName) VALUES (?, ?)"
     
-    try:
-        cursor.execute("INSERT INTO Players (playerID, Codename) VALUES (?, ?)", (playerID, codename))
-        conn.commit()
-        #print("Player added successfully.")
-    except sqlite3.IntegrityError:
-        print("Error: PlayerID already exists.")
-    
+    cursor.execute(query, (playerID, codename))
+    conn.commit()    
     conn.close()
 
-#Removes the player with the specified ID from the database
 def removePlayer(playerID):
-    conn = sqlite3.connect("players.db")
-    cursor = conn.cursor()
+    global insideVM
+
+    if insideVM:
+        conn = connectToVMDatabase()
+        cursor = conn.cursor()
+        query = "DELETE FROM players WHERE playerID = %s"
+    else:
+        conn = sqlite3.connect("players.db")
+        cursor = conn.cursor()
+        query = "DELETE FROM players WHERE playerID = ?"
     
-    cursor.execute("DELETE FROM Players WHERE playerID = ?", (playerID,))
+    cursor.execute(query, (playerID,))
     conn.commit()
     conn.close()
-    print("Player removed successfully.")
 
-#Retrieves the codename associated with the given playerID as a string
 def getCodeName(playerID):
-    conn = sqlite3.connect("players.db")
-    cursor = conn.cursor()
-    
-    cursor.execute("SELECT Codename FROM Players WHERE playerID = ?", (playerID,))
+    global insideVM
+
+    if insideVM:
+        conn = connectToVMDatabase()
+        cursor = conn.cursor()
+        query = "SELECT codeName FROM players WHERE playerID = %s"
+    else:
+        conn = sqlite3.connect("players.db")
+        cursor = conn.cursor()
+        query = "SELECT codeName FROM players WHERE playerID = ?"
+
+    cursor.execute(query, (playerID,))
     result = cursor.fetchone()
     
     conn.close()
-    #returns None, if not codename is found
     return result[0] if result else None
+
+def connectToVMDatabase():
+    conn = psycopg2.connect(
+            dbname="photon",
+            user="student",
+            password="student",
+            host="localhost",
+            port="5432"
+        )
+    return conn
