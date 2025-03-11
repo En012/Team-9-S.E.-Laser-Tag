@@ -16,12 +16,11 @@ def initialize_database():
             print(f"PostgreSQL connection failed: {e}\nFalling back to SQLite.")
             insideVM = False
  
-         # Fallback to SQLite
-         conn = sqlite3.connect("players.db")
-         cursor = conn.cursor()
+        # Fallback to SQLite
+        conn = sqlite3.connect("players.db")
+        cursor = conn.cursor()
     else:
         print(f"PostgreSQL connection failed. \nFalling back to SQLite.")
-        global insideVM
         insideVM = False
         
         # Fallback to SQLite
