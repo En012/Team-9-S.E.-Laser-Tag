@@ -20,8 +20,8 @@ def initialize_database():
     # Create the Players table if it doesn't exist
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS players (
-            playerID SERIAL PRIMARY KEY,
-            codeName TEXT NOT NULL
+            id SERIAL PRIMARY KEY,
+            codename TEXT NOT NULL
         )
     ''')
     
@@ -32,69 +32,69 @@ def initialize_database():
 
 #Checks if an entry is already in the database
 #Returns true if it is. False if it is not
-def checkInDatabase(playerID):
+def checkInDatabase(id):
     global insideVM
 
     if insideVM:
         conn = connectToVMDatabase()
         cursor = conn.cursor()
-        query = "SELECT 1 FROM players WHERE playerID = %s"
+        query = "SELECT 1 FROM players WHERE id = %s"
     else:
         conn = sqlite3.connect("players.db")
         cursor = conn.cursor()
-        query = "SELECT 1 FROM players WHERE playerID = ?"
+        query = "SELECT 1 FROM players WHERE id = ?"
     
-    cursor.execute(query, (playerID,))
+    cursor.execute(query, (id,))
     result = cursor.fetchone()
     
     conn.close()
     return result is not None
 
-def addPlayer(playerID, codename):
+def addPlayer(id, codename):
     global insideVM
 
     if insideVM:
         conn = connectToVMDatabase()
         cursor = conn.cursor()
-        query = "INSERT INTO players (playerID, codeName) VALUES (%s, %s)"
+        query = "INSERT INTO players (id, codename) VALUES (%s, %s)"
     else:
         conn = sqlite3.connect("players.db")
         cursor = conn.cursor()
-        query = "INSERT INTO players (playerID, codeName) VALUES (?, ?)"
+        query = "INSERT INTO players (id, codename) VALUES (?, ?)"
     
-    cursor.execute(query, (playerID, codename))
+    cursor.execute(query, (id, codename))
     conn.commit()    
     conn.close()
 
-def removePlayer(playerID):
+def removePlayer(id):
     global insideVM
 
     if insideVM:
         conn = connectToVMDatabase()
         cursor = conn.cursor()
-        query = "DELETE FROM players WHERE playerID = %s"
+        query = "DELETE FROM players WHERE id = %s"
     else:
         conn = sqlite3.connect("players.db")
         cursor = conn.cursor()
-        query = "DELETE FROM players WHERE playerID = ?"
+        query = "DELETE FROM players WHERE id = ?"
     
-    cursor.execute(query, (playerID,))
+    cursor.execute(query, (id,))
     conn.commit()
     conn.close()
 
-def getCodeName(playerID):
+def getCodeName(id):
     global insideVM
 
     if insideVM:
         conn = connectToVMDatabase()
         cursor = conn.cursor()
-        query = "SELECT codeName FROM players WHERE playerID = %s"
+        query = "SELECT codename FROM players WHERE id = %s"
     else:
         conn = sqlite3.connect("players.db")
         cursor = conn.cursor()
-        query = "SELECT codeName FROM players WHERE playerID = ?"
+        query = "SELECT codename FROM players WHERE id = ?"
 
-    cursor.execute(query, (playerID,))
+    cursor.execute(query, (id,))
     result = cursor.fetchone()
     
     conn.close()
