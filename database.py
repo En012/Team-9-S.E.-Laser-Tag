@@ -41,7 +41,6 @@ def initialize_database():
     # Commit changes and close connection
     conn.commit()
     conn.close()
-    print("Database initialized successfully.")
 
 #Checks if an entry is already in the database
 #Returns true if it is. False if it is not
