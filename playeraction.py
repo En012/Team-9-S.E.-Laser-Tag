@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, font as tkFont
 from tkinter import ttk
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk # Should probably be commented out since it is not used at the moment
 import os
 
 #This class contains all the code for the player action screen
@@ -32,23 +32,6 @@ class PlayerActionScreen:
             self.root.after(1000, self.update_timer)
         else:
             self.player_entry_screen()
-
-
-    #This may be broken now, I'm not sure...
-    # countdown timer function
-    def timer(self, seconds=30):
-        if seconds >= 0:
-            print(f"{seconds}\n")
-            img_path = os.path.expanduser(f"images/{seconds}.tif")
-            self.img = Image.open(img_path)
-            self.img = self.img.resize((self.width, self.height), Image.LANCZOS)
-            self.img = ImageTk.PhotoImage(self.img)
-            label = tk.Label(self.root, image=self.img, bg="black")
-            label.pack()
-            self.root.after(1000, self.timer, seconds - 1)
-        else:
-            self.player_entry_screen()
-    
     
     #CODE FOR PLAYERACTION SCREEN GOES HERE!!!
     def display_players(self, red_frame, green_frame):
