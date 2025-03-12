@@ -73,7 +73,7 @@ class Display:
         self.root.geometry(f"{self.width}x{self.height}")
         
     #code for the countdown timer screen
-    def countdown_timer(self, seconds=30):
+    def countdown_timer_screen(self, seconds=30):
         if seconds >= 0:
             #print(f"{seconds}\n")
             img_path = os.path.expanduser(f"images/{seconds}.jpg")
@@ -85,7 +85,7 @@ class Display:
                 self.label.pack()
             self.label.config(image=self.img)
             self.root.geometry(f"{self.width}x{self.height}")
-            self.root.after(1000, self.countdown_timer, seconds - 1)
+            self.root.after(1000, self.countdown_timer_screen, seconds - 1)
         else:
             self.PlayerActionScreen.run() # Show the player action screen
     
@@ -98,5 +98,5 @@ class Display:
         # Reinitialize the display when switching back
         for widget in self.root.winfo_children():
             widget.destroy()  # Clear current widgets
-        self.countdown_timer() # Show the playeraction screen
+        self.countdown_timer_screen() # Show the playeraction screen
         
