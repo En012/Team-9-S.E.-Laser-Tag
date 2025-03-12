@@ -75,7 +75,7 @@ class Display:
     #code for the countdown timer screen
     def countdown_timer(self, seconds=30):
         if seconds >= 0:
-            print(f"{seconds}\n")
+            #print(f"{seconds}\n")
             img_path = os.path.expanduser(f"images/{seconds}.jpg")
             self.img = Image.open(img_path)
             self.img = self.img.resize((self.width, self.height), Image.LANCZOS)
