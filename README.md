@@ -24,6 +24,11 @@ This can be installed with the following command:
 ###    
     pip install pillow
 
+## Psycopg2
+This can be installed with the following command:
+###
+    pip install psycopg2-binary
+
 # Running the program
 
 After downloading and extracting the zip file, navigate to the project folder within your command line.
