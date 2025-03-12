@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox, font as tkFont
 from tkinter import ttk
-from PIL import Image, ImageTk # Should probably be commented out since it is not used at the moment
+from playerentry import PlayerEntryScreen
+#from PIL import Image, ImageTk # Should probably be commented out since it is not used at the moment
 import os
 
 #This class contains all the code for the player action screen
@@ -18,7 +19,6 @@ class PlayerActionScreen:
         self.greenNameList = greenNameList
         self.redScoreList = []
         self.greenScoreList = []
-
     #Countdown timer
     def update_timer(self):
         if self.seconds_left >= 0:
@@ -58,9 +58,15 @@ class PlayerActionScreen:
                     score = self.greenScoreList[i]
                     green_player_score_label = tk.Label(green_frame, text=score, font=('Arial', 12), bg="green", fg="black")
                     green_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
-    
+    """def switch_to_entry(self):
+            """Switches back to the Player Entry Screen"""
+            from display import Display
+            for widget in self.root.winfo_children():
+                widget.destroy()  # Clear current widgets
+            self.PlayerEntryScreen = PlayerEntryScreen(self.root, self.redIDList, self.greenIDList,self.redNameList, self.greenNameList, Display.switchToPlayerAction)
+            self.PlayerEntryScreen.run()  # Restart Player Entry Screen
+    """
     def run(self):
-
         #change this value to change gameplay time
         self.seconds_left = 360
         
@@ -116,6 +122,8 @@ class PlayerActionScreen:
         self.time_remaining_label = tk.Label(black_frame, text=f"{self.seconds_left}", font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
         self.time_remaining_label.place(relx=0.5, rely=.85, anchor="n")
         self.display_players(red_frame, green_frame)
+        #back_button = tk.Button(black_frame, text="Back to Player Entry", command=self.switch_to_entry, font=("Arial", 12), bg="white")
+        #back_button.place(relx=0.5, rely=0.9, anchor="n")
         #starting the countdown
         self.update_timer()
 #test
