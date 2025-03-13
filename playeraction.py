@@ -19,6 +19,9 @@ class PlayerActionScreen:
         self.greenNameList = greenNameList
         self.redScoreList = []
         self.greenScoreList = []
+        self.greenTotalScore = 0
+        self.redTotalScore = 0
+
     #Countdown timer
     def update_timer(self):
         if self.seconds_left >= 0:
@@ -47,6 +50,7 @@ class PlayerActionScreen:
                     score = self.redScoreList[i]
                     red_player_score_label = tk.Label(red_frame, text=score, font=('Arial', 12), bg="red", fg="black")
                     red_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
+                    self.redTotalScore = self.redTotalScore + score
             #green team players
             green_length = len(self.greenIDList)
             for i in range(green_length):
@@ -58,6 +62,7 @@ class PlayerActionScreen:
                     score = self.greenScoreList[i]
                     green_player_score_label = tk.Label(green_frame, text=score, font=('Arial', 12), bg="green", fg="black")
                     green_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
+                    self.greenTotalScore = self.greenTotalScore + score
     """def switch_to_entry(self):
             from display import Display
             for widget in self.root.winfo_children():
@@ -103,9 +108,15 @@ class PlayerActionScreen:
         red_team_label = tk.Label(red_frame, text='RED TEAM', font=('Bell Gothic Std Black', 27, 'bold'), background="red", foreground="black", padx=-1, pady=-1)
         red_team_label.place(relx=.5, rely=.02, anchor="n")
 
+        red_total_score = tk.Label(red_frame, text=f'RED TEAM SCORE: {self.redTotalScore}', font=('Bell Gothic Std Black', 15, "bold"), background="red", foreground="black", padx=-1, pady=-1)
+        red_total_score.place(relx=.49, rely=0.99, anchor="s")
+
         #green team
         green_team_label = tk.Label(green_frame, text='GREEN TEAM', font=('Bell Gothic Std Black', 27, 'bold'), background="green", foreground="black", padx=-1, pady=-1)
         green_team_label.place(relx=.5, rely=.02, anchor="n")
+
+        green_total_score = tk.Label(green_frame, text=f'GREEN TEAM SCORE: {self.greenTotalScore}', font=('Bell Gothic Std Black', 15, "bold"), background="green", foreground="black", padx=-1, pady=-1)
+        green_total_score.place(relx=.49, rely=0.99, anchor="s")
         """
         #Current score label
         current_score_label = tk.Label(main_frame, text='Current Scores', font=('Bell Gothic Std Black', 12, 'bold italic'), background="black", foreground="cyan", padx=-1, pady=-1)
