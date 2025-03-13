@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, font as tkFont
 from tkinter import ttk
-from playerentry import PlayerEntryScreen
+#from playerentry import PlayerEntryScreen
 #from PIL import Image, ImageTk # Should probably be commented out since it is not used at the moment
 import os
 
@@ -37,6 +37,16 @@ class PlayerActionScreen:
             self.player_entry_screen()
     
     #CODE FOR PLAYERACTION SCREEN GOES HERE!!!
+    def update_ui(self):
+        self.root.update()
+        self.green_width1 = self.root.winfo_width() / 3
+        if(self.green_width1 != self.green_width):
+            self.green_width = self.green_width1
+            check = self.green_label_width/self.green_width
+            green_place = 1 - check
+            self.current_score_label_green.place(relx=green_place, rely=0, anchor="nw")
+        self.root.after(200, self.update_ui)
+
     def display_players(self, red_frame, green_frame):
             initial_score = 0
             # Red team players
@@ -117,15 +127,21 @@ class PlayerActionScreen:
 
         green_total_score = tk.Label(green_frame, text=f'GREEN TEAM SCORE: {self.greenTotalScore}', font=('Bell Gothic Std Black', 15, "bold"), background="green", foreground="black", padx=-1, pady=-1)
         green_total_score.place(relx=.49, rely=0.99, anchor="s")
-        """
-        #Current score label
-        current_score_label = tk.Label(main_frame, text='Current Scores', font=('Bell Gothic Std Black', 12, 'bold italic'), background="black", foreground="cyan", padx=-1, pady=-1)
-        current_score_label.place(relx=1, rely=0, anchor="ne")
+       #Current score label
+        current_score_label_red = tk.Label(red_frame, text='Current Scores', font=('Bell Gothic Std Black', 12, 'bold italic'), background="red", foreground="cyan", padx=-1, pady=-1)
+        current_score_label_red.place(relx=0, rely=0, anchor="nw")
+        self.current_score_label_green = tk.Label(green_frame, text='Current Scores', font=('Bell Gothic Std Black', 12, 'bold italic'), background="green", foreground="cyan", padx=-1, pady=-1)
+        self.green_label_width = self.current_score_label_green.winfo_reqwidth()
+        self.root.update()
+        self.green_width = self.root.winfo_width() / 3
+        check = self.green_label_width/self.green_width
+        green_place = 1 - check
+        self.current_score_label_green.place(relx=green_place, rely=0, anchor="nw")
+
 
         #Current action label
-        current_action_label = tk.Label(main_frame, text='Current Game Action', font=('Bell Gothic Std Black', 12, 'bold italic'), background="blue", foreground="cyan", padx=-1, pady=-1)
-        current_action_label.place(relx=1, rely=0, anchor="ne")"
-        """
+        current_action_label = tk.Label(black_frame, text='Current Game Action', font=('Bell Gothic Std Black', 12, 'bold italic'), background="black", foreground="cyan", padx=-1, pady=-1)
+        current_action_label.place(relx=0.5, rely=0, anchor="n")
         #Time remaining
         self.time_label = tk.Label(black_frame, text=f"Time Remaining:", font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
         self.time_label.place(relx=0.5, rely=.8, anchor="n")
@@ -136,6 +152,7 @@ class PlayerActionScreen:
         #back_button.place(relx=0.5, rely=0.9, anchor="n")
         #starting the countdown
         self.update_timer()
+        self.update_ui()
 #test
 if __name__ == "__main__":
     root = tk.Tk()
