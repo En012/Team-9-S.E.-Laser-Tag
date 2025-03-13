@@ -84,7 +84,6 @@ class Display:
                 self.label = tk.Label(self.root, image=self.img, bg="black")
                 self.label.pack()
             self.label.config(image=self.img)
-            self.root.geometry(f"{self.width}x{self.height}")
             self.root.after(1000, self.countdown_timer_screen, seconds - 1)
         else:
             self.PlayerActionScreen.run() # Show the player action screen
