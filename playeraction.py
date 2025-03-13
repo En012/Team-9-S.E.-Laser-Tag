@@ -59,7 +59,6 @@ class PlayerActionScreen:
                     green_player_score_label = tk.Label(green_frame, text=score, font=('Arial', 12), bg="green", fg="black")
                     green_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
     """def switch_to_entry(self):
-            """Switches back to the Player Entry Screen"""
             from display import Display
             for widget in self.root.winfo_children():
                 widget.destroy()  # Clear current widgets
