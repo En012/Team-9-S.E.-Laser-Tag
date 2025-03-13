@@ -153,15 +153,3 @@ class PlayerActionScreen:
         #starting the countdown
         self.update_timer()
         self.update_ui()
-#test
-if __name__ == "__main__":
-    root = tk.Tk()
-    # Example data, this would be passed from the display.py
-    redIDList = ["1", "2"]
-    greenIDList = ["3", "4"]
-    redNameList = ["Red1", "Red2"]
-    greenNameList = ["Green1", "Green2"]
-
-    screen = PlayerActionScreen(root, redIDList, greenIDList, redNameList, greenNameList)
-    screen.run()
-    root.mainloop()
