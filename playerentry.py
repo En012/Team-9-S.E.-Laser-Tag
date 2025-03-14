@@ -106,6 +106,9 @@ class PlayerEntryScreen:
 
         self.player_entry_buttons()
 
+        #binding F9 to add player
+        self.root.bind("<F9>", lambda event: self.AddPlayerButton.addPlayer(self.id_vars, self.name_vars, self.id_vars2, self.name_vars2))
+
     # Handles all the code for displaying buttons and calling the appropriate method
     def player_entry_buttons(self):
 
@@ -117,7 +120,7 @@ class PlayerEntryScreen:
         address_btn = tk.Button(self.root, text="Change Address", command=self.UDPButton.change_udp_client_inter, width=15, height=3, bd=1, relief="solid")
 
         # button for adding a player to the game. Calls method from the AddPlayerButton object
-        add_btn = tk.Button(self.root, text='Add Player',
+        add_btn = tk.Button(self.root, text='Add Player [F9]',
                             command=lambda: self.AddPlayerButton.addPlayer(self.id_vars, self.name_vars, self.id_vars2, self.name_vars2),
                             width=15, height=3, bd=1, relief="solid")
 

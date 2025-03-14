@@ -115,6 +115,8 @@ class AddPlayerButton:
         player_id_var = tk.StringVar()
         player_id_entry = tk.Entry(popup, textvariable=player_id_var, font=("Arial", 12))
         player_id_entry.pack(pady=5)
+        #setting the keyboard to be ready to type
+        player_id_entry.focus_set()
 
         # Function to handle submission
         def submit_id(event=None):
@@ -167,6 +169,8 @@ class AddPlayerButton:
         codeName_var = tk.StringVar()
         codeName_entry = tk.Entry(popup, textvariable=codeName_var, font=("Arial", 12))
         codeName_entry.pack(pady=5)
+        #setting keyboard to be ready to type
+        codeName_entry.focus_set()
 
         # Function to handle submission
         def submitCodename(event=None):
@@ -220,6 +224,7 @@ class AddPlayerButton:
         equipment_var = tk.StringVar()
         equipment_entry = tk.Entry(popup, textvariable=equipment_var, font=("Arial", 12))
         equipment_entry.pack(pady=5)
+        equipment_entry.focus_set()
 
         # Function to handle submission
         def submit_id(event=None):
