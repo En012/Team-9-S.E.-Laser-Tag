@@ -48,7 +48,7 @@ class Display:
 
     #code for clear button
     def clear_entry(self, event=None):
-        print("F12 pressed")
+        print("Entries Cleared")
         for i in range(15):
             #invidually clearing the lists values.
             self.redIDList[i] = " "
