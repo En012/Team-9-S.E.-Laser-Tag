@@ -7,7 +7,7 @@ from addplayerbutton import AddPlayerButton
 #This class contains all code for the PlayerEntryScreen
 class PlayerEntryScreen:
     #Default constructor
-    def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, switch_to_player_action):
+    def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, master):
 
         #Get root, ID, and Name lists from display.py
         self.root = root
@@ -23,7 +23,7 @@ class PlayerEntryScreen:
         #so when you press the start game button the program counter will go as follows: 
         #startGame in playerentry.py ---> switchToPlayerAction in display.py ---> run in playeraction.py
 
-        self.switch_to_player_action = switch_to_player_action
+        self.master = master
 
         #-------------------------------------------------------------------------------------------------------------
 
@@ -148,4 +148,4 @@ class PlayerEntryScreen:
             return
         # otherwise, start the game
         else:
-            self.switch_to_player_action() #go back to display.py and switch to the player action screen
+            self.master.switchToPlayerAction() #go back to display.py and switch to the player action screen

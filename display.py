@@ -28,11 +28,11 @@ class Display:
 
         #Initialize the playerentryscreen
         #All code for PlayerEntryScreen can be found in playerentry.py
-        self.PlayerEntryScreen = PlayerEntryScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList, self.switchToPlayerAction) 
+        self.PlayerEntryScreen = PlayerEntryScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList, self) 
 
         #Initialize the playeractionscreen
         #All code for PlayerActionScreen can be found in playeraction.py
-        self.PlayerActionScreen = PlayerActionScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList)
+        self.PlayerActionScreen = PlayerActionScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList, self)
         
         #binding F10 key to call clear button
         self.root.bind("<F12>", self.clear_entry)
@@ -73,17 +73,18 @@ class Display:
         self.root.geometry(f"{self.width}x{self.height}")
         
     #code for the countdown timer screen
-    def countdown_timer_screen(self, seconds=30):
+    def countdown_timer_screen(self, seconds):
         if seconds >= 0:
             #print(f"{seconds}\n")
             img_path = os.path.expanduser(f"images/{seconds}.jpg")
             self.img = Image.open(img_path)
             self.img = self.img.resize((self.width, self.height), Image.LANCZOS)
             self.img = ImageTk.PhotoImage(self.img)
-            if not hasattr(self, "label"):
+            if hasattr(self, "label") and self.label.winfo_exists():
+                self.label.config(image=self.img)
+            else:
                 self.label = tk.Label(self.root, image=self.img, bg="black")
                 self.label.pack()
-            self.label.config(image=self.img)
             self.root.after(1000, self.countdown_timer_screen, seconds - 1)
         else:
             self.PlayerActionScreen.run() # Show the player action screen
@@ -97,5 +98,5 @@ class Display:
         # Reinitialize the display when switching back
         for widget in self.root.winfo_children():
             widget.destroy()  # Clear current widgets
-        self.countdown_timer_screen() # Show the playeraction screen
+        self.countdown_timer_screen(30) # Show the playeraction screen
         
