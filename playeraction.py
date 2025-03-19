@@ -22,10 +22,12 @@ class PlayerActionScreen:
         self.greenTotalScore = 0
         self.redTotalScore = 0
         self.master = master
+        self.timerEnd = False
 
     #Countdown timer
     def update_timer(self):
         if self.seconds_left >= 0:
+            self.timerEnd = False
             #formatting into minutes/seconds
             minutes, seconds = divmod(self.seconds_left, 60)
 
@@ -35,8 +37,8 @@ class PlayerActionScreen:
             #schedule update_timer to run again after 1 second
             self.root.after(1000, self.update_timer)
         else:
-            self.player_entry_screen()
-    
+            self.timerEnd = True
+            self.back_to_entry_screen(self.timerEnd)
     #CODE FOR PLAYERACTION SCREEN GOES HERE!!!
     def update_ui(self):
         self.root.update()
@@ -107,10 +109,10 @@ class PlayerActionScreen:
         """
         red_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="red")
         green_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="green")
-        black_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="black")
+        self.black_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="black")
 
         red_frame.place(relx=0, rely=0, relwidth=.33333333333, relheight=1)
-        black_frame.place(relx=.33333333333, rely=0, relwidth=.333333333334, relheight=1)
+        self.black_frame.place(relx=.33333333333, rely=0, relwidth=.333333333334, relheight=1)
         green_frame.place(relx=.666666667, rely=0, relwidth=.33333333333, relheight=1)
         #-------------------------------------------------Labels--------------------------------------------------------------------------------
         ##Team labels##
@@ -140,16 +142,19 @@ class PlayerActionScreen:
 
 
         #Current action label
-        current_action_label = tk.Label(black_frame, text='Current Game Action', font=('Bell Gothic Std Black', 12, 'bold italic'), background="black", foreground="cyan", padx=-1, pady=-1)
+        current_action_label = tk.Label(self.black_frame, text='Current Game Action', font=('Bell Gothic Std Black', 12, 'bold italic'), background="black", foreground="cyan", padx=-1, pady=-1)
         current_action_label.place(relx=0.5, rely=0, anchor="n")
         #Time remaining
-        self.time_label = tk.Label(black_frame, text=f"Time Remaining:", font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
+        self.time_label = tk.Label(self.black_frame, text=f"Time Remaining:", font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
         self.time_label.place(relx=0.5, rely=.8, anchor="n")
-        self.time_remaining_label = tk.Label(black_frame, text=f"{self.seconds_left}", font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
+        self.time_remaining_label = tk.Label(self.black_frame, text=f"{self.seconds_left}", font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
         self.time_remaining_label.place(relx=0.5, rely=.85, anchor="n")
         self.display_players(red_frame, green_frame)
-        back_button = tk.Button(black_frame, text="Back to Player Entry", command=self.switch_to_entry, font=("Arial", 12), bg="white")
-        back_button.place(relx=0.5, rely=0.9, anchor="n")
         #starting the countdown
         self.update_timer()
         self.update_ui()
+
+    def back_to_entry_screen(self, appear):
+         if(appear == True):
+            back_button = tk.Button(self.black_frame, text="Back to Player Entry", command=self.switch_to_entry, font=("Arial", 12), bg="white")
+            back_button.place(relx=0.5, rely=0.9, anchor="n")
