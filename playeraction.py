@@ -156,5 +156,5 @@ class PlayerActionScreen:
 
     def back_to_entry_screen(self, appear):
          if(appear == True):
-            back_button = tk.Button(self.black_frame, text="Back to Player Entry", command=self.switch_to_entry, font=("Arial", 12), bg="white")
+            back_button = tk.Button(self.black_frame, text="End Game", command=self.switch_to_entry, font=("Arial", 12), bg="white")
             back_button.place(relx=0.5, rely=0.9, anchor="n")
