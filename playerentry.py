@@ -65,8 +65,8 @@ class PlayerEntryScreen:
         self.name_vars2 = [tk.StringVar(value=self.greenNameList[i]) for i in range(15)]
 
         #Create labels for keyboard input instructions
-        clear_label = tk.Label(self.root, text='Clear Screen <F12>', font = ('calibre', 8, 'bold'), background="red")
-        clear_label.place(relx=0.201, rely=0.98, anchor="center")
+        clear_label = tk.Label(self.root, text='Clear Screen <F12>', font = ('calibre', 8, 'bold'), background="green")
+        clear_label.place(relx=0.8, rely=0.98, anchor="center")
 
         # Create labels for red team
         id_label = tk.Label(self.root, text='ID', font=('calibre', 12, 'bold'), background="red", padx=-1,pady=-1)
