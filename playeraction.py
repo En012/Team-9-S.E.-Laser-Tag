@@ -84,7 +84,7 @@ class PlayerActionScreen:
     
     def run(self):
         #change this value to change gameplay time
-        self.seconds_left = 360
+        self.seconds_left = 360 
         
         # setting name of window
         self.root.title("Photon")
