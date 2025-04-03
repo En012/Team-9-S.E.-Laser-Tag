@@ -4,7 +4,7 @@ from tkinter import ttk
 #from playerentry import PlayerEntryScreen
 #from PIL import Image, ImageTk # Should probably be commented out since it is not used at the moment
 import os
-
+#from actions import Action
 #This class contains all the code for the player action screen
 class PlayerActionScreen:
 
@@ -22,12 +22,36 @@ class PlayerActionScreen:
         self.greenTotalScore = 0
         self.redTotalScore = 0
         self.master = master
+        self.temp_green = 0
+        self.temp_red = 0
         self.timerEnd = False
+        self.redHigh = False
+        self.greenHigh = False
 
     #Countdown timer
     def update_timer(self):
         if self.seconds_left >= 0:
             self.timerEnd = False
+            if(self.redTotalScore != self.temp_green or self.greenTotalScore != self.temp_green):
+                self.temp_green = self.greenTotalScore
+                self.temp_red = self.redTotalScore
+                self.red_total_score.config(text=f'RED TEAM SCORE: {self.redTotalScore}')
+                self.green_total_score.config(text=f'GREEN TEAM SCORE: {self.greenTotalScore}')
+                self.flash_high(self.redTotalScore, self.greenTotalScore)
+            if(self.greenHigh):
+                if self.seconds_left % 2:
+                    self.red_total_score.config(foreground='black')
+                    self.green_total_score.config(foreground='black')
+                else:
+                    self.red_total_score.config(foreground='black')
+                    self.green_total_score.config(foreground='blue')
+            elif(self.redHigh):
+                if self.seconds_left % 2:
+                    self.red_total_score.config(foreground='black')
+                    self.green_total_score.config(foreground='black')
+                else:
+                    self.red_total_score.config(foreground='blue')
+                    self.green_total_score.config(foreground='black')
             #formatting into minutes/seconds
             minutes, seconds = divmod(self.seconds_left, 60)
 
@@ -63,7 +87,8 @@ class PlayerActionScreen:
                     score = self.redScoreList[i]
                     red_player_score_label = tk.Label(red_frame, text=score, font=('Arial', 12), bg="red", fg="black")
                     red_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
-                    self.redTotalScore = self.redTotalScore + score
+                    #self.redTotalScore = self.redTotalScore + score + 10
+                    self.redTotalScore = 100
             #green team players
             green_length = len(self.greenIDList)
             for i in range(green_length):
@@ -84,7 +109,7 @@ class PlayerActionScreen:
     
     def run(self):
         #change this value to change gameplay time
-        self.seconds_left = 360 
+        self.seconds_left = 30 
         
         # setting name of window
         self.root.title("Photon")
@@ -107,32 +132,32 @@ class PlayerActionScreen:
         #game_frame= tk.Frame(self.root, bd=1, highlightthickness=5, highlightbackground="grey", background="blue")
         #game_frame.place(relx=0.15, rely=.4, relwidth=0.7, relheight=0.42)
         """
-        red_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="red")
-        green_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="green")
+        self.red_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="red")
+        self.green_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="green")
         self.black_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="black")
 
-        red_frame.place(relx=0, rely=0, relwidth=.33333333333, relheight=1)
+        self.red_frame.place(relx=0, rely=0, relwidth=.33333333333, relheight=1)
         self.black_frame.place(relx=.33333333333, rely=0, relwidth=.333333333334, relheight=1)
-        green_frame.place(relx=.666666667, rely=0, relwidth=.33333333333, relheight=1)
+        self.green_frame.place(relx=.666666667, rely=0, relwidth=.33333333333, relheight=1)
         #-------------------------------------------------Labels--------------------------------------------------------------------------------
         ##Team labels##
         #red team
-        red_team_label = tk.Label(red_frame, text='RED TEAM', font=('Bell Gothic Std Black', 27, 'bold'), background="red", foreground="black", padx=-1, pady=-1)
+        red_team_label = tk.Label(self.red_frame, text='RED TEAM', font=('Bell Gothic Std Black', 27, 'bold'), background="red", foreground="black", padx=-1, pady=-1)
         red_team_label.place(relx=.5, rely=.02, anchor="n")
-
-        red_total_score = tk.Label(red_frame, text=f'RED TEAM SCORE: {self.redTotalScore}', font=('Bell Gothic Std Black', 15, "bold"), background="red", foreground="black", padx=-1, pady=-1)
-        red_total_score.place(relx=.49, rely=0.99, anchor="s")
+        print(self.redTotalScore)
+        self.red_total_score = tk.Label(self.red_frame, text=f'RED TEAM SCORE: {self.redTotalScore}', font=('Bell Gothic Std Black', 15, "bold"), background="red", foreground="black", padx=-1, pady=-1)
+        self.red_total_score.place(relx=.49, rely=0.99, anchor="s")
 
         #green team
-        green_team_label = tk.Label(green_frame, text='GREEN TEAM', font=('Bell Gothic Std Black', 27, 'bold'), background="green", foreground="black", padx=-1, pady=-1)
+        green_team_label = tk.Label(self.green_frame, text='GREEN TEAM', font=('Bell Gothic Std Black', 27, 'bold'), background="green", foreground="black", padx=-1, pady=-1)
         green_team_label.place(relx=.5, rely=.02, anchor="n")
-
-        green_total_score = tk.Label(green_frame, text=f'GREEN TEAM SCORE: {self.greenTotalScore}', font=('Bell Gothic Std Black', 15, "bold"), background="green", foreground="black", padx=-1, pady=-1)
-        green_total_score.place(relx=.49, rely=0.99, anchor="s")
+        print(self.greenTotalScore)
+        self.green_total_score = tk.Label(self.green_frame, text=f'GREEN TEAM SCORE: {self.greenTotalScore}', font=('Bell Gothic Std Black', 15, "bold"), background="green", foreground="black", padx=-1, pady=-1)
+        self.green_total_score.place(relx=.49, rely=0.99, anchor="s")
        #Current score label
-        current_score_label_red = tk.Label(red_frame, text='Current Scores', font=('Bell Gothic Std Black', 12, 'bold italic'), background="red", foreground="cyan", padx=-1, pady=-1)
+        current_score_label_red = tk.Label(self.red_frame, text='Current Scores', font=('Bell Gothic Std Black', 12, 'bold italic'), background="red", foreground="cyan", padx=-1, pady=-1)
         current_score_label_red.place(relx=0, rely=0, anchor="nw")
-        self.current_score_label_green = tk.Label(green_frame, text='Current Scores', font=('Bell Gothic Std Black', 12, 'bold italic'), background="green", foreground="cyan", padx=-1, pady=-1)
+        self.current_score_label_green = tk.Label(self.green_frame, text='Current Scores', font=('Bell Gothic Std Black', 12, 'bold italic'), background="green", foreground="cyan", padx=-1, pady=-1)
         self.green_label_width = self.current_score_label_green.winfo_reqwidth()
         self.root.update()
         self.green_width = self.root.winfo_width() / 3
@@ -149,12 +174,25 @@ class PlayerActionScreen:
         self.time_label.place(relx=0.5, rely=.8, anchor="n")
         self.time_remaining_label = tk.Label(self.black_frame, text=f"{self.seconds_left}", font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
         self.time_remaining_label.place(relx=0.5, rely=.85, anchor="n")
-        self.display_players(red_frame, green_frame)
+        self.flash_high(self.redTotalScore, self.greenTotalScore)
         #starting the countdown
+        self.display_players(self.red_frame, self.green_frame)
         self.update_timer()
         self.update_ui()
+
+    def flash_high(self, red_score, green_score):
+        if(red_score > green_score):
+            self.greenHigh = False
+            self.redHigh = True
+        elif(green_score > red_score):
+            self.greenHigh = True
+            self.redHigh = False
+
 
     def back_to_entry_screen(self, appear):
          if(appear == True):
             back_button = tk.Button(self.black_frame, text="End Game", command=self.switch_to_entry, font=("Arial", 12), bg="white")
             back_button.place(relx=0.5, rely=0.9, anchor="n")
+
+    #def hit(self, hit, shooter):
+    #    self.action = Action(hit, shooter, self.redIDList, self.greenIDList, self.redScoreList, self.greenScoreList, self.master)
