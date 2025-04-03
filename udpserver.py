@@ -3,7 +3,7 @@ import threading
 
 #Default server config
 udp_server_ip = "127.0.0.1"  # default IP address
-udp_server_port = 7500      # default port
+udp_server_port = 7501      # default port
 buffersize = 1024           # buffer size
 
 #global variables for server
@@ -18,7 +18,7 @@ def udp_server_loop():
         try:
             data, addr = udp_server_socket.recvfrom(buffersize)
             message = data.decode()
-            print(f"UDP server received from {addr}: {message}")
+            print(f"UDP server received from {addr}:{message}")
             # Echo the received message back to the sender
             udp_server_socket.sendto(message.encode(), addr)
         except Exception as e:
@@ -53,7 +53,7 @@ def update_and_restart_server(new_ip, new_port):
     global udp_server_ip, udp_server_port
     udp_server_ip = new_ip
     udp_server_port = new_port
-    start_udp_server()  #Restarting with new configuration (new port/new ip)
+    start_udp_server()  #Restarting with new configuration (new ip)
 
 
 
