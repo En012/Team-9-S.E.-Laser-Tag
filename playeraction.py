@@ -4,6 +4,9 @@ from tkinter import ttk
 #from playerentry import PlayerEntryScreen
 #from PIL import Image, ImageTk # Should probably be commented out since it is not used at the moment
 import os
+#import udp stuff for traffic generator
+import udpclient
+import udpserver
 
 #This class contains all the code for the player action screen
 class PlayerActionScreen:
@@ -39,7 +42,7 @@ class PlayerActionScreen:
         else:
             self.timerEnd = True
             self.back_to_entry_screen(self.timerEnd)
-    #CODE FOR PLAYERACTION SCREEN GOES HERE!!!
+
     def update_ui(self):
         self.root.update()
         self.green_width1 = self.root.winfo_width() / 3
@@ -82,6 +85,16 @@ class PlayerActionScreen:
                 widget.destroy()  # Clear current widgets
             self.master.switchToPlayerEntry()  # Restart Player Entry Screen
     
+    #gets things set up to interact with servertraffic.py
+    def start_server_traffic(self):
+        
+        #start up the udp server to listen from servertraffic.py
+        udpserver.start_udp_server()
+
+        #send startgame code (202) to servertraffic.py
+        udpclient.send_udp_message(f"{202}")
+
+
     def run(self):
         #change this value to change gameplay time
         self.seconds_left = 360 
@@ -154,7 +167,14 @@ class PlayerActionScreen:
         self.update_timer()
         self.update_ui()
 
+        #run neccessary code to interact with the traffic generator once the game beings
+        self.start_server_traffic()
+
     def back_to_entry_screen(self, appear):
          if(appear == True):
+            #send game over code to the traffic generator three times to stop the game
+            [udpclient.send_udp_message(f"{221}") for _ in range(3)]
+
+            #make back_button appear
             back_button = tk.Button(self.black_frame, text="End Game", command=self.switch_to_entry, font=("Arial", 12), bg="white")
             back_button.place(relx=0.5, rely=0.9, anchor="n")
