@@ -4,9 +4,9 @@ from tkinter import ttk
 #from playerentry import PlayerEntryScreen
 #from PIL import Image, ImageTk # Should probably be commented out since it is not used at the moment
 import os
-#import udp stuff for traffic generator
+#import udp stuff for traffic generatorcl
 import udpclient
-import udpserver
+from udpserver import UDPServer
 
 #This class contains all the code for the player action screen
 class PlayerActionScreen:
@@ -26,6 +26,8 @@ class PlayerActionScreen:
         self.redTotalScore = 0
         self.master = master
         self.timerEnd = False
+
+        self.server = UDPServer()
 
     #Countdown timer
     def update_timer(self):
@@ -89,7 +91,7 @@ class PlayerActionScreen:
     def start_server_traffic(self):
         
         #start up the udp server to listen from servertraffic.py
-        udpserver.start_udp_server()
+        self.server.start_udp_server()
 
         #send startgame code (202) to servertraffic.py
         udpclient.send_udp_message(f"{202}")
