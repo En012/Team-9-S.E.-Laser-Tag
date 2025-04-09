@@ -16,9 +16,13 @@ def send_udp_message(message, server_ip=None, server_port=None):
     try:
         UDPClientSocket.sendto(bytesToSend, (ip, port))
         print(f"Message sent to server: '{message}'")
-        msgFromServer = UDPClientSocket.recvfrom(buffersize)
-        reply = msgFromServer[0].decode()
-        print(f"Reply from server: {reply}")
+
+        #Commented this out because I believe this is the culpret for our timeout issues (why we got counted off on sprint 4)
+        #the client will always time out because its expecting a response back from the server, but the traffic gen will not provide one
+
+        #msgFromServer = UDPClientSocket.recvfrom(buffersize)
+        #reply = msgFromServer[0].decode()
+        #print(f"Reply from server: {reply}")
     except Exception as e:
         print(f"Error sending UDP message: {e}")
     finally:

@@ -27,7 +27,7 @@ class PlayerActionScreen:
         self.master = master
         self.timerEnd = False
 
-        self.server = UDPServer()
+        self.server = UDPServer(message_callback=self.handle_server_message)
 
     #Countdown timer
     def update_timer(self):
@@ -96,6 +96,16 @@ class PlayerActionScreen:
         #send startgame code (202) to servertraffic.py
         udpclient.send_udp_message(f"{202}")
 
+    #this is where playeraction recieves the message from UDPServer and Traffic Gen
+    def handle_server_message(self, message):
+
+        #all messages recieved here should be in the form {integer:integer} 
+        #first integer is equipment ID of player transmitting (aka the shooter)
+        #the second integer is the equipment ID of the player who got hit
+        
+        print(f"Recieved in playeractionscreen: {message}")
+
+        #UPDATE UI and stuff here
 
     def run(self):
         #change this value to change gameplay time

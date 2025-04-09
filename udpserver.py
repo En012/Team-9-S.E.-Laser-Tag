@@ -5,7 +5,7 @@ import udpclient
 class UDPServer:
 
     #default constructor
-    def __init__(self):
+    def __init__(self, message_callback=None):
 
         #variables for server
         self.server_running = False
@@ -16,6 +16,9 @@ class UDPServer:
         self.udp_server_ip = "127.0.0.1"  # default IP address
         self.udp_server_port = 7501      # default port
         self.buffersize = 1024           # buffer size
+
+        #declare a return function in order to pass messages back to playeraction.py
+        self.message_callback = message_callback
 
 
     def udp_server_loop(self):
@@ -30,6 +33,10 @@ class UDPServer:
                 #the reply message should only be the equipment ID of the player who got hit
                 print(f"UDP server received from {addr}:{message}")
                 
+                #send the message recieved from traffic gen to playeraction.py
+                if self.message_callback:
+                    self.message_callback(message)
+
                 #get the second integer from the message
                 response = self.extract_second_int(message)
 
