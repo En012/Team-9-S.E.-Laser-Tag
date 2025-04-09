@@ -68,10 +68,9 @@ class UDPServer:
             self.udp_server_socket = None
             print("UDP server stopped.")
 
-    def update_and_restart_server(self, new_ip, new_port):
+    def update_and_restart_server(self, new_ip):
         self.stop_udp_server()  #Stopping the current server
         self.udp_server_ip = new_ip
-        self.udp_server_port = new_port
         self.start_udp_server()  #Restarting with new configuration (new ip)
 
     # Extract the second integer from the message

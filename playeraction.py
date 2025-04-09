@@ -91,7 +91,7 @@ class PlayerActionScreen:
     def start_server_traffic(self):
         
         #start up the udp server to listen from servertraffic.py
-        self.server.start_udp_server()
+        #self.server.start_udp_server()
 
         #send startgame code (202) to servertraffic.py
         udpclient.send_udp_message(f"{202}")
