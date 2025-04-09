@@ -102,6 +102,8 @@ class PlayerActionScreen:
         #all messages recieved here should be in the form {integer:integer} 
         #first integer is equipment ID of player transmitting (aka the shooter)
         #the second integer is the equipment ID of the player who got hit
+
+        #remember green base = 43, red base = 53 
         
         print(f"Recieved in playeractionscreen: {message}")
 
