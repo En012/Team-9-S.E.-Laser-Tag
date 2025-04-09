@@ -4,14 +4,12 @@ from tkinter import ttk
 #from playerentry import PlayerEntryScreen
 #from PIL import Image, ImageTk # Should probably be commented out since it is not used at the moment
 import os
-<<<<<<< HEAD
 #from actions import Action
-=======
 #import udp stuff for traffic generatorcl
 import udpclient
 from udpserver import UDPServer
 
->>>>>>> 8ba1fa6ec6e898809c2335ef42e927612592ac44
+
 #This class contains all the code for the player action screen
 class PlayerActionScreen:
 
@@ -140,7 +138,7 @@ class PlayerActionScreen:
 
     def run(self):
         #change this value to change gameplay time
-        self.seconds_left = 30 
+        self.seconds_left = 360 
         
         # setting name of window
         self.root.title("Photon")
@@ -211,7 +209,6 @@ class PlayerActionScreen:
         self.update_timer()
         self.update_ui()
 
-<<<<<<< HEAD
     def flash_high(self, red_score, green_score):
         if(red_score > green_score):
             self.greenHigh = False
@@ -220,10 +217,8 @@ class PlayerActionScreen:
             self.greenHigh = True
             self.redHigh = False
 
-=======
         #run neccessary code to interact with the traffic generator once the game beings
         self.start_server_traffic()
->>>>>>> 8ba1fa6ec6e898809c2335ef42e927612592ac44
 
     def back_to_entry_screen(self, appear):
          if(appear == True):
