@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 import udpclient
-import udpserver
+from udpserver import UDPServer
 
 #Handles all the code that is run when the change UDP address button is pressed
 #DOES NOT handle displaying the button to the screen
@@ -11,6 +11,9 @@ class UDPButton:
     #default constructor, get root from display
     def __init__(self, root):
         self.root = root
+
+        #creating instance for the udp server to work.
+        self.udp_server = UDPServer()
 
     #udp port functions
 
@@ -53,8 +56,8 @@ class UDPButton:
             udp_ip_address = udp_ip_address_var.get()
             try:
                 udpclient.set_udp_config(udp_ip_address)
-                #keeping this here for now since he said we might use it in the future
-                #udpserver.update_and_restart_server(new_ip)
+                #updating server along with client.
+                self.udp_server.update_and_restart_server(udp_ip_address)
             except ValueError:
                 messagebox.showerror(title="Error", message="Invalid address number! Please re-enter a valid integer.")
                 udp_ip_address = "None"

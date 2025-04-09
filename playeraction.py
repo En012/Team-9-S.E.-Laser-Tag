@@ -4,7 +4,14 @@ from tkinter import ttk
 #from playerentry import PlayerEntryScreen
 #from PIL import Image, ImageTk # Should probably be commented out since it is not used at the moment
 import os
+<<<<<<< HEAD
 #from actions import Action
+=======
+#import udp stuff for traffic generatorcl
+import udpclient
+from udpserver import UDPServer
+
+>>>>>>> 8ba1fa6ec6e898809c2335ef42e927612592ac44
 #This class contains all the code for the player action screen
 class PlayerActionScreen:
 
@@ -27,6 +34,8 @@ class PlayerActionScreen:
         self.timerEnd = False
         self.redHigh = False
         self.greenHigh = False
+
+        self.server = UDPServer(message_callback=self.handle_server_message)
 
     #Countdown timer
     def update_timer(self):
@@ -63,7 +72,7 @@ class PlayerActionScreen:
         else:
             self.timerEnd = True
             self.back_to_entry_screen(self.timerEnd)
-    #CODE FOR PLAYERACTION SCREEN GOES HERE!!!
+
     def update_ui(self):
         self.root.update()
         self.green_width1 = self.root.winfo_width() / 3
@@ -107,6 +116,28 @@ class PlayerActionScreen:
                 widget.destroy()  # Clear current widgets
             self.master.switchToPlayerEntry()  # Restart Player Entry Screen
     
+    #gets things set up to interact with servertraffic.py
+    def start_server_traffic(self):
+        
+        #start up the udp server to listen from servertraffic.py
+        #self.server.start_udp_server()
+
+        #send startgame code (202) to servertraffic.py
+        udpclient.send_udp_message(f"{202}")
+
+    #this is where playeraction recieves the message from UDPServer and Traffic Gen
+    def handle_server_message(self, message):
+
+        #all messages recieved here should be in the form {integer:integer} 
+        #first integer is equipment ID of player transmitting (aka the shooter)
+        #the second integer is the equipment ID of the player who got hit
+
+        #remember green base = 43, red base = 53 
+        
+        print(f"Recieved in playeractionscreen: {message}")
+
+        #UPDATE UI and stuff here
+
     def run(self):
         #change this value to change gameplay time
         self.seconds_left = 30 
@@ -180,6 +211,7 @@ class PlayerActionScreen:
         self.update_timer()
         self.update_ui()
 
+<<<<<<< HEAD
     def flash_high(self, red_score, green_score):
         if(red_score > green_score):
             self.greenHigh = False
@@ -188,9 +220,17 @@ class PlayerActionScreen:
             self.greenHigh = True
             self.redHigh = False
 
+=======
+        #run neccessary code to interact with the traffic generator once the game beings
+        self.start_server_traffic()
+>>>>>>> 8ba1fa6ec6e898809c2335ef42e927612592ac44
 
     def back_to_entry_screen(self, appear):
          if(appear == True):
+            #send game over code to the traffic generator three times to stop the game
+            [udpclient.send_udp_message(f"{221}") for _ in range(3)]
+
+            #make back_button appear
             back_button = tk.Button(self.black_frame, text="End Game", command=self.switch_to_entry, font=("Arial", 12), bg="white")
             back_button.place(relx=0.5, rely=0.9, anchor="n")
 
