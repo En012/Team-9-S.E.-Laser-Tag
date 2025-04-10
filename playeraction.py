@@ -143,8 +143,6 @@ class PlayerActionScreen:
         #the second integer is the equipment ID of the player who got hit
 
         #remember green base = 43, red base = 53 
-        print(f"Received in playeractionscreen: {message}")
-
         try:
             shooter_id, target_id = message.split(":")
         except ValueError:
@@ -166,8 +164,7 @@ class PlayerActionScreen:
             self.redScoreLabels[index].config(text=str(self.redScoreList[index]))
             self.redTotalScore += 100
             name = self.redNameList[index]
-            self.redNameList[index] = f"B{name}" if not name.startswith("B") else name
-            udpclient.send_udp_message(f"{target_id}")
+            self.redNameList[index] = f"[B] {name}" if not name.startswith("B") else name
             print("Green base hit by red team!")
             return
 
@@ -178,8 +175,7 @@ class PlayerActionScreen:
             self.greenScoreLabels[index].config(text=str(self.greenScoreList[index]))
             self.greenTotalScore += 100
             name = self.greenNameList[index]
-            self.greenNameList[index] = f"B{name}" if not name.startswith("B") else name
-            udpclient.send_udp_message(f"{target_id}")
+            self.greenNameList[index] = f"[B] {name}" if not name.startswith("B") else name
             print("Red base hit by green team!")
             return
 
@@ -216,7 +212,6 @@ class PlayerActionScreen:
                 self.greenScoreList[shooter_index] -= 10
                 self.greenScoreLabels[shooter_index].config(text=str(self.greenScoreList[shooter_index]))
                 self.greenTotalScore -= 10
-            udpclient.send_udp_message(f"{shooter_id}")  # Send back shooter ID
         else:
             # Enemy hit: +10
             if shooter_team == 'red' and shooter_index < len(self.redScoreList):
@@ -227,7 +222,6 @@ class PlayerActionScreen:
                 self.greenScoreList[shooter_index] += 10
                 self.greenScoreLabels[shooter_index].config(text=str(self.greenScoreList[shooter_index]))
                 self.greenTotalScore += 10
-            udpclient.send_udp_message(f"{target_id}")  # Send back target ID
 
         # Update total score labels
         self.red_total_score.config(text=f'RED TEAM SCORE: {self.redTotalScore}')
