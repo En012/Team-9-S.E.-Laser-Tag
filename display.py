@@ -9,7 +9,7 @@ from playeraction import PlayerActionScreen
 class Display:
 
     #default constructor
-    def __init__(self):
+    def __init__(self, server):
 
         #setup default values for name and ID list for red and green team
         self.redNameList = [" "] * 15
@@ -22,6 +22,9 @@ class Display:
         self.root.title("Loading...")
         self.root.configure(bg="black")
 
+        #initilizing server
+        self.server = server
+
         #get screen self.width and self.height
         self.width = self.root.winfo_screenwidth()
         self.height = self.root.winfo_screenheight()
@@ -32,7 +35,7 @@ class Display:
 
         #Initialize the playeractionscreen
         #All code for PlayerActionScreen can be found in playeraction.py
-        self.PlayerActionScreen = PlayerActionScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList, self)
+        self.PlayerActionScreen = PlayerActionScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList, self, self.server)
         
         #binding F10 key to call clear button
         self.root.bind("<F12>", self.clear_entry)

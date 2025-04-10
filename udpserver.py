@@ -36,6 +36,8 @@ class UDPServer:
                 #send the message recieved from traffic gen to playeraction.py
                 if self.message_callback:
                     self.message_callback(message)
+                else:
+                    print("Error: message_callback is none")
 
                 #get the second integer from the message
                 response = self.extract_second_int(message)
@@ -86,14 +88,3 @@ class UDPServer:
             response = "Error: Non-integer value in message"
         
         return response
-
-
-if __name__ == "__main__":
-    server = UDPServer()
-    
-    server.start_udp_server()
-    try:
-        while True:
-            pass  #keeping the server running
-    except KeyboardInterrupt:
-        server.stop_udp_server()

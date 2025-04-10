@@ -7,21 +7,23 @@ import os
 #from actions import Action
 #import udp stuff for traffic generatorcl
 import udpclient
-from udpserver import UDPServer
-
 
 #This class contains all the code for the player action screen
 class PlayerActionScreen:
 
     #default constructor
-    def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, master):
+    def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, master, server):
 
         #Get root, ID, and Name lists from display.py
         self.root = root
+
+        #IDs
         self.redIDList = redIDList
         self.greenIDList = greenIDList
         self.redNameList = redNameList
         self.greenNameList = greenNameList
+        
+        #scores
         self.redScoreList = []
         self.greenScoreList = []
         self.greenTotalScore = 0
@@ -33,13 +35,15 @@ class PlayerActionScreen:
         self.redHigh = False
         self.greenHigh = False
 
-        self.server = UDPServer(message_callback=self.handle_server_message)
+        #server stuff
+        self.server = server
+        self.server.message_callback = self.handle_server_message
 
     #Countdown timer
     def update_timer(self):
         if self.seconds_left >= 0:
             self.timerEnd = False
-            if(self.redTotalScore != self.temp_green or self.greenTotalScore != self.temp_green):
+            if(self.redTotalScore != self.temp_red or self.greenTotalScore != self.temp_green):
                 self.temp_green = self.greenTotalScore
                 self.temp_red = self.redTotalScore
                 self.red_total_score.config(text=f'RED TEAM SCORE: {self.redTotalScore}')
@@ -82,6 +86,12 @@ class PlayerActionScreen:
         self.root.after(200, self.update_ui)
 
     def display_players(self, red_frame, green_frame):
+            #red team labels
+            self.redScoreLabels = []
+
+            #green team labels 
+            self.greenScoreLabels = []
+
             initial_score = 0
             # Red team players
             red_length = len(self.redIDList)
@@ -94,8 +104,10 @@ class PlayerActionScreen:
                     score = self.redScoreList[i]
                     red_player_score_label = tk.Label(red_frame, text=score, font=('Arial', 12), bg="red", fg="black")
                     red_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
-                    #self.redTotalScore = self.redTotalScore + score + 10
-                    self.redTotalScore = 100
+                    #pusing the score label into this array to modify elsewhere
+                    self.redScoreLabels.append(red_player_score_label)
+                    #gets update elsewhere so it can stay zero
+                    self.redTotalScore = 0
             #green team players
             green_length = len(self.greenIDList)
             for i in range(green_length):
@@ -107,7 +119,9 @@ class PlayerActionScreen:
                     score = self.greenScoreList[i]
                     green_player_score_label = tk.Label(green_frame, text=score, font=('Arial', 12), bg="green", fg="black")
                     green_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
-                    self.greenTotalScore = self.greenTotalScore + score
+                    self.greenScoreLabels.append(green_player_score_label)
+                    #gets updated elsewhere so it can remain zero
+                    self.greenTotalScore = 0
     def switch_to_entry(self):
             from display import Display
             for widget in self.root.winfo_children():
@@ -116,10 +130,6 @@ class PlayerActionScreen:
     
     #gets things set up to interact with servertraffic.py
     def start_server_traffic(self):
-        
-        #start up the udp server to listen from servertraffic.py
-        #self.server.start_udp_server()
-
         #send startgame code (202) to servertraffic.py
         udpclient.send_udp_message(f"{202}")
 
@@ -131,10 +141,95 @@ class PlayerActionScreen:
         #the second integer is the equipment ID of the player who got hit
 
         #remember green base = 43, red base = 53 
-        
-        print(f"Recieved in playeractionscreen: {message}")
+        print(f"Received in playeractionscreen: {message}")
 
-        #UPDATE UI and stuff here
+        try:
+            shooter_id, target_id = message.split(":")
+        except ValueError:
+            print("Invalid message format")
+            return
+        
+        # Convert to string (to make sure shooter/target are strings)
+        shooter_id, target_id = map(str, message.split(":"))
+
+        # Create string-converted versions of the ID lists
+        red_ids = list(map(str, self.redIDList))
+        green_ids = list(map(str, self.greenIDList))
+
+        # Base scoring logic
+        if target_id == "43" and shooter_id in red_ids:
+            # Red player hit green base
+            index = red_ids.index(shooter_id)
+            self.redScoreList[index] += 100
+            self.redScoreLabels[index].config(text=str(self.redScoreList[index]))
+            self.redTotalScore += 100
+            name = self.redNameList[index]
+            self.redNameList[index] = f"B{name}" if not name.startswith("B") else name
+            udpclient.send_udp_message(f"{target_id}")
+            print("Green base hit by red team!")
+            return
+
+        if target_id == "53" and shooter_id in green_ids:
+            # Green player hit red base
+            index = green_ids.index(shooter_id)
+            self.greenScoreList[index] += 100
+            self.greenScoreLabels[index].config(text=str(self.greenScoreList[index]))
+            self.greenTotalScore += 100
+            name = self.greenNameList[index]
+            self.greenNameList[index] = f"B{name}" if not name.startswith("B") else name
+            udpclient.send_udp_message(f"{target_id}")
+            print("Red base hit by green team!")
+            return
+
+        # Identify shooter team and index
+        shooter_team = None
+        target_team = None
+
+        if shooter_id in red_ids:
+            shooter_team = 'red'
+            shooter_index = red_ids.index(shooter_id)
+        elif shooter_id in green_ids:
+            shooter_team = 'green'
+            shooter_index = green_ids.index(shooter_id)
+        else:
+            print("Shooter ID not found.")
+            return
+
+        if target_id in red_ids:
+            target_team = 'red'
+        elif target_id in green_ids:
+            target_team = 'green'
+        else:
+            print("Target ID not found.")
+            return
+
+        # Scoring logic
+        if shooter_team == target_team:
+            # Friendly fire: -10
+            if shooter_team == 'red' and shooter_index < len(self.redScoreList):
+                self.redScoreList[shooter_index] -= 10
+                self.redScoreLabels[shooter_index].config(text=str(self.redScoreList[shooter_index]))
+                self.redTotalScore -= 10
+            elif shooter_team == 'green' and shooter_index < len(self.greenScoreList):
+                self.greenScoreList[shooter_index] -= 10
+                self.greenScoreLabels[shooter_index].config(text=str(self.greenScoreList[shooter_index]))
+                self.greenTotalScore -= 10
+            udpclient.send_udp_message(f"{shooter_id}")  # Send back shooter ID
+        else:
+            # Enemy hit: +10
+            if shooter_team == 'red' and shooter_index < len(self.redScoreList):
+                self.redScoreList[shooter_index] += 10
+                self.redScoreLabels[shooter_index].config(text=str(self.redScoreList[shooter_index]))
+                self.redTotalScore += 10
+            elif shooter_team == 'green' and shooter_index < len(self.greenScoreList):
+                self.greenScoreList[shooter_index] += 10
+                self.greenScoreLabels[shooter_index].config(text=str(self.greenScoreList[shooter_index]))
+                self.greenTotalScore += 10
+            udpclient.send_udp_message(f"{target_id}")  # Send back target ID
+
+        # Update total score labels
+        self.red_total_score.config(text=f'RED TEAM SCORE: {self.redTotalScore}')
+        self.green_total_score.config(text=f'GREEN TEAM SCORE: {self.greenTotalScore}')
 
     def run(self):
         #change this value to change gameplay time
@@ -209,6 +304,10 @@ class PlayerActionScreen:
         self.update_timer()
         self.update_ui()
 
+        #run neccessary code to interact with the traffic generator once the game beings
+        self.start_server_traffic()
+
+
     def flash_high(self, red_score, green_score):
         if(red_score > green_score):
             self.greenHigh = False
@@ -216,9 +315,6 @@ class PlayerActionScreen:
         elif(green_score > red_score):
             self.greenHigh = True
             self.redHigh = False
-
-        #run neccessary code to interact with the traffic generator once the game beings
-        self.start_server_traffic()
 
     def back_to_entry_screen(self, appear):
          if(appear == True):
