@@ -33,6 +33,9 @@ class PlayerActionScreen:
         self.redHigh = False
         self.greenHigh = False
 
+        #Testing to reduce time with one variable
+        self.Test = True
+
         self.server = UDPServer(message_callback=self.handle_server_message)
 
     #Countdown timer
@@ -135,7 +138,10 @@ class PlayerActionScreen:
 
     def run(self):
         #change this value to change gameplay time
-        self.seconds_left = 360 
+        if self.Test == True:
+            self.seconds_left = 30
+        else:
+            self.seconds_left = 360 
         
         # setting name of window
         self.root.title("Photon")
