@@ -116,10 +116,7 @@ class PlayerActionScreen:
     
     #gets things set up to interact with servertraffic.py
     def start_server_traffic(self):
-        
-        #start up the udp server to listen from servertraffic.py
-        #self.server.start_udp_server()
-
+    
         #send startgame code (202) to servertraffic.py
         udpclient.send_udp_message(f"{202}")
 
@@ -209,6 +206,9 @@ class PlayerActionScreen:
         self.update_timer()
         self.update_ui()
 
+        #run neccessary code to interact with the traffic generator once the game beings
+        self.start_server_traffic()
+
     def flash_high(self, red_score, green_score):
         if(red_score > green_score):
             self.greenHigh = False
@@ -216,9 +216,6 @@ class PlayerActionScreen:
         elif(green_score > red_score):
             self.greenHigh = True
             self.redHigh = False
-
-        #run neccessary code to interact with the traffic generator once the game beings
-        self.start_server_traffic()
 
     def back_to_entry_screen(self, appear):
          if(appear == True):

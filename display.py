@@ -17,6 +17,9 @@ class Display:
         self.greenNameList = [" "] * 15
         self.greenIDList = [" "] * 15
 
+        #Testing flag, to bypass wait times, just set to true.
+        self.Test = True
+
         #setup tkinter GUI elements
         self.root = tk.Tk()
         self.root.title("Loading...")
@@ -43,8 +46,11 @@ class Display:
         #display the splash screen
         self.splash_screen()
 
-        #switch to player entry screen after 3000 milliseconds
-        self.root.after(3000, self.switchToPlayerEntry)
+        #switch to player entry screen after 3000 milliseconds (Unless Testing)
+        if self.Test == True:
+            self.switchToPlayerEntry()
+        else:
+            self.root.after(3000, self.switchToPlayerEntry)
 
     #code for clear button
     def clear_entry(self, event=None):
@@ -95,10 +101,8 @@ class Display:
 
     #switch to playerActionScreen (Ed: Possible name change due to how its modified now?)
     def switchToPlayerAction(self):
-        #Testing condition: If youre testing and want to bypass the wait times, just set this to true, if not testing, set to false
-        Test = True
         # Reinitialize the display when switching back
-        if Test == True:
+        if self.Test == True:
             for widget in self.root.winfo_children():
                 widget.destroy()  # Clear current widgets
             self.PlayerActionScreen.run()
