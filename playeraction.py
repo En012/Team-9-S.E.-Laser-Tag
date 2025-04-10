@@ -90,9 +90,11 @@ class PlayerActionScreen:
     def display_players(self, red_frame, green_frame):
             #red team labels
             self.redScoreLabels = []
+            self.redNameLabels = []
 
             #green team labels 
             self.greenScoreLabels = []
+            self.greenNameLabels = []
 
             initial_score = 0
             # Red team players
@@ -102,11 +104,13 @@ class PlayerActionScreen:
                 if(player != " "):
                     red_player_name_label = tk.Label(red_frame, text=player, font=('Arial', 12), bg="red", fg="black")
                     red_player_name_label.place(relx=0.35, rely=.12 + (i * 0.05), anchor="w")
+                    #pusing the name labels into this array to modify elsewhere
+                    self.redNameLabels.append(red_player_name_label)
                     self.redScoreList.append(initial_score)
                     score = self.redScoreList[i]
                     red_player_score_label = tk.Label(red_frame, text=score, font=('Arial', 12), bg="red", fg="black")
                     red_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
-                    #pusing the score label into this array to modify elsewhere
+                    #pusing the score labels into this array to modify elsewhere
                     self.redScoreLabels.append(red_player_score_label)
                     #gets update elsewhere so it can stay zero
                     self.redTotalScore = 0
@@ -117,10 +121,13 @@ class PlayerActionScreen:
                 if(player != " "):
                     green_player_name_label = tk.Label(green_frame, text=player, font=('Arial', 12), bg="green", fg="black")
                     green_player_name_label.place(relx=0.35, rely=.12 + (i * 0.05), anchor="w")
+                    #green name labels into this array to be modified elsewhere
+                    self.greenNameLabels.append(green_player_name_label)
                     self.greenScoreList.append(initial_score)
                     score = self.greenScoreList[i]
                     green_player_score_label = tk.Label(green_frame, text=score, font=('Arial', 12), bg="green", fg="black")
                     green_player_score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
+                    #storing the green score labels to be modified elsewhere
                     self.greenScoreLabels.append(green_player_score_label)
                     #gets updated elsewhere so it can remain zero
                     self.greenTotalScore = 0
@@ -164,7 +171,9 @@ class PlayerActionScreen:
             self.redScoreLabels[index].config(text=str(self.redScoreList[index]))
             self.redTotalScore += 100
             name = self.redNameList[index]
-            self.redNameList[index] = f"[B] {name}" if not name.startswith("B") else name
+            #name change logic
+            if not name.startswith("[B] "):
+                self.redNameLabels[index].config(text=f"[B] {name}")
             print("Green base hit by red team!")
             return
 
@@ -175,7 +184,9 @@ class PlayerActionScreen:
             self.greenScoreLabels[index].config(text=str(self.greenScoreList[index]))
             self.greenTotalScore += 100
             name = self.greenNameList[index]
-            self.greenNameList[index] = f"[B] {name}" if not name.startswith("B") else name
+            #name change logic
+            if not name.startswith("[B] "):
+                self.greenNameLabels[index].config(text=f"[B] {name}")
             print("Red base hit by green team!")
             return
 
