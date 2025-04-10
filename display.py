@@ -100,8 +100,6 @@ class Display:
     def switchToPlayerAction(self):
         # Reinitialize the display when switching back
         if self.PlayerActionScreen.Test == True:
-            for widget in self.root.winfo_children():
-                widget.destroy()  # Clear current widgets
             self.PlayerActionScreen.run()
         else:
             for widget in self.root.winfo_children():
