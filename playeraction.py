@@ -38,6 +38,8 @@ class PlayerActionScreen:
         #server stuff
         self.server = server
         self.server.message_callback = self.handle_server_message
+        #Testing to reduce time with one variable
+        self.Test = True
 
     #Countdown timer
     def update_timer(self):
@@ -233,7 +235,10 @@ class PlayerActionScreen:
 
     def run(self):
         #change this value to change gameplay time
-        self.seconds_left = 360 
+        if self.Test == True:
+            self.seconds_left = 30
+        else:
+            self.seconds_left = 360 
         
         # setting name of window
         self.root.title("Photon")
@@ -306,7 +311,6 @@ class PlayerActionScreen:
 
         #run neccessary code to interact with the traffic generator once the game beings
         self.start_server_traffic()
-
 
     def flash_high(self, red_score, green_score):
         if(red_score > green_score):

@@ -1,6 +1,9 @@
 import os
 import sqlite3
-import psycopg2
+
+## Needs testing in VM, but should streamline us having to constantly comment out this line.
+if os.name == "posix":
+    import psycopg2
 
 #global variable, used to keep track of if the user is inside the Virtual Machine or not
 #true = user is in VM, false = user is not in VM
