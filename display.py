@@ -95,8 +95,15 @@ class Display:
 
     #switch to playerActionScreen (Ed: Possible name change due to how its modified now?)
     def switchToPlayerAction(self):
+        #Testing condition: If youre testing and want to bypass the wait times, just set this to true, if not testing, set to false
+        Test = True
         # Reinitialize the display when switching back
-        for widget in self.root.winfo_children():
-            widget.destroy()  # Clear current widgets
-        self.countdown_timer_screen(30) # Show the playeraction screen
+        if Test == True:
+            for widget in self.root.winfo_children():
+                widget.destroy()  # Clear current widgets
+            self.PlayerActionScreen.run()
+        else:
+            for widget in self.root.winfo_children():
+                widget.destroy()  # Clear current widgets
+            self.countdown_timer_screen(30) # Show the playeraction screen
         
