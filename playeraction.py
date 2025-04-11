@@ -245,6 +245,9 @@ class PlayerActionScreen:
         else:
             self.seconds_left = 360 
         
+        #clear scores from the previous game
+        self.clearScores()
+
         # setting name of window
         self.root.title("Photon")
         self.root.minsize(800, 600)
@@ -333,6 +336,15 @@ class PlayerActionScreen:
             #make back_button appear
             back_button = tk.Button(self.black_frame, text="End Game", command=self.switch_to_entry, font=("Arial", 12), bg="white")
             back_button.place(relx=0.5, rely=0.9, anchor="n")
+
+    #resets all score values
+    def clearScores(self):
+
+        self.redScoreList.clear()
+        self.greenScoreList.clear()
+
+        self.redTotalScore = 0
+        self.greenTotalScore = 0
 
     #def hit(self, hit, shooter):
     #    self.action = Action(hit, shooter, self.redIDList, self.greenIDList, self.redScoreList, self.greenScoreList, self.master)
