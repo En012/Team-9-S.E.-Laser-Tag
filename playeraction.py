@@ -354,7 +354,7 @@ class PlayerActionScreen:
     #Event Showcase
     def showcaseactionEvents(self):
         #event placeholder text above Showcase box (we could just delete this if we keep the one above it)
-        eventtextPlaceholder = tk.Label(self.black_frame, text='Event Tests', font=('Bell Gothic Std Black', 12, 'bold italic'), background="black", foreground="cyan", padx=-1, pady=-1)
+        eventtextPlaceholder = tk.Label(self.root, text='Event Tests', font=('Bell Gothic Std Black', 12, 'bold italic'), background="black", foreground="cyan", padx=-1, pady=-1)
         eventtextPlaceholder.place(relx=0.5, rely=0.2, anchor="center")
         
         #Showcase box
