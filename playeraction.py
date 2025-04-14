@@ -314,6 +314,8 @@ class PlayerActionScreen:
         self.flash_high(self.redTotalScore, self.greenTotalScore)
         #starting the countdown
         self.display_players(self.red_frame, self.green_frame)
+        #event test showcase
+        self.showcaseactionEvents()
         self.update_timer()
         self.update_ui()
 
@@ -348,3 +350,18 @@ class PlayerActionScreen:
 
     #def hit(self, hit, shooter):
     #    self.action = Action(hit, shooter, self.redIDList, self.greenIDList, self.redScoreList, self.greenScoreList, self.master)
+    
+    #Event Showcase
+    def showcaseactionEvents(self):
+        #event placeholder text above Showcase box (we could just delete this if we keep the one above it)
+        eventtextPlaceholder = tk.Label(self.black_frame, text='Event Tests', font=('Bell Gothic Std Black', 12, 'bold italic'), background="black", foreground="cyan", padx=-1, pady=-1)
+        eventtextPlaceholder.place(relx=0.5, rely=0.2, anchor="center")
+        
+        #Showcase box
+        #white background shows where the event showcase is
+        eventFrame = tk.Frame(self.root, bg = "white", width = 350, height= 400) #change white to black later
+        eventFrame.place(relx=0.5, rely=0.5, anchor="center")
+        
+        for i in range(5):
+            events = tk.Label(eventFrame, text=f"Parts {i + 1}", font=('calibre', 12), bg = "black" , fg = "cyan" , width= 40)
+            events.place(relx = 0.5, rely= 0.1 + i * 0.20, anchor= "center")
