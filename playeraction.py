@@ -242,6 +242,7 @@ class PlayerActionScreen:
         # Update total score labels
         self.red_total_score.config(text=f'RED TEAM SCORE: {self.redTotalScore}')
         self.green_total_score.config(text=f'GREEN TEAM SCORE: {self.greenTotalScore}')
+        self.updateEvents(self.killfeed_text)
 
     def run(self):
         #change this value to change gameplay time
@@ -372,7 +373,7 @@ class PlayerActionScreen:
         self.eventStorage = []
         
         for i in range(5):
-            events = tk.Label(eventFrame, text=f"Parts {i + 1}", font=('calibre', 12), bg = "black" , fg = "cyan" , width= 40)
+            events = tk.Label(eventFrame, text="", font=('calibre', 12), bg = "black" , fg = "cyan" , width= 40)
             events.place(relx = 0.5, rely= 0.1 + i * 0.20, anchor= "center")
             self.eventStorage.append(events)
             
