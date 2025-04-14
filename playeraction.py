@@ -179,7 +179,8 @@ class PlayerActionScreen:
             #name change logic
             if not name.startswith("[B] "):
                 self.redNameLabels[index].config(text=f"[B] {name}")
-            self.killfeed_text = (f"Green base was hit by {self.redNameList[index]}!")
+            self.killfeed_text = (f"Green Base was hit by {self.redNameList[index]}")
+            self.updateEvents(self.killfeed_text)
             return
 
         if target_id == "53" and shooter_id in green_ids:
@@ -192,7 +193,8 @@ class PlayerActionScreen:
             #name change logic
             if not name.startswith("[B] "):
                 self.greenNameLabels[index].config(text=f"[B] {name}")
-            self.killfeed_text = (f"Red base was hit by {self.greenNameList[index]}!")
+            self.killfeed_text = (f"Red Base was hit by {self.greenNameList[index]}")
+            self.updateEvents(self.killfeed_text)
             return
 
         # Identify shooter team and index
@@ -239,13 +241,13 @@ class PlayerActionScreen:
                 self.redScoreList[shooter_index] += 10
                 self.redScoreLabels[shooter_index].config(text=str(self.redScoreList[shooter_index]))
                 self.redTotalScore += 10
-                self.killfeed_text = (f"{self.redNameList[shooter_index]} shot {self.greenNameList[target_index]}")
+                self.killfeed_text = (f"{self.redNameList[shooter_index]} hit {self.greenNameList[target_index]}")
             elif shooter_team == 'green' and shooter_index < len(self.greenScoreList):
                 target_index = red_ids.index(target_id)
                 self.greenScoreList[shooter_index] += 10
                 self.greenScoreLabels[shooter_index].config(text=str(self.greenScoreList[shooter_index]))
                 self.greenTotalScore += 10
-                self.killfeed_text = (f"{self.greenNameList[shooter_index]} shot {self.redNameList[target_index]}")
+                self.killfeed_text = (f"{self.greenNameList[shooter_index]} hit {self.redNameList[target_index]}")
 
         # Update total score labels
         self.red_total_score.config(text=f'RED TEAM SCORE: {self.redTotalScore}')
