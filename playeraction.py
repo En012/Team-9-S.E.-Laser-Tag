@@ -362,6 +362,30 @@ class PlayerActionScreen:
         eventFrame = tk.Frame(self.root, bg = "white", width = 350, height= 400) #change white to black later
         eventFrame.place(relx=0.5, rely=0.5, anchor="center")
         
+        #stores events in here
+        #if you need a fixed list just do something like "list = [] * 5"
+        self.eventStorage = []
+        
         for i in range(5):
             events = tk.Label(eventFrame, text=f"Parts {i + 1}", font=('calibre', 12), bg = "black" , fg = "cyan" , width= 40)
             events.place(relx = 0.5, rely= 0.1 + i * 0.20, anchor= "center")
+            self.eventStorage.append(events)
+            
+        #Testing to see if labels change (they do)
+        #This just changes the bottom label to say "hi" instead of "Parts 5"
+        self.root.after(1000, lambda: self.updateEvents("hi"))
+        self.root.after(2000, lambda: self.updateEvents("hi2"))
+        self.root.after(3000, lambda: self.updateEvents("hi3"))
+        self.root.after(4000, lambda: self.updateEvents("hi4"))
+        self.root.after(5000, lambda: self.updateEvents("hi5"))
+        self.root.after(6000, lambda: self.updateEvents("hi6"))
+        self.root.after(7000, lambda: self.updateEvents("hi7"))
+        self.root.after(8000, lambda: self.updateEvents("hi8"))
+    
+    #Event Updater (changes text within the labels to go upwards)
+    def updateEvents(self, yourText):
+        for i in range(len(self.eventStorage) - 1):
+            placeholderText = self.eventStorage[i + 1]['text']
+            self.eventStorage[i].config(text = placeholderText)
+        self.eventStorage[-1].config(text = yourText)
+        
