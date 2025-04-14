@@ -352,17 +352,17 @@ class PlayerActionScreen:
 
         self.redTotalScore = 0
         self.greenTotalScore = 0
-        for i, label in enumerate(self.redNameLabels):
-            name = self.redNameList[i]
-            if name.startswith("[B] "):
-                label.config(text=name[4:])
-                self.redNameList[i] = name[4:]
+        # for i, label in enumerate(self.redNameLabels):
+        #     name = self.redNameList[i]
+        #     if name.startswith("[B] "):
+        #         label.config(text=name[4:])
+        #         self.redNameList[i] = name[4:]
 
-        for i, label in enumerate(self.greenNameLabels):
-            name = self.greenNameList[i]
-            if name.startswith("[B] "):
-                label.config(text=name[4:])
-                self.greenNameList[i] = name[4:]
+        # for i, label in enumerate(self.greenNameLabels):
+        #     name = self.greenNameList[i]
+        #     if name.startswith("[B] "):
+        #         label.config(text=name[4:])
+        #         self.greenNameList[i] = name[4:]
 
     #def hit(self, hit, shooter):
     #    self.action = Action(hit, shooter, self.redIDList, self.greenIDList, self.redScoreList, self.greenScoreList, self.master)
