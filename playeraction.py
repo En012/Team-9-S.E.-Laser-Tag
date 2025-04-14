@@ -178,7 +178,7 @@ class PlayerActionScreen:
             name = self.redNameList[index]
             #name change logic
             if not name.startswith("[B] "):
-                self.redNameLabels[index].config(text=f"[B] {name}")
+                self.redNameLabels[index].config(text=f"[B] {name}", font = ("Times", 12, "bold italic"), fg = "gold")
             self.killfeed_text = (f"Green Base was hit by {self.redNameList[index]}")
             self.updateEvents(self.killfeed_text)
             return
@@ -192,7 +192,7 @@ class PlayerActionScreen:
             name = self.greenNameList[index]
             #name change logic
             if not name.startswith("[B] "):
-                self.greenNameLabels[index].config(text=f"[B] {name}")
+                self.greenNameLabels[index].config(text=f"[B] {name}", font = ("Times", 12, "bold italic"), fg = "gold")
             self.killfeed_text = (f"Red Base was hit by {self.greenNameList[index]}")
             self.updateEvents(self.killfeed_text)
             return
