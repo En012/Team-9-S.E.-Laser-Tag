@@ -34,6 +34,7 @@ class PlayerActionScreen:
         self.timerEnd = False
         self.redHigh = False
         self.greenHigh = False
+        self.killfeed_text = ""
 
         #server stuff
         self.server = server
@@ -174,7 +175,7 @@ class PlayerActionScreen:
             #name change logic
             if not name.startswith("[B] "):
                 self.redNameLabels[index].config(text=f"[B] {name}")
-            print("Green base hit by red team!")
+            self.killfeed_text = (f"Green base hit by player {shooter_id}!")
             return
 
         if target_id == "53" and shooter_id in green_ids:
@@ -187,7 +188,7 @@ class PlayerActionScreen:
             #name change logic
             if not name.startswith("[B] "):
                 self.greenNameLabels[index].config(text=f"[B] {name}")
-            print("Red base hit by green team!")
+            self.killfeed_text = (f"Red base hit by player {shooter_id}!")
             return
 
         # Identify shooter team and index
@@ -219,20 +220,24 @@ class PlayerActionScreen:
                 self.redScoreList[shooter_index] -= 10
                 self.redScoreLabels[shooter_index].config(text=str(self.redScoreList[shooter_index]))
                 self.redTotalScore -= 10
+                self.killfeed_text = (f"Red player {shooter_id} hit their own teammate player {target_id}!")
             elif shooter_team == 'green' and shooter_index < len(self.greenScoreList):
                 self.greenScoreList[shooter_index] -= 10
                 self.greenScoreLabels[shooter_index].config(text=str(self.greenScoreList[shooter_index]))
                 self.greenTotalScore -= 10
+                self.killfeed_text = (f"Green player {shooter_id} hit their own teammate player {target_id}!")
         else:
             # Enemy hit: +10
             if shooter_team == 'red' and shooter_index < len(self.redScoreList):
                 self.redScoreList[shooter_index] += 10
                 self.redScoreLabels[shooter_index].config(text=str(self.redScoreList[shooter_index]))
                 self.redTotalScore += 10
+                self.killfeed_text = (f"Red player {shooter_id} hit green player {target_id}!")
             elif shooter_team == 'green' and shooter_index < len(self.greenScoreList):
                 self.greenScoreList[shooter_index] += 10
                 self.greenScoreLabels[shooter_index].config(text=str(self.greenScoreList[shooter_index]))
                 self.greenTotalScore += 10
+                self.killfeed_text = (f"Green player {shooter_id} hit red player {target_id}!")
 
         # Update total score labels
         self.red_total_score.config(text=f'RED TEAM SCORE: {self.redTotalScore}')
@@ -347,6 +352,17 @@ class PlayerActionScreen:
 
         self.redTotalScore = 0
         self.greenTotalScore = 0
+        for i, label in enumerate(self.redNameLabels):
+            name = self.redNameList[i]
+            if name.startswith("[B] "):
+                label.config(text=name[4:])
+                self.redNameList[i] = name[4:]
+
+        for i, label in enumerate(self.greenNameLabels):
+            name = self.greenNameList[i]
+            if name.startswith("[B] "):
+                label.config(text=name[4:])
+                self.greenNameList[i] = name[4:]
 
     #def hit(self, hit, shooter):
     #    self.action = Action(hit, shooter, self.redIDList, self.greenIDList, self.redScoreList, self.greenScoreList, self.master)
@@ -373,14 +389,14 @@ class PlayerActionScreen:
             
         #Testing to see if labels change (they do)
         #This just changes the bottom label to say "hi" instead of "Parts 5"
-        self.root.after(1000, lambda: self.updateEvents("hi"))
-        self.root.after(2000, lambda: self.updateEvents("hi2"))
-        self.root.after(3000, lambda: self.updateEvents("hi3"))
-        self.root.after(4000, lambda: self.updateEvents("hi4"))
-        self.root.after(5000, lambda: self.updateEvents("hi5"))
-        self.root.after(6000, lambda: self.updateEvents("hi6"))
-        self.root.after(7000, lambda: self.updateEvents("hi7"))
-        self.root.after(8000, lambda: self.updateEvents("hi8"))
+        #self.root.after(1000, lambda: self.updateEvents("hi"))
+        #self.root.after(2000, lambda: self.updateEvents("hi2"))
+        #self.root.after(3000, lambda: self.updateEvents("hi3"))
+        #self.root.after(4000, lambda: self.updateEvents("hi4"))
+        #self.root.after(5000, lambda: self.updateEvents("hi5"))
+        #self.root.after(6000, lambda: self.updateEvents("hi6"))
+        #self.root.after(7000, lambda: self.updateEvents("hi7"))
+        #self.root.after(8000, lambda: self.updateEvents("hi8"))
     
     #Event Updater (changes text within the labels to go upwards)
     def updateEvents(self, yourText):
