@@ -366,22 +366,17 @@ class PlayerActionScreen:
     
     #Event Showcase
     def showcaseactionEvents(self):
-        #event placeholder text above Showcase box (we could just delete this if we keep the one above it)
-        eventtextPlaceholder = tk.Label(self.root, text='Event Tests', font=('Bell Gothic Std Black', 12, 'bold italic'), background="black", foreground="cyan", padx=-1, pady=-1)
-        eventtextPlaceholder.place(relx=0.5, rely=0.2, anchor="center")
-        
-        #Showcase box
-        #white background shows where the event showcase is
-        eventFrame = tk.Frame(self.root, bg = "white", width = 350, height= 400) #change white to black later
-        eventFrame.place(relx=0.5, rely=0.5, anchor="center")
-        
-        #stores events in here
-        #if you need a fixed list just do something like "list = [] * 5"
+        # Showcase box
+        eventFrame = tk.Frame(self.root, bg="black", width=350, height=550)  
+        eventFrame.place(relx=0.5, rely=0.38, anchor="center")
+
+        # Stores events in here
         self.eventStorage = []
-        
-        for i in range(5):
-            events = tk.Label(eventFrame, text="", font=('calibre', 12), bg = "black" , fg = "cyan" , width= 40)
-            events.place(relx = 0.5, rely= 0.1 + i * 0.20, anchor= "center")
+
+        # Create 12 labels for events
+        for i in range(12):
+            events = tk.Label(eventFrame, text="", font=('calibre', 12), bg="black", fg="cyan", width=40)
+            events.place(relx=0.5, rely=0.03 + i * 0.08, anchor="center")  
             self.eventStorage.append(events)
     
     #Event Updater (changes text within the labels to go upwards)
