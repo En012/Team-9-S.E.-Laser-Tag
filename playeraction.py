@@ -384,7 +384,7 @@ class PlayerActionScreen:
 
         # Create 15 labels for events
         for i in range(15):
-            events = tk.Label(eventFrame, text="", font=('calibre', 12), bg="black", fg="cyan", width=40)
+            events = tk.Label(eventFrame, text="", font=('calibre', 12), bg="black", fg="cyan", width=30)
             events.place(relx=0.5, rely=0.049 + i * 0.065, anchor="center")  # Adjusted spacing to fit 15 labels
             self.eventStorage.append(events)
     
