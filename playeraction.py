@@ -141,6 +141,7 @@ class PlayerActionScreen:
             from display import Display
             for widget in self.root.winfo_children():
                 widget.destroy()  # Clear current widgets
+            self.pygame.mixer.music.stop()     # Stop the music
             self.master.switchToPlayerEntry()  # Restart Player Entry Screen
     
     #gets things set up to interact with servertraffic.py
@@ -369,9 +370,6 @@ class PlayerActionScreen:
 
     def back_to_entry_screen(self, appear):
          if(appear == True):
-
-            # Stop the music
-            self.pygame.mixer.music.stop()
 
             #send game over code to the traffic generator three times to stop the game
             [udpclient.send_udp_message(f"{221}") for _ in range(3)]
