@@ -29,6 +29,11 @@ This can be installed with the following command:
 ###
     pip install psycopg2-binary
 
+## Pygame
+This can be installed with the following command:
+###
+    python3 -m pip install -U pygame==2.6.0
+
 # Running the program
 
 After downloading and extracting the zip file, navigate to the project folder within your command line.
