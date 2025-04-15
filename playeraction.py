@@ -7,18 +7,12 @@ import os
 #from actions import Action
 #import udp stuff for traffic generatorcl
 import udpclient
-#import pygame for music playing
-import pygame
-#import random for the randomized tracks in music folder
-import random
-#import threading so music can run while playeraction runs
-import threading
 
 #This class contains all the code for the player action screen
 class PlayerActionScreen:
 
     #default constructor
-    def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, master, server):
+    def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, master, server, pygame):
 
         #Get root, ID, and Name lists from display.py
         self.root = root
@@ -44,12 +38,13 @@ class PlayerActionScreen:
         
         #used to prevent reading info from traffic gen once the game is over
         self.endGame = False
+        self.pygame = pygame
 
         #server stuff
         self.server = server
         self.server.message_callback = self.handle_server_message
         #Testing to reduce time with one variable
-        self.Test = True
+        self.Test = False
 
     #Countdown timer
     def update_timer(self):
@@ -86,15 +81,6 @@ class PlayerActionScreen:
         else:
             self.timerEnd = True
             self.back_to_entry_screen(self.timerEnd)
-
-    def play_music_background(self):
-        def _play():
-            pygame.mixer.init()
-            random_number = random.randint(1, 8)
-            song_path = os.path.expanduser(f"music/{random_number}.mp3")
-            pygame.mixer.music.load(song_path)
-            pygame.mixer.music.play()
-        threading.Thread(target=_play, daemon=True).start()
 
     def update_ui(self):
         self.root.update()
@@ -306,7 +292,7 @@ class PlayerActionScreen:
         if self.Test == True:
             self.seconds_left = 60
         else:
-            self.seconds_left = 360 
+            self.seconds_left = 360
         
         #clear scores from the previous game
         self.clearScores()
@@ -363,8 +349,7 @@ class PlayerActionScreen:
         self.time_remaining_label = tk.Label(self.black_frame, text=f"{self.seconds_left}", font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
         self.time_remaining_label.place(relx=0.5, rely=.85, anchor="n")
         self.flash_high(self.redTotalScore, self.greenTotalScore)
-        #starting the countdown (add music so music starts during 30 second countdown)
-        self.play_music_background()
+        #starting the countdown
         self.display_players(self.red_frame, self.green_frame)
         #event test showcase
         self.showcaseactionEvents()
@@ -384,6 +369,10 @@ class PlayerActionScreen:
 
     def back_to_entry_screen(self, appear):
          if(appear == True):
+
+            # Stop the music
+            self.pygame.mixer.music.stop()
+
             #send game over code to the traffic generator three times to stop the game
             [udpclient.send_udp_message(f"{221}") for _ in range(3)]
 

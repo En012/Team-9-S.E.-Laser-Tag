@@ -6,6 +6,11 @@ import os
 from playerentry import PlayerEntryScreen
 from playeraction import PlayerActionScreen
 
+#import pygame for music playing
+import pygame
+#import random for the randomized tracks in music folder
+import random
+
 class Display:
 
     #default constructor
@@ -22,6 +27,9 @@ class Display:
         self.root.title("Loading...")
         self.root.configure(bg="black")
 
+        #start pygame to get music working
+        pygame.mixer.init()
+
         #initilizing server
         self.server = server
 
@@ -35,7 +43,7 @@ class Display:
 
         #Initialize the playeractionscreen
         #All code for PlayerActionScreen can be found in playeraction.py
-        self.PlayerActionScreen = PlayerActionScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList, self, self.server)
+        self.PlayerActionScreen = PlayerActionScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList, self, self.server, pygame)
         
         #binding F10 key to call clear button
         self.root.bind("<F12>", self.clear_entry)
@@ -92,6 +100,8 @@ class Display:
                 self.label = tk.Label(self.root, image=self.img, bg="black")
                 self.label.pack()
             self.root.after(1000, self.countdown_timer_screen, seconds - 1)
+            if seconds == 15: #begin playing music starting at 15 seconds left in countdown
+                self._play()
         else:
             self.PlayerActionScreen.run() # Show the player action screen
     
@@ -108,4 +118,10 @@ class Display:
             for widget in self.root.winfo_children():
                 widget.destroy()  # Clear current widgets
             self.countdown_timer_screen(30) # Show the playeraction screen
-        
+
+    #starts playing the music    
+    def _play(self):
+        random_number = random.randint(1, 8)
+        song_path = os.path.expanduser(f"music/{random_number}.mp3")
+        pygame.mixer.music.load(song_path)
+        pygame.mixer.music.play()
