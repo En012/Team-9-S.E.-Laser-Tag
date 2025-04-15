@@ -7,7 +7,7 @@ from addplayerbutton import AddPlayerButton
 #This class contains all code for the PlayerEntryScreen
 class PlayerEntryScreen:
     #Default constructor
-    def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, master):
+    def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, equipmentIdList, master):
 
         #Get root, ID, and Name lists from display.py
         self.root = root
@@ -15,6 +15,8 @@ class PlayerEntryScreen:
         self.greenIDList = greenIDList
         self.redNameList = redNameList
         self.greenNameList = greenNameList
+        
+        self.equipmentIdList = equipmentIdList
 
         #-------------------------------------------------------------------------------------------------------------
         #self.switch_to_player_action is used to switch back to display.py when the "start game" button is pressed
@@ -30,7 +32,7 @@ class PlayerEntryScreen:
         #create objects for the UDP and AddPlayer button
         #THESE OBJECTS DO NOT HANDLE DISPLAYING THE BUTTONS, they handle the code that is run when the buttons are pressed
         self.UDPButton = UDPButton(self.root)
-        self.AddPlayerButton = AddPlayerButton(self.root, self.redIDList, self.greenIDList, self.redNameList, self.greenNameList)
+        self.AddPlayerButton = AddPlayerButton(self.root, self.redIDList, self.greenIDList, self.redNameList, self.greenNameList, self.equipmentIdList)
 
     # code for the player entry screen
     def run(self):

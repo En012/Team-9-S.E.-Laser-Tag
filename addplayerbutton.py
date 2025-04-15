@@ -9,12 +9,14 @@ import database
 class AddPlayerButton:
 
     #default constructor get root, IDList, and NameList
-    def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList):
+    def __init__(self, root, redIDList, greenIDList, redNameList, greenNameList, equipmentIdList):
         self.root = root
         self.redIDList = redIDList
         self.greenIDList = greenIDList
         self.redNameList = redNameList
         self.greenNameList = greenNameList
+
+        self.equipmentIdList = equipmentIdList
 
     #handles the process for adding a player to the game
     def addPlayer(self, id_vars, name_vars, id_vars2, name_vars2):
@@ -24,11 +26,6 @@ class AddPlayerButton:
 
         #if playerId == None, getting the id failed, so return
         if playerId == "None":
-            return
-
-        #check to see if player with the same id is already in the game
-        if playerId in self.redIDList or playerId in self.greenIDList:
-            messagebox.showerror(title="Error", message=f"Player with ID: {playerId} is already in the game")
             return
 
         #check to see if the player is already in the database
@@ -71,6 +68,7 @@ class AddPlayerButton:
                 if self.redIDList[i] == " ":
                     self.redIDList[i] = playerId
                     self.redNameList[i] = playerCodeName
+                    self.equipmentIdList[i] = playerEquipmentId
 
                     id_vars[i].set(self.redIDList[i])
                     name_vars[i].set(self.redNameList[i])
@@ -83,6 +81,7 @@ class AddPlayerButton:
                 if self.greenIDList[i] == " ":
                     self.greenIDList[i] = playerId
                     self.greenNameList[i] = playerCodeName
+                    self.equipmentIdList[i] = playerEquipmentId
 
                     id_vars2[i].set(self.greenIDList[i])
                     name_vars2[i].set(self.greenNameList[i])
@@ -124,6 +123,9 @@ class AddPlayerButton:
             player_id = player_id_var.get()
             if not player_id.isdigit():
                 messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
+                player_id = "None"
+            elif player_id in self.redIDList or player_id in self.greenIDList:
+                messagebox.showerror(title="Error", message=f"Player with ID: {player_id} is already in the game")
                 player_id = "None"
             else:
                 popup.destroy()
@@ -233,6 +235,9 @@ class AddPlayerButton:
 
             if not equipmentId.isdigit():
                 messagebox.showerror(title="Error", message="ID's should only consist of digits. Please reenter the ID")
+                equipmentId = "None"
+            elif equipmentId in self.equipmentIdList:
+                messagebox.showerror(title="Error", message=f"Player with Equipment ID: {equipmentId} is already in the game!")
                 equipmentId = "None"
             else:
                 popup.destroy()

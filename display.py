@@ -22,6 +22,8 @@ class Display:
         self.greenNameList = [" "] * 15
         self.greenIDList = [" "] * 15
 
+        self.equipmentIdList = [" "] * 15
+
         #setup tkinter GUI elements
         self.root = tk.Tk()
         self.root.title("Loading...")
@@ -39,7 +41,7 @@ class Display:
 
         #Initialize the playerentryscreen
         #All code for PlayerEntryScreen can be found in playerentry.py
-        self.PlayerEntryScreen = PlayerEntryScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList, self) 
+        self.PlayerEntryScreen = PlayerEntryScreen(self.root, self.redIDList, self.redNameList, self.greenIDList, self.greenNameList, self.equipmentIdList, self) 
 
         #Initialize the playeractionscreen
         #All code for PlayerActionScreen can be found in playeraction.py
@@ -69,6 +71,7 @@ class Display:
             self.redNameList[i] = " "
             self.greenIDList[i] = " "
             self.greenNameList[i] = " "
+            self.equipmentIdList[i] = " "
 
             #clearing the list graphically from the GUI
             self.PlayerEntryScreen.id_vars[i].set("")
