@@ -7,6 +7,12 @@ import os
 #from actions import Action
 #import udp stuff for traffic generatorcl
 import udpclient
+#import pygame for music playing
+import pygame
+#import random for the randomized tracks in music folder
+import random
+#import threading so music can run while playeraction runs
+import threading
 
 #This class contains all the code for the player action screen
 class PlayerActionScreen:
@@ -80,6 +86,15 @@ class PlayerActionScreen:
         else:
             self.timerEnd = True
             self.back_to_entry_screen(self.timerEnd)
+
+    def play_music_background(self):
+        def _play():
+            pygame.mixer.init()
+            random_number = random.randint(1, 8)
+            song_path = os.path.expanduser(f"music/{random_number}.mp3")
+            pygame.mixer.music.load(song_path)
+            pygame.mixer.music.play()
+        threading.Thread(target=_play, daemon=True).start()
 
     def update_ui(self):
         self.root.update()
@@ -348,7 +363,8 @@ class PlayerActionScreen:
         self.time_remaining_label = tk.Label(self.black_frame, text=f"{self.seconds_left}", font=('Bell Gothic Std Black', 16, 'bold'), background="black", foreground="white", padx=-1, pady=-1)
         self.time_remaining_label.place(relx=0.5, rely=.85, anchor="n")
         self.flash_high(self.redTotalScore, self.greenTotalScore)
-        #starting the countdown
+        #starting the countdown (add music so music starts during 30 second countdown)
+        self.play_music_background()
         self.display_players(self.red_frame, self.green_frame)
         #event test showcase
         self.showcaseactionEvents()
