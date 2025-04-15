@@ -376,8 +376,8 @@ class PlayerActionScreen:
     #Event Showcase
     def showcaseactionEvents(self):
         # Showcase box
-        eventFrame = tk.Frame(self.root, bg="black", width=350, height=550)  # Keep the current max height
-        eventFrame.place(relx=0.5, rely=0.45, anchor="center")  # Lowered placement closer to "Remaining Time"
+        eventFrame = tk.Frame(self.root, highlightbackground= "cyan", highlightthickness=2, bg="black", width=350, height=580)  # Keep the current max height
+        eventFrame.place(relx=0.5, rely=0.4, anchor="center", relheight=0.63, relwidth=0.33)  # Lowered placement closer to "Remaining Time" / relheight and relwidth scale to window size
 
         # Stores events in here
         self.eventStorage = []
@@ -385,7 +385,7 @@ class PlayerActionScreen:
         # Create 15 labels for events
         for i in range(15):
             events = tk.Label(eventFrame, text="", font=('calibre', 12), bg="black", fg="cyan", width=40)
-            events.place(relx=0.5, rely=0.02 + i * 0.065, anchor="center")  # Adjusted spacing to fit 15 labels
+            events.place(relx=0.5, rely=0.049 + i * 0.065, anchor="center")  # Adjusted spacing to fit 15 labels
             self.eventStorage.append(events)
     
     #Event Updater (changes text within the labels to go upwards)
