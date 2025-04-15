@@ -135,6 +135,7 @@ class PlayerActionScreen:
                     self.greenScoreLabels.append(green_player_score_label)
                     #gets updated elsewhere so it can remain zero
                     self.greenTotalScore = 0
+
     def switch_to_entry(self):
             from display import Display
             for widget in self.root.winfo_children():
@@ -184,6 +185,7 @@ class PlayerActionScreen:
                 self.redNameLabels[index].config(text=f"[B] {name}", font = ("Times", 12, "bold italic"), fg = "gold")
             self.killfeed_text = (f"Green Base was hit by {self.redNameList[index]}")
             self.updateEvents(self.killfeed_text)
+            self.sort_players_by_score()
             return
 
         if target_id == "53" and shooter_id in green_ids:
@@ -198,6 +200,7 @@ class PlayerActionScreen:
                 self.greenNameLabels[index].config(text=f"[B] {name}", font = ("Times", 12, "bold italic"), fg = "gold")
             self.killfeed_text = (f"Red Base was hit by {self.greenNameList[index]}")
             self.updateEvents(self.killfeed_text)
+            self.sort_players_by_score()
             return
 
         # Identify shooter team and index
@@ -231,12 +234,14 @@ class PlayerActionScreen:
                 self.redScoreLabels[shooter_index].config(text=str(self.redScoreList[shooter_index]))
                 self.redTotalScore -= 10
                 self.killfeed_text = (f"{self.redNameList[shooter_index]} hit their own teammate {self.redNameList[target_index]}!")
+                self.sort_players_by_score()
             elif shooter_team == 'green' and shooter_index < len(self.greenScoreList):
                 target_index = green_ids.index(target_id)
                 self.greenScoreList[shooter_index] -= 10
                 self.greenScoreLabels[shooter_index].config(text=str(self.greenScoreList[shooter_index]))
                 self.greenTotalScore -= 10
                 self.killfeed_text = (f"{self.greenNameList[shooter_index]} hit their own teammate {self.greenNameList[target_index]}!")
+                self.sort_players_by_score()
         else:
             # Enemy hit: +10
             if shooter_team == 'red' and shooter_index < len(self.redScoreList):
@@ -245,17 +250,38 @@ class PlayerActionScreen:
                 self.redScoreLabels[shooter_index].config(text=str(self.redScoreList[shooter_index]))
                 self.redTotalScore += 10
                 self.killfeed_text = (f"{self.redNameList[shooter_index]} hit {self.greenNameList[target_index]}")
+                self.sort_players_by_score()
             elif shooter_team == 'green' and shooter_index < len(self.greenScoreList):
                 target_index = red_ids.index(target_id)
                 self.greenScoreList[shooter_index] += 10
                 self.greenScoreLabels[shooter_index].config(text=str(self.greenScoreList[shooter_index]))
                 self.greenTotalScore += 10
                 self.killfeed_text = (f"{self.greenNameList[shooter_index]} hit {self.redNameList[target_index]}")
+                self.sort_players_by_score()
 
         # Update total score labels
         self.red_total_score.config(text=f'RED TEAM SCORE: {self.redTotalScore}')
         self.green_total_score.config(text=f'GREEN TEAM SCORE: {self.greenTotalScore}')
         self.updateEvents(self.killfeed_text)
+
+    #sort players method
+    def sort_players_by_score(self):
+        # Sort red team
+        red_combined = list(zip(self.redScoreList, self.redNameList, self.redNameLabels, self.redScoreLabels))
+        red_combined.sort(reverse=True, key=lambda x: x[0])
+
+        for i, (score, name, name_label, score_label) in enumerate(red_combined):
+            name_label.place(relx=0.35, rely=.12 + (i * 0.05), anchor="w")
+            score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
+
+        # Sort green team
+        green_combined = list(zip(self.greenScoreList, self.greenNameList, self.greenNameLabels, self.greenScoreLabels))
+        green_combined.sort(reverse=True, key=lambda x: x[0])
+
+        for i, (score, name, name_label, score_label) in enumerate(green_combined):
+            name_label.place(relx=0.35, rely=.12 + (i * 0.05), anchor="w")
+            score_label.place(relx=0.6, rely=.12 + (i * 0.05), anchor="w")
+
 
     def run(self):
         #make sure the program will read scores from traffic gen again
@@ -263,7 +289,7 @@ class PlayerActionScreen:
 
         #change this value to change gameplay time
         if self.Test == True:
-            self.seconds_left = 30
+            self.seconds_left = 60
         else:
             self.seconds_left = 360 
         
@@ -281,16 +307,6 @@ class PlayerActionScreen:
         title.place(relx=0.5, rely=0.05, anchor="center")
         
         #--------------------------------------------------Frames-------------------------------------------------------------------------------
-        #Keeping old in case we need to go back
-        """
-        #black background for score keeping (referenced from his github)
-        #back_frame= tk.Frame(self.root, bd=1, highlightthickness=5, highlightbackground="grey", background="black")
-        #back_frame.place(relx=0.15, rely=.15, relwidth=0.7, relheight=0.75)
-
-        #blue frame where gameplay is tracked
-        #game_frame= tk.Frame(self.root, bd=1, highlightthickness=5, highlightbackground="grey", background="blue")
-        #game_frame.place(relx=0.15, rely=.4, relwidth=0.7, relheight=0.42)
-        """
         self.red_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="red")
         self.green_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="green")
         self.black_frame = tk.Frame(self.root, bd=1, highlightthickness=1, highlightbackground="black", background="black")
@@ -303,14 +319,12 @@ class PlayerActionScreen:
         #red team
         red_team_label = tk.Label(self.red_frame, text='RED TEAM', font=('Bell Gothic Std Black', 27, 'bold'), background="red", foreground="black", padx=-1, pady=-1)
         red_team_label.place(relx=.5, rely=.02, anchor="n")
-        print(self.redTotalScore)
         self.red_total_score = tk.Label(self.red_frame, text=f'RED TEAM SCORE: {self.redTotalScore}', font=('Bell Gothic Std Black', 15, "bold"), background="red", foreground="black", padx=-1, pady=-1)
         self.red_total_score.place(relx=.49, rely=0.99, anchor="s")
 
         #green team
         green_team_label = tk.Label(self.green_frame, text='GREEN TEAM', font=('Bell Gothic Std Black', 27, 'bold'), background="green", foreground="black", padx=-1, pady=-1)
         green_team_label.place(relx=.5, rely=.02, anchor="n")
-        print(self.greenTotalScore)
         self.green_total_score = tk.Label(self.green_frame, text=f'GREEN TEAM SCORE: {self.greenTotalScore}', font=('Bell Gothic Std Black', 15, "bold"), background="green", foreground="black", padx=-1, pady=-1)
         self.green_total_score.place(relx=.49, rely=0.99, anchor="s")
        #Current score label
