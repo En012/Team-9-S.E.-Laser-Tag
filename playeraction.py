@@ -35,6 +35,9 @@ class PlayerActionScreen:
         self.redHigh = False
         self.greenHigh = False
         self.killfeed_text = ""
+        
+        #used to prevent reading info from traffic gen once the game is over
+        self.endGame = False
 
         #server stuff
         self.server = server
@@ -151,7 +154,7 @@ class PlayerActionScreen:
         #the second integer is the equipment ID of the player who got hit
 
         #dont allow the score to change at all after the game is over
-        if self.seconds_left <= 0:
+        if self.endGame:
             return
 
         #remember green base = 43, red base = 53 
@@ -255,6 +258,9 @@ class PlayerActionScreen:
         self.updateEvents(self.killfeed_text)
 
     def run(self):
+        #make sure the program will read scores from traffic gen again
+        self.endGame = False
+
         #change this value to change gameplay time
         if self.Test == True:
             self.seconds_left = 30
@@ -351,6 +357,9 @@ class PlayerActionScreen:
             #send game over code to the traffic generator three times to stop the game
             [udpclient.send_udp_message(f"{221}") for _ in range(3)]
 
+            #make sure no other hits are registered from the traffic gen
+            self.endGame = True
+
             #make back_button appear
             back_button = tk.Button(self.black_frame, text="End Game", command=self.switch_to_entry, font=("Arial", 12), bg="white")
             back_button.place(relx=0.5, rely=0.9, anchor="n")
@@ -367,16 +376,16 @@ class PlayerActionScreen:
     #Event Showcase
     def showcaseactionEvents(self):
         # Showcase box
-        eventFrame = tk.Frame(self.root, bg="black", width=350, height=550)  
-        eventFrame.place(relx=0.5, rely=0.38, anchor="center")
+        eventFrame = tk.Frame(self.root, bg="black", width=350, height=550)  # Keep the current max height
+        eventFrame.place(relx=0.5, rely=0.45, anchor="center")  # Lowered placement closer to "Remaining Time"
 
         # Stores events in here
         self.eventStorage = []
 
-        # Create 12 labels for events
-        for i in range(12):
+        # Create 15 labels for events
+        for i in range(15):
             events = tk.Label(eventFrame, text="", font=('calibre', 12), bg="black", fg="cyan", width=40)
-            events.place(relx=0.5, rely=0.03 + i * 0.08, anchor="center")  
+            events.place(relx=0.5, rely=0.02 + i * 0.065, anchor="center")  # Adjusted spacing to fit 15 labels
             self.eventStorage.append(events)
     
     #Event Updater (changes text within the labels to go upwards)
